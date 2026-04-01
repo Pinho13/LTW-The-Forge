@@ -1,1 +1,49 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=23300763&assignment_repo_type=AssignmentRepo)
+# [Gym Name] — Gym Management Platform
+
+> Linguagens e Tecnologias Web (LTW) — 2025/2026
+>
+> Faculdade de Engenharia da Universidade do Porto
+>
+> Página do Curos: https://pages.up.pt/~up353972/page/courses/ltw/
+>
+> Descrição do Projeto: https://pages.up.pt/~up353972/page/courses/ltw/project/ 
+
+
+## Team LTW12G01
+
+| Name | Email |
+|------|-------|
+| Miguel Rocha | 202405484@up.pt |
+| Pedro Teixeira | 202404987@up.pt |
+| Rafael Pinho | 202406334@up.pt |
+
+
+## Description
+
+## Implemented Features
+
+### All Users
+- To be implementes
+
+### Members
+- To be implemented
+
+### Trainers
+- To be implemented
+
+### Admins
+- To be implemented
+## Technologies Used
+
+- **HTML**
+- **CSS**
+- **SQLite**
+
+## How to Run
+
+```bash
+git clone git@github.com:FEUP-LTW-2026/ltw-project-ltw12g01.git
+php -S localhost:9000
+```
+
+Then open [http://localhost:9000](http://localhost:9000) in your browser.
