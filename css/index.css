@@ -1,0 +1,105 @@
+body {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+#topNavBar {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 0.5em; 
+    border-bottom: 2px solid var(--color-gold);
+}
+
+#topNavBar a{
+    flex: 1;
+    text-decoration: none;
+    font-family: "Instrument Sans", sans-serif;
+    font-weight: bold;
+    font-size: 1.25em;
+    color: var(--color-grey);
+}
+
+#topNavBar .Logo {                                                                                      
+    display: flex;                                                                           
+    align-items: center;  
+    justify-content: center;                                                                   
+    gap: 0.5em;                                                                            
+}          
+#topNavBar .logo-text{
+    font-family: "Big Shoulders Inline", sans-serif;
+    font-weight: 900;
+    font-size: 2.5em;
+    color: var(--color-gold); 
+}
+
+#topNavBar .logo-img {
+    width: 3em;
+}
+
+header {
+    margin: 0; 
+}
+.hero {
+    text-align: center;
+}
+
+.heroContent {
+    display: block;
+    position: relative;
+    width: fit-content;
+    margin: 0 auto 0;
+    background-color: rgba(var(--color-gold-rgb), 0.45);
+    padding-top: 3em;
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-bottom: 0.2em;
+
+    box-shadow: 
+            /* LAYER 1 (Closest) */
+            -5px 0 0 0 rgba(var(--color-gold-rgb), 0.2), /* Left side */
+            5px 0 0 0 rgba(var(--color-gold-rgb), 0.2), /* Right side */
+
+            /* LAYER 2 (Middle) */
+            -10px 0 0 0 rgba(var(--color-gold-rgb), 0.2), /* Left side */
+            10px 0 0 0 rgba(var(--color-gold-rgb), 0.2), /* Right side */
+
+            /* LAYER 3 (Farthest) */
+            -15px 0 0 0 rgba(var(--color-gold-rgb), 0.1), /* Left side */
+            15px 0 0 0 rgba(var(--color-gold-rgb), 0.1); /* Right side */
+}
+
+.hero h1 {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: 4em;
+    padding: 0;
+    margin-bottom: 0;
+    color: var(--color-almost-white);
+}
+
+.hero h2 {
+    font-family: "Italiana", sans-serif;
+    font-weight: 100;
+    color: var(--color-grey);
+    margin-top: 0;
+}
+
+.hero h2 span {
+    border-top: 1px solid var(--color-gold);
+}
+
+.hero a {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    text-decoration: none;
+
+    color: var(--color-black);
+    background-color: var(--color-gold);
+    padding: 0.4em 1.2em;
+    outline: 1px solid var(--color-white);
+    outline-offset: -3px;
+    font-family: "Instrument Sans", sans-serif;
+
+}
