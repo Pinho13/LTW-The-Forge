@@ -1,11 +1,10 @@
-#login-modal {
+.auth-modal {
     --color-modal-bg: #201e19;
-    --color-modal-input-bg: #595959;
     --color-modal-input-bg-rgb: 89, 89, 89;
-
 }
 
-#login-modal {
+
+.auth-modal {
     background-color: var(--color-modal-bg);
     border-top: 0.5em solid var(--color-gold);
     position: relative;
@@ -13,39 +12,37 @@
     width: 30%;
 }
 
-#login-modal::backdrop {
+.auth-modal::backdrop {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-#modal-close-btn {
-    background: none;                                                                                                            
-    border: none;                                                                                                                
-    color: var(--color-almost-white);                                                                                                    
+.modal-close-btn {
+    background: none;
+    border: none;
+    color: var(--color-almost-white);
     font-size: 1.2em;
     position: absolute;
     top: 0.5em;
-    right: 0.5em;                                                                                                          
+    right: 0.5em;
 }
 
-#login-modal h1 {
+.auth-modal h1 {
     font-family: "Big Shoulders", sans-serif;
-    font-size: 2em;
     color: var(--color-almost-white);
     margin: 0.35em 0 0 0;
     text-align: center;
     font-size: 3em;
 }
 
-#login-modal h1::after {
+.auth-modal h1::after {
     content: '';
-    display: block;                                                                                                              
-    width: 40%;     
-    margin: 0 auto 0;                                                                                                 
-    border-bottom: 0.05em solid var(--color-gold);   
-    ;                                                                               
+    display: block;
+    width: 40%;
+    margin: 0 auto 0;
+    border-bottom: 0.05em solid var(--color-gold);
 }
 
-#login-modal h2 {
+.auth-modal h2 {
     font-family: "Italiana", serif;
     font-size: 1.5em;
     color: var(--color-grey);
@@ -55,20 +52,19 @@
     margin-bottom: 0;
 }
 
-#login-modal label {                                                                                                           
-    display: block;                                                                                                              
-    color: var(--color-grey);                                                                                                    
-    margin-bottom: 0.2em;    
-    padding-top: 1em;                                                                                                    
-}   
+.auth-modal label {
+    display: block;
+    color: var(--color-grey);
+    margin-bottom: 0.2em;
+    padding-top: 1em;
+}
 
-
-#login-modal input {
+.auth-modal input {
     display: block;
     width: 100%;
     background-color: rgba(var(--color-modal-input-bg-rgb), 0.1);
     color: var(--color-white);
-    padding: 1.5em 1em 1.5em 1em;
+    padding: 1.5em 1em;
     box-sizing: border-box;
 }
 
@@ -76,11 +72,11 @@
     position: relative;
 }
 
-#login-modal .password-wrapper input {
+.auth-modal .password-wrapper input {
     padding-right: 3em;
 }
 
-#toggle-password {
+.toggle-password {
     position: absolute;
     right: 0.6em;
     top: 25%;
@@ -101,7 +97,7 @@
     text-decoration: underline;
 }
 
-.sign-in-btn {
+.auth-submit-btn {
     display: block;
     width: 100%;
     background-color: var(--color-light-gold);
@@ -116,12 +112,12 @@
     margin: 1em 0 1em 0;
 }
 
-#login-modal p {
+.auth-modal p {
     text-align: center;
     color: var(--color-grey);
 }
 
-#login-modal p a {
+.auth-modal p a {
     color: rgba(var(--color-gold-rgb), 0.9);
     text-decoration: underline;
 }

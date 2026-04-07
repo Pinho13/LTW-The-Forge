@@ -16,3 +16,7 @@
     --color-dark-gold: #8A6F33;
     --color-dark-gold-rgb: 138, 111, 51;
 }
+
+button, a {                                                                                                                     
+    cursor: pointer;                                                                                                            
+}

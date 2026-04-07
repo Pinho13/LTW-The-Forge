@@ -7,21 +7,22 @@
         <link rel="stylesheet" href="../style/base.css">
         <link rel="stylesheet" href="../style/index.css">
         <link rel="stylesheet" href="../style/login.css">
+        <link rel="stylesheet" href="../style/components/footer.css">
     </head>
 
 
     <body>
         <header>
             <nav id="top-nav-bar">
-                <a href = "index.html"> ABOUT US</a>
-                <a href = "index.html"> FACILITIES</a>
+                <a href = "index.php"> ABOUT US</a>
+                <a href = "index.php"> FACILITIES</a>
 
-                <a href = "index.html" class="logo">
+                <a href = "index.php" class="logo">
                     <img src="../assets/images/logo-no-bg.png" alt="" class="logo-img">
                     <span class="logo-text">THE FORGE</span>
                 </a>
 
-                <a href = "index.html"> PLANS</a>
+                <a href = "index.php"> PLANS</a>
                 <div class="login-wrapper">
                     <button id="login-btn">LOG IN</button>
                 </div>
@@ -36,7 +37,7 @@
                     <h2>
                         <span>Every workout. Every session. Every day.</span>
                     </h2>
-                    <a href = "index.html"> EXPLORE PLANS</a>
+                    <a href = "index.php"> EXPLORE PLANS</a>
                 </section>
             </div>
 
@@ -67,8 +68,8 @@
         </main>
 
 
-        <dialog id="login-modal">
-            <button id="modal-close-btn">&times;</button>
+        <dialog id="login-modal" class="auth-modal">
+            <button class="modal-close-btn">&times;</button>
             <h1>WELCOME BACK</h1>
             <h2>Sign in to your account</h2>
             <form method="dialog">
@@ -78,34 +79,47 @@
                 <label for="password">PASSWORD</label>
                 <div class="password-wrapper">
                     <input type="password" id="password" name="password">
-                    <button type="button" id="toggle-password">&#128065;</button>
+                    <button type="button" class="toggle-password">&#128065;</button>
                 </div>
 
-                <a href="index.html" class="forgot-password">Forgot your password?</a>
+                <a href="index.php" class="forgot-password">Forgot your password?</a>
 
-                <button type="submit" class="sign-in-btn">SIGN IN</button>
+                <button type="submit" class="auth-submit-btn">SIGN IN</button>
             </form>
-            <p>New member? <a href="index.html">Register for free</a></p>
+            <p>New member? <a href="#" id="open-register-btn">Register for free</a></p>
         </dialog>
 
-        <footer>
-            <span class="footer-text">THE FORGE</span>
-            
-            <div class="symbol-container">
-                <span class="symbol layer-1">&times;</span>
-                <span class="symbol layer-2">&times;</span>
-            </div>
+        <dialog id="register-modal" class="auth-modal">
+            <button class="modal-close-btn">&times;</button>
+            <h1>WELCOME</h1>
+            <h2>Register your account</h2>
+            <form method="dialog">
+                <label for="register-name">NAME</label>
+                <input type="text" id="register-name" name="name" placeholder="Full Name">
 
-            <span class="footer-text">TRAINING FACILITIES</span>
+                <label for="register-email">EMAIL ADDRESS</label>
+                <input type="email" id="register-email" name="email" placeholder="example@gmail.com">
 
-            <div class="symbol-container">
-                <span class="symbol layer-1">&times;</span>
-                <span class="symbol layer-2">&times;</span>
-            </div>
+                <label for="register-password">PASSWORD</label>
+                <div class="password-wrapper">
+                    <input type="password" id="register-password" name="password">
+                    <button type="button" class="toggle-password">&#128065;</button>
+                </div>
 
-            <span class="footer-text">2026</span>
+                <label for="register-confirm-password">CONFIRM PASSWORD</label>
+                <div class="password-wrapper">
+                    <input type="password" id="register-confirm-password" name="confirm-password">
+                    <button type="button" class="toggle-password">&#128065;</button>
+                </div>
 
-        </footer>
+                <button type="submit" class="auth-submit-btn">REGISTER</button>
+            </form>
+            <p>Already have an account? <a href="#" id="open-login-btn">Sign In</a></p>
+        </dialog>
+
+
+        <?php include '../components/footer.php'; ?>
+        
         <script src="../scripts/index.js"></script>
     </body>
 </html>

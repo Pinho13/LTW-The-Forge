@@ -1,23 +1,42 @@
-const modal = document.getElementById('login-modal');
+const loginModal = document.getElementById('login-modal');
+const registerModal = document.getElementById('register-modal');
 const loginBtn = document.getElementById('login-btn');
-const closeBtn = document.getElementById('modal-close-btn');
-const togglePassword = document.getElementById('toggle-password');
-const passwordInput = document.getElementById('password');
+const openRegisterBtn = document.getElementById('open-register-btn');
+const openLoginBtn = document.getElementById('open-login-btn');
 
-loginBtn.addEventListener('click', () => modal.showModal());
+loginBtn.addEventListener('click', () => loginModal.showModal());
 
-closeBtn.addEventListener('click', () => modal.close());
-
-modal.addEventListener('click', (e) => {
-    const rect = modal.getBoundingClientRect();
-    if (e.clientX < rect.left || e.clientX > rect.right ||
-        e.clientY < rect.top  || e.clientY > rect.bottom) {
-        modal.close();
-    }
+openRegisterBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    loginModal.close();
+    registerModal.showModal();
 });
 
-togglePassword.addEventListener('click', () => {
-    const isHidden = passwordInput.type === 'password';
-    passwordInput.type = isHidden ? 'text' : 'password';
-    togglePassword.textContent = isHidden ? '\u{1F576}' : '\u{1F441}';
+openLoginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    registerModal.close();
+    loginModal.showModal();
+});
+
+document.querySelectorAll('.modal-close-btn').forEach(btn => {
+    btn.addEventListener('click', () => btn.closest('dialog').close());
+});
+
+document.querySelectorAll('.auth-modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+        const rect = modal.getBoundingClientRect();
+        if (e.clientX < rect.left || e.clientX > rect.right ||
+            e.clientY < rect.top  || e.clientY > rect.bottom) {
+            modal.close();
+        }
+    });
+});
+
+document.querySelectorAll('.toggle-password').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const input = btn.previousElementSibling;
+        const isHidden = input.type === 'password';
+        input.type = isHidden ? 'text' : 'password';
+        btn.textContent = isHidden ? '\u{1F576}' : '\u{1F441}';
+    });
 });
