@@ -15,7 +15,7 @@
 |------|-------|
 | Miguel Rocha | 202405484@up.pt |
 | Pedro Teixeira | 202404987@up.pt |
-| Rafael Pinho | 202406334@up.pt |
+| Rafael Silva | 202406334@up.pt |
 
 
 ## Description
