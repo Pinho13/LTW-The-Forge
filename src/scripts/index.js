@@ -9,7 +9,11 @@ loginBtn.addEventListener('click', () => modal.showModal());
 closeBtn.addEventListener('click', () => modal.close());
 
 modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.close();
+    const rect = modal.getBoundingClientRect();
+    if (e.clientX < rect.left || e.clientX > rect.right ||
+        e.clientY < rect.top  || e.clientY > rect.bottom) {
+        modal.close();
+    }
 });
 
 togglePassword.addEventListener('click', () => {
