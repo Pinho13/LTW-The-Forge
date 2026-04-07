@@ -1,0 +1,66 @@
+#login-modal {
+    --color-modal-bg: #201e19;
+    --color-modal-input-bg: #595959;
+    --color-modal-input-bg-rgb: rgb(89, 89, 89);
+
+}
+
+#login-modal {
+    background-color: var(--color-modal-bg);
+    border-top: 0.5em solid var(--color-gold);
+    position: relative;  
+}
+
+#modal-close-btn {
+    background: none;                                                                                                            
+    border: none;                                                                                                                
+    color: var(--color-almost-white);                                                                                                    
+    font-size: 1.2em;
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;                                                                                                               
+}
+
+#login-modal h1 {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: 2em;
+    color: var(--color-almost-white);
+    margin: 0;
+    text-align: center;
+    font-size: 3em;
+}
+
+#login-modal h1::after {
+    content: '';
+    display: block;                                                                                                              
+    width: 60%;     
+    margin: 0 auto 0;                                                                                                 
+    border-bottom: 0.05em solid var(--color-gold);   
+    ;                                                                               
+}
+
+#login-modal h2 {
+    font-family: "Italiana", serif;
+    font-size: 1.5em;
+    color: var(--color-grey);
+    font-weight: lighter;
+    text-align: center;
+    margin-top: 0.2em;
+}
+
+#login-modal label {                                                                                                           
+    display: block;                                                                                                              
+    color: var(--color-grey);                                                                                                    
+    margin-bottom: 0.2em;                                                                                                        
+}   
+
+
+#login-modal input {                                                                                                             
+    display: block;
+    width: 100%;                                                                                                                 
+    background-color: argb(var(--color-modal-input-bg-rgb), 0.1);
+    color: var(--color-white);                                                                                                   
+    padding: 0.6em 0.8em;
+    box-sizing: border-box;                                                                                                      
+}                                                                                                                                
+   

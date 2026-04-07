@@ -6,28 +6,31 @@
         <title>The Forge</title>
         <link rel="stylesheet" href="../style/base.css">
         <link rel="stylesheet" href="../style/index.css">
+        <link rel="stylesheet" href="../style/login.css">
     </head>
 
 
     <body>
         <header>
-            <nav id = "topNavBar">
+            <nav id="top-nav-bar">
                 <a href = "index.html"> ABOUT US</a>
                 <a href = "index.html"> FACILITIES</a>
 
-                <a href = "index.html" class = "Logo">
-                    <img src="../assets/images/Logo-removebg-preview.png" alt="" class="logo-img">
+                <a href = "index.html" class="logo">
+                    <img src="../assets/images/logo-no-bg.png" alt="" class="logo-img">
                     <span class="logo-text">THE FORGE</span>
                 </a>
 
                 <a href = "index.html"> PLANS</a>
-                <a href = "index.html"> LOGIN</a>
+                <div class="login-wrapper">
+                    <button id="login-btn">LOG IN</button>
+                </div>
             </nav>
         </header>
 
 
         <main>
-            <div class="heroContent">
+            <div class="hero-content">
                 <section class = "hero">
                     <h1>FORGE YOUR LIMITS</h1>
                     <h2>
@@ -39,46 +42,70 @@
 
 
 
-            <section class="photosContainer">
+            <section class="photos-container">
                 <div class="image left">
-                    <img src="../assets/images/Left Image.png" alt="Gym Equipment" class="filler">
+                    <img src="../assets/images/main-page/left-image.png" alt="Gym Equipment">
                 </div>
-                
-                <div class="slant border-left"></div>
 
-                <div class="slant divisor-gold-base"></div>
-                <div class="slant white-line line-1"></div>
-                <div class="slant white-line line-2"></div>
-                <div class="slant white-line line-3"></div>
-                <div class="slant white-line line-4"></div>
-                <div class="slant white-line line-5"></div>
-
-                <div class="slant border-right"></div>
+                <div class="splitter">
+                    <div class="border-left"></div>
+                    <div class="slant">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="border-right"></div>
+                </div>
 
                 <div class="image right">
-                    <img src="../assets/images/Right Image.webp" alt="People Training" class="filler">
+                    <img src="../assets/images/main-page/right-image.webp" alt="People Training">
                 </div>
             </section>
         </main>
 
 
+        <dialog id="login-modal">
+            <button id="modal-close-btn">&times;</button>
+            <h1>WELCOME BACK</h1>
+            <h2>Sign in to your account</h2>
+            <form method="dialog">
+                <label for="email">EMAIL ADDRESS</label>
+                <input type="email" id="email" name="email" placeholder="example@gmail.com">
+
+                <label for="password">PASSWORD</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password">
+                    <button type="button" id="toggle-password">&#128065;</button>
+                </div>
+
+                <a href="#" class="forgot-password">Forgot your password?</a>
+
+                <button type="submit" class="sign-in-btn">SIGN IN</button>
+            </form>
+            <p>New member? <a href="#">Register for free</a></p>
+        </dialog>
+
         <footer>
             <span class="footer-text">THE FORGE</span>
             
             <div class="symbol-container">
-                <span class="symbol layer-1">&gt;&lt;</span>
-                <span class="symbol layer-2">&gt;&lt;</span>
+                <span class="symbol layer-1">&times;</span>
+                <span class="symbol layer-2">&times;</span>
             </div>
 
             <span class="footer-text">TRAINING FACILITIES</span>
 
             <div class="symbol-container">
-                <span class="symbol layer-1">&gt;&lt;</span>
-                <span class="symbol layer-2">&gt;&lt;</span>
+                <span class="symbol layer-1">&times;</span>
+                <span class="symbol layer-2">&times;</span>
             </div>
 
             <span class="footer-text">2026</span>
 
         </footer>
+        <script src="../scripts/index.js"></script>
     </body>
 </html>
