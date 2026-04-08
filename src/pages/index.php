@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="../style/index.css">
         <link rel="stylesheet" href="../style/login.css">
         <link rel="stylesheet" href="../style/components/footer.css">
+        <link rel="stylesheet" href="../style/components/logo.css">
     </head>
 
 
@@ -17,10 +18,7 @@
                 <a href = "index.php"> ABOUT US</a>
                 <a href = "index.php"> FACILITIES</a>
 
-                <a href = "index.php" class="logo">
-                    <img src="../assets/images/logo-no-bg.png" alt="" class="logo-img">
-                    <span class="logo-text">THE FORGE</span>
-                </a>
+                <?php include '../components/logo.php'; ?>
 
                 <a href = "index.php"> PLANS</a>
                 <div class="login-wrapper">
