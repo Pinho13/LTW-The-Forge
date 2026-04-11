@@ -17,6 +17,12 @@
     --color-dark-gold-rgb: 138, 111, 51;
 }
 
-button, a {                                                                                                                     
-    cursor: pointer;                                                                                                            
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+button, a {
+    cursor: pointer;
 }

@@ -1,0 +1,56 @@
+.side-menu {
+    background-color: var(--color-black);
+    grid-area: side-menu;
+    min-height: 93vh;
+}
+
+.side-menu .logo {
+    padding: 1em;
+    border-bottom: 0.1em solid var(--color-gold);
+}
+
+.side-nav {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1em;
+}
+
+.side-nav a {
+    position: relative;
+    color: var(--color-grey);
+    text-decoration: none;
+    font-size: 1em;
+    font-family: "Instrument Sans", sans-serif;
+    padding: 1em 1.5em;
+    border-left: 0.15em solid transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.side-nav a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1em;
+    right: 1em;
+    height: 0.05em;
+    background-color: rgba(var(--color-grey-rgb), 0.3);
+}
+
+.side-nav a:hover {
+    color: var(--color-almost-white);
+}
+
+.side-nav a.active {
+    color: var(--color-gold);
+    border-left-color: var(--color-light-gold);
+    background-color: rgba(var(--color-brown-rgb), 0.3);
+    
+}
+
+.side-nav a.active::after {
+    content: '›';
+    font-size: 2em;
+    line-height: 0;
+}
