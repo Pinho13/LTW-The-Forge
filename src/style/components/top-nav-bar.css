@@ -16,3 +16,8 @@
 #top-nav-bar #login-btn {
     padding: 0.25em 2em;
 }
+
+#top-nav-bar #account-btn {
+    padding: 0.25em 2em;
+    font-size: 0.75em;
+}

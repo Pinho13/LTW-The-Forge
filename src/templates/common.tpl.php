@@ -34,7 +34,11 @@ require_once(__DIR__ . '/../../utils/session.php');
 
         <a href="index.php">PLANS</a>
         <div class="login-wrapper">
-          <button id="login-btn">LOG IN</button>
+          <?php if ($session?->isLoggedIn()): ?>
+            <a href="/src/pages/my-account.php"><button id="account-btn">MY ACCOUNT</button></a>
+          <?php else: ?>
+            <button id="login-btn">LOG IN</button>
+          <?php endif; ?>
         </div>
       </nav>
     </header>
