@@ -1,6 +1,11 @@
-<?php declare(strict_types = 1); ?>
+<?php
+declare(strict_types = 1);
+require_once(__DIR__ . '/../../utils/session.php');
+?>
 
-<?php function drawHeader(array $extraCss = []) { ?>
+<?php function drawHeader(array $extraCss = [], ?Session $session = null) {
+  $GLOBALS['_tpl_session'] = $session;
+?>
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
@@ -45,6 +50,9 @@
 <?php } ?>
 
 <?php function drawAuthModal(bool $isLogin) {
+  $session  = $GLOBALS['_tpl_session'] ?? null;
+  $error    = !$isLogin ? $session?->popRegisterError()   : null;
+  $formData = !$isLogin ? $session?->popRegisterFormData() ?? [] : [];
   $id       = $isLogin ? 'login-modal'            : 'register-modal';
   $title    = $isLogin ? 'WELCOME BACK'            : 'WELCOME';
   $subtitle = $isLogin ? 'Sign in to your account' : 'Register your account';
@@ -54,15 +62,18 @@
     <button class="btn-ghost modal-close-btn">&times;</button>
     <h1><?=$title?></h1>
     <h2><?=$subtitle?></h2>
-    <form method="dialog">
+    <form <?= $isLogin ? 'method="dialog"' : 'method="post" action="../actions/action_register.php"' ?>>
 
       <?php if (!$isLogin) { ?>
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session?->generateCsrfToken() ?? '') ?>">
         <label for="register-name">NAME</label>
-        <input type="text" id="register-name" name="name" placeholder="Full Name">
+        <input type="text" id="register-name" name="name" placeholder="Full Name"
+               value="<?= htmlspecialchars($formData['name'] ?? '') ?>">
       <?php } ?>
 
       <label for="<?=$isLogin ? 'email' : 'register-email'?>">EMAIL ADDRESS</label>
-      <input type="email" id="<?=$isLogin ? 'email' : 'register-email'?>" name="email" placeholder="example@gmail.com">
+      <input type="email" id="<?=$isLogin ? 'email' : 'register-email'?>" name="email" placeholder="example@gmail.com"
+             value="<?= htmlspecialchars($formData['email'] ?? '') ?>">
 
       <label for="<?=$isLogin ? 'password' : 'register-password'?>">PASSWORD</label>
       <?php drawPasswordField($isLogin ? 'password' : 'register-password', 'password'); ?>
@@ -75,6 +86,9 @@
       <?php } ?>
 
       <button type="submit" class="btn-primary"><?=$submit?></button>
+      <?php if ($error): ?>
+        <p class="form-error"><?= htmlspecialchars($error) ?></p>
+      <?php endif; ?>
     </form>
     <?php if ($isLogin) { ?>
       <p>New member? <a href="#" id="open-register-btn">Register for free</a></p>

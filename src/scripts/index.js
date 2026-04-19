@@ -1,18 +1,27 @@
-const loginModal = document.getElementById('login-modal');
-const registerModal = document.getElementById('register-modal');
-const loginBtn = document.getElementById('login-btn');
+const params = new URLSearchParams(window.location.search);
+if (params.get('open') === 'register') {
+    document.getElementById('register-modal')?.showModal();
+    history.replaceState(null, '', window.location.pathname);
+} else if (params.get('open') === 'login') {
+    document.getElementById('login-modal')?.showModal();
+    history.replaceState(null, '', window.location.pathname);
+}
+
+const loginModal     = document.getElementById('login-modal');
+const registerModal  = document.getElementById('register-modal');
+const loginBtn       = document.getElementById('login-btn');
 const openRegisterBtn = document.getElementById('open-register-btn');
-const openLoginBtn = document.getElementById('open-login-btn');
+const openLoginBtn   = document.getElementById('open-login-btn');
 
-loginBtn.addEventListener('click', () => loginModal.showModal());
+loginBtn?.addEventListener('click', () => loginModal.showModal());
 
-openRegisterBtn.addEventListener('click', (e) => {
+openRegisterBtn?.addEventListener('click', (e) => {
     e.preventDefault();
     loginModal.close();
     registerModal.showModal();
 });
 
-openLoginBtn.addEventListener('click', (e) => {
+openLoginBtn?.addEventListener('click', (e) => {
     e.preventDefault();
     registerModal.close();
     loginModal.showModal();
@@ -29,6 +38,15 @@ document.querySelectorAll('.auth-modal').forEach(modal => {
             e.clientY < rect.top  || e.clientY > rect.bottom) {
             modal.close();
         }
+    });
+
+    modal.addEventListener('close', () => {
+        modal.querySelector('form')?.reset();
+        modal.querySelector('.form-error')?.remove();
+        modal.querySelectorAll('.toggle-password').forEach(btn => {
+            btn.previousElementSibling.type = 'password';
+            btn.textContent = '\u{1F441}';
+        });
     });
 });
 
