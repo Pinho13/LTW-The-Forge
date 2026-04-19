@@ -1,6 +1,5 @@
 .auth-modal {
-    --color-modal-bg: #201e19;
-    background-color: var(--color-modal-bg);
+    background-color: var(--color-golden-brown);
     border-top: 0.5em solid var(--color-gold);
     position: relative;
     padding: 1em 4em;
