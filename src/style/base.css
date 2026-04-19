@@ -2,19 +2,29 @@
 
 :root {
     --color-white: #FFFFFF;
+    --color-white-rgb: 255, 255, 255;
     --color-black: #0B0B0B;
+    --color-black-rgb: 11, 11, 11;
+
     --color-light-gold: #D4A853;
     --color-light-gold-rgb: 212, 168, 83;
-    --color-grey: #ACA8A2;
-    --color-grey-rgb: 172, 168, 162;
-    --color-almost-white: #F2EDE4;
-    --color-almost-white-rgb: 242, 237, 228;
     --color-gold: #A8843C;
     --color-gold-rgb: 168, 132, 60;
-    --color-brown: #504020;
-    --color-brown-rgb: 80, 64, 32;
     --color-dark-gold: #8A6F33;
     --color-dark-gold-rgb: 138, 111, 51;
+    --color-brown: #504020;
+    --color-brown-rgb: 80, 64, 32;
+    --color-rust: #B9530E;
+    --color-rust-rgb: 185, 83, 14;
+
+    --color-almost-white: #F2EDE4;
+    --color-almost-white-rgb: 242, 237, 228;
+    --color-light-grey: #D9D9D9;
+    --color-light-grey-rgb: 217, 217, 217;
+    --color-grey: #ACA8A2;
+    --color-grey-rgb: 172, 168, 162;
+    --color-dark-grey: #595959;
+    --color-dark-grey-rgb: 89, 89, 89;
 }
 
 body {
