@@ -46,20 +46,19 @@ class Session {
         session_destroy();
     }
 
-    public function setRegisterError(string $msg, array $formData = []): void {
-        $_SESSION['register_error']     = $msg;
-        $_SESSION['register_form_data'] = $formData;
+    public function setFormError(string $form, string $msg, array $data = []): void {
+        $_SESSION['form_errors'][$form] = ['error' => $msg, 'data' => $data];
     }
 
-    public function popRegisterError(): ?string {
-        $msg = $_SESSION['register_error'] ?? null;
-        unset($_SESSION['register_error']);
-        return $msg;
+    public function popFormError(string $form): ?string {
+        $error = $_SESSION['form_errors'][$form]['error'] ?? null;
+        unset($_SESSION['form_errors'][$form]['error']);
+        return $error;
     }
 
-    public function popRegisterFormData(): array {
-        $data = $_SESSION['register_form_data'] ?? [];
-        unset($_SESSION['register_form_data']);
+    public function popFormData(string $form): array {
+        $data = $_SESSION['form_errors'][$form]['data'] ?? [];
+        unset($_SESSION['form_errors'][$form]);
         return $data;
     }
 

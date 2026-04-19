@@ -8,7 +8,7 @@ require_once(__DIR__ . '/../../database/User.class.php');
 $session = new Session();
 
 function redirectError(Session $session, array $formData, string $message): never {
-    $session->setRegisterError($message, $formData);
+    $session->setFormError('register', $message, $formData);
     header('Location: /src/pages/index.php?open=register');
     exit;
 }

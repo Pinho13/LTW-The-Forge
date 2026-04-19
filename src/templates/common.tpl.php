@@ -51,8 +51,9 @@ require_once(__DIR__ . '/../../utils/session.php');
 
 <?php function drawAuthModal(bool $isLogin) {
   $session  = $GLOBALS['_tpl_session'] ?? null;
-  $error    = !$isLogin ? $session?->popRegisterError()   : null;
-  $formData = !$isLogin ? $session?->popRegisterFormData() ?? [] : [];
+  $form     = $isLogin ? 'login' : 'register';
+  $error    = $session?->popFormError($form);
+  $formData = $session?->popFormData($form) ?? [];
   $id       = $isLogin ? 'login-modal'            : 'register-modal';
   $title    = $isLogin ? 'WELCOME BACK'            : 'WELCOME';
   $subtitle = $isLogin ? 'Sign in to your account' : 'Register your account';
@@ -62,17 +63,18 @@ require_once(__DIR__ . '/../../utils/session.php');
     <button class="btn-ghost modal-close-btn">&times;</button>
     <h1><?=$title?></h1>
     <h2><?=$subtitle?></h2>
-    <form <?= $isLogin ? 'method="dialog"' : 'method="post" action="../actions/action_register.php"' ?>>
+    <form method="post" action="<?= $isLogin ? '../actions/action_login.php' : '../actions/action_register.php' ?>">
+
+      <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session?->generateCsrfToken() ?? '') ?>">
 
       <?php if (!$isLogin) { ?>
-        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session?->generateCsrfToken() ?? '') ?>">
         <label for="register-name">NAME</label>
         <input type="text" id="register-name" name="name" placeholder="Full Name"
                value="<?= htmlspecialchars($formData['name'] ?? '') ?>">
       <?php } ?>
 
-      <label for="<?=$isLogin ? 'email' : 'register-email'?>">EMAIL ADDRESS</label>
-      <input type="email" id="<?=$isLogin ? 'email' : 'register-email'?>" name="email" placeholder="example@gmail.com"
+      <label for="<?=$isLogin ? 'login-email' : 'register-email'?>">EMAIL ADDRESS</label>
+      <input type="email" id="<?=$isLogin ? 'login-email' : 'register-email'?>" name="email" placeholder="example@gmail.com"
              value="<?= htmlspecialchars($formData['email'] ?? '') ?>">
 
       <label for="<?=$isLogin ? 'password' : 'register-password'?>">PASSWORD</label>
