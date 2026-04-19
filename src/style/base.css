@@ -31,8 +31,59 @@ body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    font-family: "Instrument Sans", sans-serif;
+}
+
+h1 {
+    font-family: "Big Shoulders", sans-serif;
+}
+
+h2 {
+    font-family: "Italiana", serif;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-grey);
 }
 
 button, a {
     cursor: pointer;
+}
+
+button {
+    background-color: var(--color-gold);
+    color: var(--color-black);
+    border: none;
+    outline: 0.1em solid var(--color-white);
+    outline-offset: -0.25em;
+    font-family: "Big Shoulders", sans-serif;
+    font-size: inherit;
+}
+
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 0.4em;
+    font-size: 2em;
+    margin: 1em 0;
+}
+
+label {
+    display: block;
+    color: var(--color-grey);
+    margin-bottom: 0.2em;
+    padding-top: 1em;
+}
+
+input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75em 1em;
+    border: none;
+    background-color: rgba(var(--color-dark-grey-rgb), 0.1);
+    color: var(--color-white);
 }

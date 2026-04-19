@@ -10,6 +10,5 @@ main {
 
 footer {
     grid-area: footer;
-    background-color: var(--color-black);
     min-height: 4vh;
 }

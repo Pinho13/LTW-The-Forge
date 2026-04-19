@@ -17,10 +17,7 @@
 
 .side-nav a {
     position: relative;
-    color: var(--color-grey);
-    text-decoration: none;
     font-size: 1em;
-    font-family: "Instrument Sans", sans-serif;
     padding: 1em 1.5em;
     border-left: 0.15em solid transparent;
     display: flex;

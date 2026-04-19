@@ -1,0 +1,28 @@
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 3em;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 0.6em;
+    top: 25%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-grey);
+    font-size: 1.1em;
+    padding: 0;
+}
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    margin-top: 0.5em;
+    color: rgba(var(--color-gold-rgb), 0.9);
+    font-size: 0.9em;
+    text-decoration: underline;
+}

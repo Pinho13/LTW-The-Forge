@@ -1,35 +1,3 @@
-body {
-    background-color: var(--color-black);
-    color: var(--color-white);
-}
-
-#top-nav-bar {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    padding: 0.5em; 
-    border-bottom: 0.2em solid var(--color-gold);
-}
-
-#top-nav-bar a,
-#top-nav-bar .login-wrapper {
-    flex: 1;
-    text-decoration: none;
-    font-family: "Instrument Sans", sans-serif;
-    font-weight: bold;
-    font-size: 1.25em;
-    color: var(--color-grey);
-}
-
-#top-nav-bar #login-btn {
-    font: inherit;
-    padding: 0.25em 2em 0.25em 2em;
-    background-color: var(--color-gold);
-    outline: 0.05em solid var(--color-white);
-    outline-offset: -0.25em;
-}
-
-
 
 .hero {
     text-align: center;
@@ -57,7 +25,6 @@ body {
 }
 
 .hero h1 {
-    font-family: "Big Shoulders", sans-serif;
     font-size: 4em;
     padding: 0;
     margin-bottom: 0;
@@ -65,7 +32,6 @@ body {
 }
 
 .hero h2 {
-    font-family: "Italiana", sans-serif;
     font-weight: 100;
     color: var(--color-grey);
     margin-top: 0;
@@ -75,22 +41,14 @@ body {
     border-top: 1px solid var(--color-gold);
 }
 
-.hero a {
+.hero button {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 50%);
-    text-decoration: none;
-
-    /* Above images so its clickable */
-    z-index: 1;
-
-    color: var(--color-black);
-    background-color: var(--color-gold);
+    z-index: 1; /* above images so its clickable */
     padding: 0.4em 1.2em;
-    outline: 0.1em solid var(--color-white);
-    outline-offset: -0.2em;
-    font-family: "Instrument Sans", sans-serif;
+    font-size: 1.3em;
 }
 
 main {
