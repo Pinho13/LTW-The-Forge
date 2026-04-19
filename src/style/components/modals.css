@@ -12,14 +12,11 @@
 }
 
 .modal-close-btn {
-    background: none;
-    border: none;
     color: var(--color-almost-white);
     font-size: 1.2em;
     position: absolute;
     top: 0.5em;
     right: 0.5em;
-    
 }
 
 .auth-modal h1 {

@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Forge</title>
     <link rel="stylesheet" href="../style/base.css">
+    <link rel="stylesheet" href="../style/components/buttons.css">
     <link rel="stylesheet" href="../style/components/top-nav-bar.css">
     <link rel="stylesheet" href="../style/components/forms.css">
     <link rel="stylesheet" href="../style/components/modals.css">
@@ -50,7 +51,7 @@
   $submit   = $isLogin ? 'SIGN IN'                 : 'REGISTER';
 ?>
   <dialog id="<?=$id?>" class="auth-modal">
-    <button class="modal-close-btn">&times;</button>
+    <button class="btn-ghost modal-close-btn">&times;</button>
     <h1><?=$title?></h1>
     <h2><?=$subtitle?></h2>
     <form method="dialog">
