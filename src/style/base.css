@@ -45,6 +45,17 @@
     --border-s:    0.2em;
     --border-m:    0.25em;
     --border-l:    0.5em;
+    --border-1px:  1px;
+
+    /* Spacing scale */
+    --space-xxs: 0.2em;
+    --space-xs:  0.5em;
+    --space-s:   0.75em;
+    --space-m:   1em;
+    --space-l:   1.5em;
+    --space-xl:  2em;
+    --space-xxl: 3em;
+    --space-hero: 4em;
 }
 
 body {
@@ -77,8 +88,8 @@ button {
     background-color: var(--color-gold);
     color: var(--color-black);
     border: none;
-    outline: 0.1em solid var(--color-white);
-    outline-offset: -0.25em;
+    outline: var(--border-xs) solid var(--color-white);
+    outline-offset: calc(-1 * var(--border-m));
     font-family: "Big Shoulders", sans-serif;
     font-size: inherit;
 }
@@ -88,16 +99,16 @@ button {
 label {
     display: block;
     color: var(--color-grey);
-    margin-bottom: 0.2em;
-    padding-top: 1em;
+    margin-bottom: var(--space-xxs);
+    padding-top: var(--space-m);
 }
 
 input {
     display: block;
     width: 100%;
     box-sizing: border-box;
-    padding: 0.75em 1em;
-    border: 0.1em solid var(--color-dark-grey);
+    padding: var(--space-s) var(--space-m);
+    border: var(--border-xs) solid var(--color-dark-grey);
     background-color: rgba(var(--color-dark-grey-rgb), 0.1);
     color: var(--color-white);
 }

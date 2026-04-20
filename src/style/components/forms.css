@@ -3,7 +3,7 @@
 }
 
 .password-wrapper input {
-    padding-right: 3em;
+    padding-right: var(--space-xxl);
 }
 
 .toggle-password {
@@ -15,15 +15,15 @@
     outline: none;
     cursor: pointer;
     color: var(--color-grey);
-    font-size: 1.1em;
+    font-size: var(--font-size-m);
     padding: 0;
 }
 
 .forgot-password {
     display: block;
     text-align: right;
-    margin-top: 0.5em;
+    margin-top: var(--space-xs);
     color: rgba(var(--color-gold-rgb), 0.9);
-    font-size: 0.9em;
+    font-size: var(--font-size-xs);
     text-decoration: underline;
 }
