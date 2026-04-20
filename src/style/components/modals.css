@@ -1,0 +1,58 @@
+.auth-modal {
+    background-color: var(--color-golden-brown);
+    border-top: 0.5em solid var(--color-gold);
+    position: relative;
+    padding: 1em 4em;
+    width: 30%;
+}
+
+.auth-modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-close-btn {
+    color: var(--color-almost-white);
+    font-size: 1.2em;
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+}
+
+.auth-modal h1 {
+    color: var(--color-almost-white);
+    margin: 0.35em 0 0 0;
+    text-align: center;
+    font-size: 3em;
+}
+
+.auth-modal h1::after {
+    content: '';
+    display: block;
+    width: 40%;
+    margin: 0 auto;
+    border-bottom: 0.05em solid var(--color-gold);
+}
+
+.auth-modal h2 {
+    color: var(--color-grey);
+    font-size: 1.5em;
+    font-weight: lighter;
+    text-align: center;
+    margin-top: 0.2em;
+    margin-bottom: 0;
+}
+
+.auth-modal p {
+    text-align: center;
+    color: var(--color-grey);
+}
+
+.auth-modal p a {
+    color: rgba(var(--color-gold-rgb), 0.9);
+    text-decoration: underline;
+}
+
+.auth-modal .form-error {
+    color: #ff8080;
+    font-size: 1em;
+}

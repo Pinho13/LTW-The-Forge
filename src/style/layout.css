@@ -1,0 +1,14 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas: "side-menu main" "footer footer";
+}
+
+main {
+    grid-area: main;
+}
+
+footer {
+    grid-area: footer;
+    min-height: 4vh;
+}

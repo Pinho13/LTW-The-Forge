@@ -1,52 +1,9 @@
-body {
-    background-color: var(--color-black);
-    color: var(--color-white);
-}
 
-#topNavBar {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    padding: 0.5em; 
-    border-bottom: 2px solid var(--color-gold);
-}
-
-#topNavBar a{
-    flex: 1;
-    text-decoration: none;
-    font-family: "Instrument Sans", sans-serif;
-    font-weight: bold;
-    font-size: 1.25em;
-    color: var(--color-grey);
-}
-
-#topNavBar .Logo {                                                                                      
-    display: flex;                                                                           
-    align-items: center;  
-    justify-content: center;                                                                   
-    gap: 0.5em;                                                                            
-}          
-#topNavBar .logo-text{
-    font-family: "Big Shoulders Inline", sans-serif;
-    font-weight: 900;
-    font-size: 2.5em;
-    color: var(--color-gold); 
-}
-
-#topNavBar .logo-img {
-    width: 3em;
-}
-
-header {
-    margin: 0; 
-}
 .hero {
     text-align: center;
-    flex-shrink: 0;
 }
 
-.heroContent {
-    display: block;
+.hero-content {
     position: relative;
     width: fit-content;
     margin: 0 auto 0;
@@ -64,11 +21,10 @@ header {
             10px 0 0 0 rgba(var(--color-gold-rgb), 0.2),
 
             -15px 0 0 0 rgba(var(--color-gold-rgb), 0.1),
-            15px 0 0 0 rgba(var(--color-gold-rgb), 0.1); /
+            15px 0 0 0 rgba(var(--color-gold-rgb), 0.1);
 }
 
 .hero h1 {
-    font-family: "Big Shoulders", sans-serif;
     font-size: 4em;
     padding: 0;
     margin-bottom: 0;
@@ -76,7 +32,6 @@ header {
 }
 
 .hero h2 {
-    font-family: "Italiana", sans-serif;
     font-weight: 100;
     color: var(--color-grey);
     margin-top: 0;
@@ -86,68 +41,59 @@ header {
     border-top: 1px solid var(--color-gold);
 }
 
-.hero a {
+.hero button {
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 50%);
-    text-decoration: none;
-
-    color: var(--color-black);
-    background-color: var(--color-gold);
+    z-index: 1; /* above images so its clickable */
     padding: 0.4em 1.2em;
-    outline: 1px solid var(--color-white);
-    outline-offset: -3px;
-    font-family: "Instrument Sans", sans-serif;
+    font-size: 1.3em;
 }
 
 main {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
 
 /* Middle Photos Part */
 
-.photosContainer {
+.photos-container {
     display: grid;
-    height: 35em;
-    padding-top: 4em; 
+    min-height: 35em;
+    flex: 1;
+    padding-top: 4em;
+    padding-bottom: 4em;
     position: relative;
     overflow: hidden;
 }
 
-.photosContainer .image,
-.photosContainer .slant {
-    grid-area: 1 / 1; 
+.photos-container .image {
+    grid-area: 1 / 1;
     box-sizing: border-box;
-}
-
-.photosContainer .image {
     border-top: 0.25em solid var(--color-gold);
     border-bottom: 0.25em solid var(--color-gold);
-
 }
 
 
-.photosContainer .left {
+.photos-container .left {
     clip-path: polygon(0 0, 46% 0, 36% 100%, 0 100%);
     z-index: 1;
 }
-.photosContainer .right {
+.photos-container .right {
     clip-path: polygon(64% 0, 100% 0, 100% 100%, 54% 100%);
     z-index: 1;
 }
 
 
-.photosContainer .left .filler {
+.photos-container .left img {
     width: 50%;
     height: 100%;
     object-fit: cover;
     object-position: center; 
 }
 
-.photosContainer .right .filler {
+.photos-container .right img {
     width: 55%;
     margin-left: 45%;
     height: 100%;
@@ -157,56 +103,60 @@ main {
 
 
 
-.photosContainer .slant {
-    background-color: var(--color-gold);
+.splitter {
+    display: grid;
+    grid-area: 1 / 1;
+    box-sizing: border-box;
     z-index: 2;
     pointer-events: none;
 }
 
-.photosContainer .border-left {
+.splitter > * {
+    grid-area: 1 / 1;
+    box-sizing: border-box;
+    background-color: var(--color-gold);
+}
+
+.splitter .border-left {
     clip-path: polygon(
-        calc(46% - 0.25em) 0, 
-        46% 0, 
-        36% 100%, 
+        calc(46% - 0.25em) 0,
+        46% 0,
+        36% 100%,
         calc(36% - 0.25em) 100%
     );
 }
 
-.photosContainer .border-right {
+.splitter .border-right {
     clip-path: polygon(
-        64% 0, 
-        calc(64% + 0.25em) 0, 
-        calc(54% + 0.25em) 100%, 
+        64% 0,
+        calc(64% + 0.25em) 0,
+        calc(54% + 0.25em) 100%,
         54% 100%
     );
 }
 
-.photosContainer .divisor-gold-base {
-    clip-path: polygon(52% 0, 58% 0, 48% 100%, 42% 100%);
-    z-index: 2;
+.slant {
+    clip-path: polygon(51.9% 0, 58.1% 0, 48.1% 100%, 41.9% 100%);
+    display: grid;
+    background-color: transparent;
 }
 
-.photosContainer .white-line {
+.slant > div {
+    grid-area: 1 / 1;
+}
+
+.slant > div:nth-child(1) {
+    background-color: var(--color-gold);
+}
+
+.slant > div:nth-child(n+2) {
     background-color: var(--color-almost-white);
-    z-index: 3;
 }
 
-.photosContainer .line-1 { 
-    clip-path: polygon(51.9% 0, 52.1% 0, 42.1% 100%, 41.9% 100%); 
-}
+.slant > div:nth-child(2) { clip-path: polygon(51.9% 0, 52.1% 0, 42.1% 100%, 41.9% 100%); }
+.slant > div:nth-child(3) { clip-path: polygon(53.4% 0, 53.6% 0, 43.6% 100%, 43.4% 100%); }
+.slant > div:nth-child(4) { clip-path: polygon(54.9% 0, 55.1% 0, 45.1% 100%, 44.9% 100%); }
+.slant > div:nth-child(5) { clip-path: polygon(56.4% 0, 56.6% 0, 46.6% 100%, 46.4% 100%); }
+.slant > div:nth-child(6) { clip-path: polygon(57.9% 0, 58.1% 0, 48.1% 100%, 47.9% 100%); }
 
-.photosContainer .line-2 { 
-    clip-path: polygon(53.4% 0, 53.6% 0, 43.6% 100%, 43.4% 100%); 
-}
 
-.photosContainer .line-3 { 
-    clip-path: polygon(54.9% 0, 55.1% 0, 45.1% 100%, 44.9% 100%); 
-}
-
-.photosContainer .line-4 { 
-    clip-path: polygon(56.4% 0, 56.6% 0, 46.6% 100%, 46.4% 100%); 
-}
-
-.photosContainer .line-5 { 
-    clip-path: polygon(57.9% 0, 58.1% 0, 48.1% 100%, 47.9% 100%); 
-}

@@ -1,1 +1,8 @@
 .DS_Store
+CLAUDE.md
+CLAUDE_END_GOAL.md
+chinook/
+database/database.db
+database/database.db-journal
+database/database.db-shm
+database/database.db-wal

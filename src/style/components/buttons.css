@@ -1,0 +1,15 @@
+/* Buttons component */
+
+.btn-ghost {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 0.4em;
+    font-size: 2em;
+    margin: 1em 0;
+}
