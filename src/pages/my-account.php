@@ -18,7 +18,7 @@
 
         <main>
             <h1>Welcome, User!</h1>
-            <p>This is your dashboard where you can manage your account, view classes, trainers,
+            <p>This is your dashboard where you can manage your account, view classes, trainers.</p>
         </main>
 
 

@@ -47,18 +47,19 @@ class Session {
     }
 
     public function setFormError(string $form, string $msg, array $data = []): void {
-        $_SESSION['form_errors'][$form] = ['error' => $msg, 'data' => $data];
+        $_SESSION['form_errors'][$form] = $msg;
+        $_SESSION['form_data'][$form]   = $data;
     }
 
     public function popFormError(string $form): ?string {
-        $error = $_SESSION['form_errors'][$form]['error'] ?? null;
-        unset($_SESSION['form_errors'][$form]['error']);
+        $error = $_SESSION['form_errors'][$form] ?? null;
+        unset($_SESSION['form_errors'][$form]);
         return $error;
     }
 
     public function popFormData(string $form): array {
-        $data = $_SESSION['form_errors'][$form]['data'] ?? [];
-        unset($_SESSION['form_errors'][$form]);
+        $data = $_SESSION['form_data'][$form] ?? [];
+        unset($_SESSION['form_data'][$form]);
         return $data;
     }
 
