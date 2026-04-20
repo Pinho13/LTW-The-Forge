@@ -34,3 +34,9 @@ footer {
     color: var(--color-dark-gold);
     transform: translateY(0.14em);
 }
+
+@media (max-width: 640px) {
+    footer {
+        font-size: 0.75em;
+    }
+}

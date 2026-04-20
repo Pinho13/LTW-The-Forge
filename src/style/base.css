@@ -27,6 +27,24 @@
     --color-grey-rgb: 172, 168, 162;
     --color-dark-grey: #595959;
     --color-dark-grey-rgb: 89, 89, 89;
+
+    /* Font size scale */
+    --font-size-xxs: 0.75em;
+    --font-size-xs:  0.9em;
+    --font-size-s:   1em;
+    --font-size-m:   1.2em;
+    --font-size-l:   1.5em;
+    --font-size-xl:  2em;
+    --font-size-xxl: 2.5em;
+    --font-size-display: 3em;
+    --font-size-hero:    4em;
+
+    /* Border size scale */
+    --border-thin: 0.05em;
+    --border-xs:   0.1em;
+    --border-s:    0.2em;
+    --border-m:    0.25em;
+    --border-l:    0.5em;
 }
 
 body {
@@ -82,4 +100,10 @@ input {
     border: 0.1em solid var(--color-dark-grey);
     background-color: rgba(var(--color-dark-grey-rgb), 0.1);
     color: var(--color-white);
+}
+
+@media (max-width: 640px) {
+    html {
+        font-size: 12px;
+    }
 }

@@ -160,3 +160,78 @@ main {
 .slant > div:nth-child(6) { clip-path: polygon(57.9% 0, 58.1% 0, 48.1% 100%, 47.9% 100%); }
 
 
+
+@media (max-width: 640px) {
+    .hero-content {
+        width: 15em;
+    }
+
+    .hero h1 {
+        font-size: 2.1em;
+    }
+    .hero h2 {
+        font-size: 0.8em;
+    }
+
+    .hero button {
+        font-size: 0.8em;
+    }
+
+    .photos-container {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin-top: 3em;
+        flex: none;
+    }
+
+    .photos-container .image {
+        clip-path: none;
+        border: none;
+    }
+
+
+    .photos-container .left img {
+        border-top: 0.1em solid var(--color-gold);
+    }
+
+    .photos-container .left img,
+    .photos-container .right img {
+        display: block;
+        width: 100%;
+        height: 18em;
+        margin-left: 0;
+        object-fit: cover;
+    }
+
+    .splitter {
+        display: block;
+        height: 1em;
+        background-color: var(--color-gold);
+    }
+
+    .splitter .border-left,
+    .splitter .border-right {
+        display: none;
+    }
+
+    .slant {
+        clip-path: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .slant > div:nth-child(n) {
+        clip-path: none;
+        height: 0.02em;
+        background-color: var(--color-almost-white);
+    }
+
+    .slant > div:nth-child(6) {
+        display: none;
+    }
+
+}
+

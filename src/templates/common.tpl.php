@@ -25,6 +25,15 @@ require_once(__DIR__ . '/../../utils/session.php');
     <script src="../scripts/index.js" defer></script>
   </head>
   <body>
+    <input type="checkbox" id="mobile-menu-toggle">
+    <nav id="mobile-menu">
+      <label for="mobile-menu-toggle" class="mobile-menu-backdrop"></label>
+      <div class="mobile-menu-panel">
+        <a href="index.php">ABOUT US</a>
+        <a href="index.php">FACILITIES</a>
+        <a href="index.php">PLANS</a>
+      </div>
+    </nav>
     <header>
       <nav id="top-nav-bar">
         <a href="index.php">ABOUT US</a>
