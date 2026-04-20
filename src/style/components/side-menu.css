@@ -5,21 +5,21 @@
 }
 
 .side-menu .logo {
-    padding: 1em;
-    border-bottom: 0.1em solid var(--color-gold);
+    padding: var(--space-m);
+    border-bottom: var(--border-xs) solid var(--color-gold);
 }
 
 .side-nav {
     display: flex;
     flex-direction: column;
-    padding-top: 1em;
+    padding-top: var(--space-m);
 }
 
 .side-nav a {
     position: relative;
-    font-size: 1em;
-    padding: 1em 1.5em;
-    border-left: 0.15em solid transparent;
+    font-size: var(--font-size-s);
+    padding: var(--space-m) var(--space-l);
+    border-left: var(--border-xs) solid transparent;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,7 +31,7 @@
     bottom: 0;
     left: 1em;
     right: 1em;
-    height: 0.05em;
+    height: var(--border-thin);
     background-color: rgba(var(--color-grey-rgb), 0.3);
 }
 
@@ -48,6 +48,6 @@
 
 .side-nav a.active::after {
     content: '›';
-    font-size: 2em;
+    font-size: var(--font-size-xl);
     line-height: 0;
 }

@@ -1,8 +1,8 @@
 .auth-modal {
     background-color: var(--color-golden-brown);
-    border-top: 0.5em solid var(--color-gold);
+    border-top: var(--border-l) solid var(--color-gold);
     position: relative;
-    padding: 1em 4em;
+    padding: var(--space-m) var(--space-hero);
     width: 30%;
 }
 
@@ -12,7 +12,7 @@
 
 .modal-close-btn {
     color: var(--color-almost-white);
-    font-size: 1.2em;
+    font-size: var(--font-size-m);
     position: absolute;
     top: 0.5em;
     right: 0.5em;
@@ -20,9 +20,9 @@
 
 .auth-modal h1 {
     color: var(--color-almost-white);
-    margin: 0.35em 0 0 0;
+    margin: var(--space-xs) 0 0 0;
     text-align: center;
-    font-size: 3em;
+    font-size: var(--font-size-display);
 }
 
 .auth-modal h1::after {
@@ -30,15 +30,15 @@
     display: block;
     width: 40%;
     margin: 0 auto;
-    border-bottom: 0.05em solid var(--color-gold);
+    border-bottom: var(--border-thin) solid var(--color-gold);
 }
 
 .auth-modal h2 {
     color: var(--color-grey);
-    font-size: 1.5em;
+    font-size: var(--font-size-l);
     font-weight: lighter;
     text-align: center;
-    margin-top: 0.2em;
+    margin-top: var(--space-xxs);
     margin-bottom: 0;
 }
 
@@ -54,5 +54,5 @@
 
 .auth-modal .form-error {
     color: #ff8080;
-    font-size: 1em;
+    font-size: var(--font-size-s);
 }

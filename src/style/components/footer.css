@@ -2,12 +2,12 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.5em;
-    padding: 0.8em;
-    border-top: 0.2em solid var(--color-gold);
+    gap: var(--space-l);
+    padding: var(--space-s);
+    border-top: var(--border-s) solid var(--color-gold);
     color: var(--color-gold);
     font-family: "Big Shoulders", sans-serif;
-    font-size: 1.2em;
+    font-size: var(--font-size-m);
 }
 
 .symbol-container {
@@ -20,7 +20,7 @@ footer {
     position: absolute;
     top: 0;
     left: 0;
-    font-size: 1.2em;
+    font-size: var(--font-size-m);
     font-weight: bold;
     line-height: 1;
     transform: translateY(-0.2em);
@@ -33,4 +33,10 @@ footer {
 .symbol.layer-2 {
     color: var(--color-dark-gold);
     transform: translateY(0.14em);
+}
+
+@media (max-width: 640px) {
+    footer {
+        font-size: var(--font-size-xxs);
+    }
 }

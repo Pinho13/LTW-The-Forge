@@ -8,10 +8,10 @@
     width: fit-content;
     margin: 0 auto 0;
     background-color: rgba(var(--color-gold-rgb), 0.45);
-    padding-top: 3em;
-    padding-left: 2em;
-    padding-right: 2em;
-    padding-bottom: 0.2em;
+    padding-top: var(--space-xxl);
+    padding-left: var(--space-xl);
+    padding-right: var(--space-xl);
+    padding-bottom: var(--space-xxs);
 
     box-shadow: 
             -5px 0 0 0 rgba(var(--color-gold-rgb), 0.2),
@@ -25,7 +25,7 @@
 }
 
 .hero h1 {
-    font-size: 4em;
+    font-size: var(--font-size-hero);
     padding: 0;
     margin-bottom: 0;
     color: var(--color-almost-white);
@@ -38,7 +38,7 @@
 }
 
 .hero h2 span {
-    border-top: 1px solid var(--color-gold);
+    border-top: var(--border-1px) solid var(--color-gold);
 }
 
 .hero button {
@@ -47,8 +47,8 @@
     left: 50%;
     transform: translate(-50%, 50%);
     z-index: 1; /* above images so its clickable */
-    padding: 0.4em 1.2em;
-    font-size: 1.3em;
+    padding: var(--space-xs) var(--space-m);
+    font-size: var(--font-size-m);
 }
 
 main {
@@ -62,8 +62,8 @@ main {
     display: grid;
     min-height: 35em;
     flex: 1;
-    padding-top: 4em;
-    padding-bottom: 4em;
+    padding-top: var(--space-hero);
+    padding-bottom: var(--space-hero);
     position: relative;
     overflow: hidden;
 }
@@ -71,8 +71,8 @@ main {
 .photos-container .image {
     grid-area: 1 / 1;
     box-sizing: border-box;
-    border-top: 0.25em solid var(--color-gold);
-    border-bottom: 0.25em solid var(--color-gold);
+    border-top: var(--border-m) solid var(--color-gold);
+    border-bottom: var(--border-m) solid var(--color-gold);
 }
 
 
@@ -119,18 +119,18 @@ main {
 
 .splitter .border-left {
     clip-path: polygon(
-        calc(46% - 0.25em) 0,
+        calc(46% - var(--border-m)) 0,
         46% 0,
         36% 100%,
-        calc(36% - 0.25em) 100%
+        calc(36% - var(--border-m)) 100%
     );
 }
 
 .splitter .border-right {
     clip-path: polygon(
         64% 0,
-        calc(64% + 0.25em) 0,
-        calc(54% + 0.25em) 100%,
+        calc(64% + var(--border-m)) 0,
+        calc(54% + var(--border-m)) 100%,
         54% 100%
     );
 }
@@ -159,4 +159,79 @@ main {
 .slant > div:nth-child(5) { clip-path: polygon(56.4% 0, 56.6% 0, 46.6% 100%, 46.4% 100%); }
 .slant > div:nth-child(6) { clip-path: polygon(57.9% 0, 58.1% 0, 48.1% 100%, 47.9% 100%); }
 
+
+
+@media (max-width: 640px) {
+    .hero-content {
+        width: 15em;
+    }
+
+    .hero h1 {
+        font-size: var(--font-size-xl);
+    }
+    .hero h2 {
+        font-size: var(--font-size-xxs);
+    }
+
+    .hero button {
+        font-size: var(--font-size-xxs);
+    }
+
+    .photos-container {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin-top: var(--space-xxl);
+        flex: none;
+    }
+
+    .photos-container .image {
+        clip-path: none;
+        border: none;
+    }
+
+
+    .photos-container .left img {
+        border-top: var(--border-xs) solid var(--color-gold);
+    }
+
+    .photos-container .left img,
+    .photos-container .right img {
+        display: block;
+        width: 100%;
+        height: 18em;
+        margin-left: 0;
+        object-fit: cover;
+    }
+
+    .splitter {
+        display: block;
+        height: 1em;
+        background-color: var(--color-gold);
+    }
+
+    .splitter .border-left,
+    .splitter .border-right {
+        display: none;
+    }
+
+    .slant {
+        clip-path: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .slant > div:nth-child(n) {
+        clip-path: none;
+        height: 0.02em;
+        background-color: var(--color-almost-white);
+    }
+
+    .slant > div:nth-child(6) {
+        display: none;
+    }
+
+}
 

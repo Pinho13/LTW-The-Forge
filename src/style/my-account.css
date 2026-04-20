@@ -1,5 +1,5 @@
 /* Page-specific styles for my-account.php */
 
 main {
-    padding: 2em;
+    padding: var(--space-xl);
 }
