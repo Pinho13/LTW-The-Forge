@@ -1,3 +1,22 @@
+-- Safe to re-run: clears all data and resets AUTOINCREMENT counters first
+PRAGMA foreign_keys = OFF;
+DELETE FROM member_subscription;
+DELETE FROM personal_training_session;
+DELETE FROM gym_visit;
+DELETE FROM facility_reservation;
+DELETE FROM facility;
+DELETE FROM equipment_reservation;
+DELETE FROM equipment_unit;
+DELETE FROM equipment;
+DELETE FROM review;
+DELETE FROM enrollment;
+DELETE FROM class_session;
+DELETE FROM class;
+DELETE FROM class_type;
+DELETE FROM trainer_profile;
+DELETE FROM membership_plan;
+DELETE FROM user;
+DELETE FROM sqlite_sequence;
 PRAGMA foreign_keys = ON;
 
 -- ============================================================
