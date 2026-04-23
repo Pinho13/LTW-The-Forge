@@ -39,6 +39,19 @@ class User
         return self::fromRow($row);
     }
 
+    public static function findByUsername(PDO $db, string $username): ?self
+    {
+        $stmt = $db->prepare('SELECT * FROM user WHERE username = ?');
+        $stmt->execute([$username]);
+
+        $row = $stmt->fetch();
+        if (!$row) {
+            return null;
+        }
+
+        return self::fromRow($row);
+    }
+
     public static function register(
         PDO $db,
         string $name,
