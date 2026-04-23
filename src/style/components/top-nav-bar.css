@@ -28,7 +28,7 @@
 }
 
 @media (max-width: 640px) {
-    header {
+    #top-nav-bar {
         position: relative;
         z-index: 20;
     }
