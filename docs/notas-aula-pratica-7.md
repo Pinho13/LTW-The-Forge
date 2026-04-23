@@ -1,0 +1,2 @@
+O professor durante a aula falou do projeto de chinook, do processo de desenvolvimento de website dele. 
+o css está estruturado com Base (cores, fontes, espacamentos entre palavras, tamanhos default para sizes de cenas,  ); Components (buttons, anchors, forms, tables, objetos, etc ), depois coisas especificas de cada pagina -> em princío, bastante poucas.  
