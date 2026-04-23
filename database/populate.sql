@@ -19,6 +19,12 @@ DELETE FROM user;
 DELETE FROM sqlite_sequence;
 PRAGMA foreign_keys = ON;
 
+
+-- ========================================================================================================================
+-- CORE FEATURES CURRENTLY USED IN THE APP
+-- ========================================================================================================================
+
+
 -- ============================================================
 -- USERS
 -- Passwords: NormalTest1! / TrainerTest1! / AdminTest1! / Member2Test1!
@@ -102,8 +108,14 @@ INSERT INTO equipment (name, type, description) VALUES
 -- ============================================================
 INSERT INTO equipment_unit (equipment_id, identifier, status) VALUES
     (1, 'TRD-01', 'available'),
-    (1, 'TRD-02', 'available'),
+    (1, 'TRD-02', 'maintenance'),
     (2, 'BAR-01', 'available');
+
+
+-- ========================================================================================================================
+-- EXTRA FEATURES PLANNED / PARTIALLY INTEGRATED
+-- Seeded now so the data model is ready for later development
+-- ========================================================================================================================
 
 
 -- ============================================================
