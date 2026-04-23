@@ -9,11 +9,6 @@ require_once($templatePath);
 
 $session = new Session();
 
-if ($session->isLoggedIn()) {
-    header('Location: /src/pages/my-account.php');
-    exit;
-}
-
 drawHeader(['../style/index.css'], $session);
 ?>
 
