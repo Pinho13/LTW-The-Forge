@@ -68,6 +68,3 @@
     color: var(--color-rust);
 }
 
-@container (max-width: 6em) {
-    .class-card h3 { font-size: var(--font-size-xxs); }
-}

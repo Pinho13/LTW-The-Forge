@@ -11,3 +11,14 @@ main {
 .site-footer {
     grid-area: footer;
 }
+
+@media (max-width: 640px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-areas: "mobile-top" "main" "footer";
+    }
+
+    .mobile-top-bar {
+        grid-area: mobile-top;
+    }
+}

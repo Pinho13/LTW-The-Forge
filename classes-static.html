@@ -15,11 +15,22 @@
 </head>
 <body>
 
-    <aside class="side-menu">
-        <a href="src/pages/index.php" class="logo">
+    <input type="checkbox" id="side-menu-toggle">
+
+    <header class="mobile-top-bar">
+        <label for="side-menu-toggle" class="logo">
             <img src="src/assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo-img">
             <span class="logo-text">THE FORGE</span>
-        </a>
+        </label>
+    </header>
+
+    <label for="side-menu-toggle" class="side-menu-backdrop"></label>
+
+    <aside class="side-menu">
+        <label for="side-menu-toggle" class="logo">
+            <img src="src/assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo-img">
+            <span class="logo-text">THE FORGE</span>
+        </label>
         <nav class="side-nav" aria-label="Site navigation">
             <a href="#">MY ACCOUNT</a>
             <a href="#" class="active">CLASSES</a>
