@@ -5,6 +5,7 @@ const registerModal = document.getElementById('register-modal');
 const loginBtn = document.getElementById('login-btn');
 const openRegisterBtn = document.getElementById('open-register-btn');
 const openLoginBtn = document.getElementById('open-login-btn');
+const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
 
 function openModal(modal) {
     if (modal && typeof modal.showModal === 'function') {
@@ -87,5 +88,13 @@ document.querySelectorAll('.toggle-password').forEach((button) => {
         const isHidden = input.type === 'password';
         input.type = isHidden ? 'text' : 'password';
         button.textContent = isHidden ? '\u{1F576}' : '\u{1F441}';
+    });
+});
+
+document.querySelectorAll('#mobile-menu a').forEach((link) => {
+    link.addEventListener('click', () => {
+        if (mobileMenuToggle instanceof HTMLInputElement) {
+            mobileMenuToggle.checked = false;
+        }
     });
 });

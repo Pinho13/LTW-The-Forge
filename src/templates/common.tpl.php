@@ -55,15 +55,22 @@ function drawHeader(array $extraCss = [], ?Session $session = null): void
 
     <nav id="mobile-menu">
       <label for="mobile-menu-toggle" class="mobile-menu-backdrop"></label>
+
       <div class="mobile-menu-panel">
         <a href="index.php#about">ABOUT US</a>
         <a href="index.php#facilities">FACILITIES</a>
         <a href="index.php#plans">PLANS</a>
+
+        <?php if ($session !== null && $session->isLoggedIn()) { ?>
+          <a href="my-account.php">MY ACCOUNT</a>
+        <?php } ?>
       </div>
     </nav>
 
     <header>
       <nav id="top-nav-bar">
+        <label for="mobile-menu-toggle" class="menu-toggle" aria-label="Open navigation menu">☰</label>
+
         <a href="index.php#about">ABOUT US</a>
         <a href="index.php#facilities">FACILITIES</a>
 
@@ -73,7 +80,7 @@ function drawHeader(array $extraCss = [], ?Session $session = null): void
 
         <div class="login-wrapper">
           <?php if ($session !== null && $session->isLoggedIn()) { ?>
-            <a class="btn-primary" href="my-account.php">MY ACCOUNT</a>
+            <a id="account-btn" class="btn-primary" href="my-account.php">MY ACCOUNT</a>
           <?php } else { ?>
             <button id="login-btn" type="button">LOG IN</button>
           <?php } ?>
