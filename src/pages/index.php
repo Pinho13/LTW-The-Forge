@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 $sessionPath = __DIR__ . '/../../utils/session.php';
 $templatePath = __DIR__ . '/../templates/common.tpl.php';
@@ -8,6 +8,12 @@ require_once($sessionPath);
 require_once($templatePath);
 
 $session = new Session();
+
+if ($session->isLoggedIn()) {
+    header('Location: /src/pages/my-account.php');
+    exit;
+}
+
 drawHeader(['../style/index.css'], $session);
 ?>
 
