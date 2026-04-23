@@ -3,8 +3,6 @@ main {
     flex-direction: column;
 }
 
-/* Hero */
-
 .hero {
     text-align: center;
 }
@@ -12,100 +10,114 @@ main {
 .hero-content {
     position: relative;
     width: fit-content;
-    margin: 0 auto;
-    padding: var(--space-xxl) var(--space-xl) var(--space-xxs);
+    margin: 0 auto 0;
     background-color: rgba(var(--color-gold-rgb), 0.45);
-    box-shadow:
-        -5px 0 0 0 rgba(var(--color-gold-rgb), 0.2),
-        5px 0 0 0 rgba(var(--color-gold-rgb), 0.2),
-        -10px 0 0 0 rgba(var(--color-gold-rgb), 0.2),
-        10px 0 0 0 rgba(var(--color-gold-rgb), 0.2),
-        -15px 0 0 0 rgba(var(--color-gold-rgb), 0.1),
-        15px 0 0 0 rgba(var(--color-gold-rgb), 0.1);
+    padding-top: var(--space-xxl);
+    padding-left: var(--space-xl);
+    padding-right: var(--space-xl);
+    padding-bottom: var(--space-xxs);
+
+    box-shadow: 
+            -5px 0 0 0 rgba(var(--color-gold-rgb), 0.2),
+            5px 0 0 0 rgba(var(--color-gold-rgb), 0.2),
+
+            -10px 0 0 0 rgba(var(--color-gold-rgb), 0.2),
+            10px 0 0 0 rgba(var(--color-gold-rgb), 0.2),
+
+            -15px 0 0 0 rgba(var(--color-gold-rgb), 0.1),
+            15px 0 0 0 rgba(var(--color-gold-rgb), 0.1);
 }
 
 .hero h1 {
-    margin-bottom: 0;
-    padding: 0;
-    color: var(--color-almost-white);
     font-size: var(--font-size-hero);
+    padding: 0;
+    margin-bottom: 0;
+    color: var(--color-almost-white);
 }
 
 .hero h2 {
-    margin-top: 0;
-    color: var(--color-grey);
     font-weight: 100;
+    color: var(--color-grey);
+    margin-top: 0;
 }
 
 .hero h2 span {
     border-top: var(--border-1px) solid var(--color-gold);
 }
 
-.hero .primary-button {
+.hero button {
     position: absolute;
     bottom: 0;
     left: 50%;
-    z-index: 1;
-    width: auto;
-    margin: 0;
-    padding: var(--space-xs) var(--space-m);
     transform: translate(-50%, 50%);
+    z-index: 1; /* above images so its clickable */
+    padding: var(--space-xs) var(--space-m);
     font-size: var(--font-size-m);
 }
 
-/* Photo composition */
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Middle Photos Part */
 
 .photos-container {
-    position: relative;
     display: grid;
-    flex: 1;
     min-height: 35em;
-    overflow: hidden;
+    flex: 1;
     padding-top: var(--space-hero);
     padding-bottom: var(--space-hero);
+    position: relative;
+    overflow: hidden;
 }
 
 .photos-container .image {
     grid-area: 1 / 1;
+    box-sizing: border-box;
     border-top: var(--border-m) solid var(--color-gold);
     border-bottom: var(--border-m) solid var(--color-gold);
 }
 
+
 .photos-container .left {
-    z-index: 1;
     clip-path: polygon(0 0, 46% 0, 36% 100%, 0 100%);
+    z-index: 1;
+}
+.photos-container .right {
+    clip-path: polygon(64% 0, 100% 0, 100% 100%, 54% 100%);
+    z-index: 1;
 }
 
-.photos-container .right {
-    z-index: 1;
-    clip-path: polygon(64% 0, 100% 0, 100% 100%, 54% 100%);
-}
 
 .photos-container .left img {
     width: 50%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: center; 
 }
 
 .photos-container .right img {
     width: 55%;
-    height: 100%;
     margin-left: 45%;
+    height: 100%;
     object-fit: cover;
     object-position: center;
 }
 
+
+
 .splitter {
-    position: relative;
-    z-index: 2;
     display: grid;
     grid-area: 1 / 1;
+    box-sizing: border-box;
+    z-index: 2;
     pointer-events: none;
 }
 
 .splitter > * {
     grid-area: 1 / 1;
+    box-sizing: border-box;
     background-color: var(--color-gold);
 }
 
@@ -128,9 +140,9 @@ main {
 }
 
 .slant {
+    clip-path: polygon(51.9% 0, 58.1% 0, 48.1% 100%, 41.9% 100%);
     display: grid;
     background-color: transparent;
-    clip-path: polygon(51.9% 0, 58.1% 0, 48.1% 100%, 41.9% 100%);
 }
 
 .slant > div {
@@ -141,29 +153,17 @@ main {
     background-color: var(--color-gold);
 }
 
-.slant > div:nth-child(n + 2) {
+.slant > div:nth-child(n+2) {
     background-color: var(--color-almost-white);
 }
 
-.slant > div:nth-child(2) {
-    clip-path: polygon(51.9% 0, 52.1% 0, 42.1% 100%, 41.9% 100%);
-}
+.slant > div:nth-child(2) { clip-path: polygon(51.9% 0, 52.1% 0, 42.1% 100%, 41.9% 100%); }
+.slant > div:nth-child(3) { clip-path: polygon(53.4% 0, 53.6% 0, 43.6% 100%, 43.4% 100%); }
+.slant > div:nth-child(4) { clip-path: polygon(54.9% 0, 55.1% 0, 45.1% 100%, 44.9% 100%); }
+.slant > div:nth-child(5) { clip-path: polygon(56.4% 0, 56.6% 0, 46.6% 100%, 46.4% 100%); }
+.slant > div:nth-child(6) { clip-path: polygon(57.9% 0, 58.1% 0, 48.1% 100%, 47.9% 100%); }
 
-.slant > div:nth-child(3) {
-    clip-path: polygon(53.4% 0, 53.6% 0, 43.6% 100%, 43.4% 100%);
-}
 
-.slant > div:nth-child(4) {
-    clip-path: polygon(54.9% 0, 55.1% 0, 45.1% 100%, 44.9% 100%);
-}
-
-.slant > div:nth-child(5) {
-    clip-path: polygon(56.4% 0, 56.6% 0, 46.6% 100%, 46.4% 100%);
-}
-
-.slant > div:nth-child(6) {
-    clip-path: polygon(57.9% 0, 58.1% 0, 48.1% 100%, 47.9% 100%);
-}
 
 @media (max-width: 640px) {
     .hero-content {
@@ -173,27 +173,27 @@ main {
     .hero h1 {
         font-size: var(--font-size-xl);
     }
-
     .hero h2 {
         font-size: var(--font-size-xxs);
     }
 
-    .hero .primary-button {
+    .hero button {
         font-size: var(--font-size-xxs);
     }
 
     .photos-container {
         display: flex;
-        flex: none;
         flex-direction: column;
-        margin-top: var(--space-xxl);
         padding: 0;
+        margin-top: var(--space-xxl);
+        flex: none;
     }
 
     .photos-container .image {
-        border: none;
         clip-path: none;
+        border: none;
     }
+
 
     .photos-container .left img {
         border-top: var(--border-xs) solid var(--color-gold);
@@ -220,20 +220,21 @@ main {
     }
 
     .slant {
+        clip-path: none;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
-        clip-path: none;
     }
 
     .slant > div:nth-child(n) {
+        clip-path: none;
         height: 0.02em;
         background-color: var(--color-almost-white);
-        clip-path: none;
     }
 
     .slant > div:nth-child(6) {
         display: none;
     }
+
 }

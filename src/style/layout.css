@@ -8,7 +8,17 @@ main {
     grid-area: main;
 }
 
-footer {
+body > footer {
     grid-area: footer;
-    min-height: 4vh;
+}
+
+@media (max-width: 640px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-areas: "mobile-top" "main" "footer";
+    }
+
+    .mobile-top-bar {
+        grid-area: mobile-top;
+    }
 }

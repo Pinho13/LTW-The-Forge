@@ -1,0 +1,68 @@
+.class-card {
+    min-height: max-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    background-color: rgba(var(--color-brown-rgb), 1);
+    border-left: var(--border-s) solid var(--color-gold);
+    padding: var(--space-xxs) var(--space-xs);
+    cursor: pointer;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    font-size: var(--font-size-xxs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.class-card:hover {
+    background-color: rgba(var(--color-dark-gold-rgb), 0.45);
+}
+
+.class-card header {
+    display: flex;
+    flex-direction: column;
+}
+
+.class-card h3 {
+    margin: 0;
+}
+
+.class-card header p {
+    color: var(--color-light-gold);
+    margin: var(--space-xxs) 0;
+}
+
+.class-card footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.intensity-dots {
+    display: flex;
+    gap: var(--space-xxs);
+    flex-shrink: 0;
+}
+
+.intensity-dot {
+    width: var(--space-xs);
+    height: var(--space-xs);
+    border-radius: 50%;
+    background-color: rgba(var(--color-grey-rgb), 0.5);
+}
+
+.intensity-dot.filled {
+    background-color: var(--color-rust);
+}
+
+.class-card footer > span {
+    color: var(--color-success);
+    text-align: right;
+}
+
+.class-card.full footer > span {
+    color: var(--color-rust);
+}

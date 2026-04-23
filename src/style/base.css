@@ -16,6 +16,8 @@
     --color-brown-rgb: 80, 64, 32;
     --color-rust: #B9530E;
     --color-rust-rgb: 185, 83, 14;
+    --color-success: #4e9055;
+    --color-success-rgb: 78, 144, 85;
     --color-golden-brown: #201E19;
     --color-golden-brown-rgb: 32, 30, 25;
 
@@ -28,29 +30,32 @@
     --color-dark-grey: #595959;
     --color-dark-grey-rgb: 89, 89, 89;
 
+    /* Font size scale */
     --font-size-xxs: 0.75em;
-    --font-size-xs: 0.9em;
-    --font-size-s: 1em;
-    --font-size-m: 1.2em;
-    --font-size-l: 1.5em;
-    --font-size-xl: 2em;
+    --font-size-xs:  0.9em;
+    --font-size-s:   1em;
+    --font-size-m:   1.2em;
+    --font-size-l:   1.5em;
+    --font-size-xl:  2em;
     --font-size-xxl: 2.5em;
     --font-size-display: 3em;
-    --font-size-hero: 4em;
+    --font-size-hero:    4em;
 
+    /* Border size scale */
     --border-thin: 0.05em;
-    --border-xs: 0.1em;
-    --border-s: 0.2em;
-    --border-m: 0.25em;
-    --border-l: 0.5em;
-    --border-1px: 1px;
+    --border-xs:   0.1em;
+    --border-s:    0.2em;
+    --border-m:    0.25em;
+    --border-l:    0.5em;
+    --border-1px:  1px;
 
+    /* Spacing scale */
     --space-xxs: 0.2em;
-    --space-xs: 0.5em;
-    --space-s: 0.75em;
-    --space-m: 1em;
-    --space-l: 1.5em;
-    --space-xl: 2em;
+    --space-xs:  0.5em;
+    --space-s:   0.75em;
+    --space-m:   1em;
+    --space-l:   1.5em;
+    --space-xl:  2em;
     --space-xxl: 3em;
     --space-hero: 4em;
 }
@@ -90,30 +95,31 @@ ul {
 }
 
 a {
-    color: var(--color-grey);
     text-decoration: none;
+    color: var(--color-grey);
 }
 
-button,
-a {
+button, a {
     cursor: pointer;
 }
 
 button {
+    background-color: var(--color-gold);
+    color: var(--color-black);
     border: none;
     outline: var(--border-xs) solid var(--color-white);
     outline-offset: calc(-1 * var(--border-m));
-    background-color: var(--color-gold);
-    color: var(--color-black);
     font-family: "Big Shoulders", sans-serif;
     font-size: inherit;
 }
 
+
+
 label {
     display: block;
+    color: var(--color-grey);
     margin-bottom: var(--space-xxs);
     padding-top: var(--space-m);
-    color: var(--color-grey);
 }
 
 input {

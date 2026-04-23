@@ -8,32 +8,22 @@
 
 .toggle-password {
     position: absolute;
-    top: 50%;
-    right: var(--space-s);
-    transform: translateY(-50%);
-    padding: 0;
+    right: 0.6em;
+    top: 25%;
+    background: none;
     border: none;
     outline: none;
-    background: none;
+    cursor: pointer;
     color: var(--color-grey);
     font-size: var(--font-size-m);
-}
-
-.toggle-password:hover {
-    color: var(--color-almost-white);
+    padding: 0;
 }
 
 .forgot-password {
-    display: inline-block;
-    margin-top: var(--space-xxs);
+    display: block;
+    text-align: right;
+    margin-top: var(--space-xs);
     color: rgba(var(--color-gold-rgb), 0.9);
     font-size: var(--font-size-xs);
     text-decoration: underline;
-}
-
-@media (max-width: 640px) {
-    .toggle-password {
-        right: var(--space-m);
-        font-size: var(--font-size-s);
-    }
 }
