@@ -1,4 +1,4 @@
-<footer class="site-footer">
+<footer>
     <span class="footer-text">THE FORGE</span>
 
     <div class="symbol-container">

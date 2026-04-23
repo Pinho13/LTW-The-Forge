@@ -8,7 +8,7 @@ main {
     grid-area: main;
 }
 
-.site-footer {
+body > footer {
     grid-area: footer;
 }
 
