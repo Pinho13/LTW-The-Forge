@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline:opsz,wght@10..72,100..900&family=Big+Shoulders:opsz,wght@10..72,100..900&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Italiana&display=swap');
+
+:root {
+    --color-white: #FFFFFF;
+    --color-white-rgb: 255, 255, 255;
+    --color-black: #0B0B0B;
+    --color-black-rgb: 11, 11, 11;
+
+    --color-light-gold: #D4A853;
+    --color-light-gold-rgb: 212, 168, 83;
+    --color-gold: #A8843C;
+    --color-gold-rgb: 168, 132, 60;
+    --color-dark-gold: #8A6F33;
+    --color-dark-gold-rgb: 138, 111, 51;
+    --color-brown: #504020;
+    --color-brown-rgb: 80, 64, 32;
+    --color-rust: #B9530E;
+    --color-rust-rgb: 185, 83, 14;
+    --color-golden-brown: #201E19;
+    --color-golden-brown-rgb: 32, 30, 25;
+
+    --color-almost-white: #F2EDE4;
+    --color-almost-white-rgb: 242, 237, 228;
+    --color-light-grey: #D9D9D9;
+    --color-light-grey-rgb: 217, 217, 217;
+    --color-grey: #ACA8A2;
+    --color-grey-rgb: 172, 168, 162;
+    --color-dark-grey: #595959;
+    --color-dark-grey-rgb: 89, 89, 89;
+
+    --font-size-xxs: 0.75em;
+    --font-size-xs: 0.9em;
+    --font-size-s: 1em;
+    --font-size-m: 1.2em;
+    --font-size-l: 1.5em;
+    --font-size-xl: 2em;
+    --font-size-xxl: 2.5em;
+    --font-size-display: 3em;
+    --font-size-hero: 4em;
+
+    --border-thin: 0.05em;
+    --border-xs: 0.1em;
+    --border-s: 0.2em;
+    --border-m: 0.25em;
+    --border-l: 0.5em;
+    --border-1px: 1px;
+
+    --space-xxs: 0.2em;
+    --space-xs: 0.5em;
+    --space-s: 0.75em;
+    --space-m: 1em;
+    --space-l: 1.5em;
+    --space-xl: 2em;
+    --space-xxl: 3em;
+    --space-hero: 4em;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    font-family: "Instrument Sans", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+h1 {
+    font-family: "Big Shoulders", sans-serif;
+    margin: 0;
+}
+
+h2 {
+    font-family: "Italiana", serif;
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-grey);
+}
+
+button,
+a {
+    cursor: pointer;
+}
+
+button {
+    background-color: var(--color-gold);
+    color: var(--color-black);
+    border: none;
+    outline: var(--border-xs) solid var(--color-white);
+    outline-offset: calc(-1 * var(--border-m));
+    font-family: "Big Shoulders", sans-serif;
+    font-size: inherit;
+}
+
+label {
+    display: block;
+    color: var(--color-grey);
+    margin-bottom: var(--space-xxs);
+    padding-top: var(--space-m);
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: var(--space-s) var(--space-m);
+    border: var(--border-xs) solid var(--color-dark-grey);
+    background-color: rgba(var(--color-dark-grey-rgb), 0.1);
+    color: var(--color-white);
+}
+
+@media (max-width: 640px) {
+    html {
+        font-size: 12px;
+    }
+}

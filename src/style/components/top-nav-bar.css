@@ -1,0 +1,123 @@
+#top-nav-bar {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-xs);
+    border-bottom: var(--border-s) solid var(--color-gold);
+}
+
+#top-nav-bar > a,
+#top-nav-bar .login-wrapper {
+    flex: 1;
+    font-weight: bold;
+    font-size: var(--font-size-m);
+}
+
+#top-nav-bar .login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#top-nav-bar #login-btn,
+#top-nav-bar #account-btn {
+    padding: var(--space-xxs) var(--space-xl);
+}
+
+.menu-toggle {
+    display: none;
+    color: var(--color-white);
+    font-size: var(--font-size-xl);
+    line-height: 1;
+    padding: 0 var(--space-s);
+    cursor: pointer;
+}
+
+#mobile-menu-toggle,
+#mobile-menu {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    header {
+        position: relative;
+        z-index: 20;
+    }
+
+    .menu-toggle {
+        display: block;
+        flex: 0 0 auto;
+    }
+
+    #top-nav-bar {
+        justify-content: space-between;
+        border-bottom: var(--border-xs) solid var(--color-gold);
+    }
+
+    #top-nav-bar > a:not(.logo) {
+        display: none;
+    }
+
+    #top-nav-bar .login-wrapper {
+        flex: 0 0 auto;
+        font-size: var(--font-size-xxs);
+    }
+
+    #top-nav-bar #login-btn,
+    #top-nav-bar #account-btn {
+        padding: var(--space-xxs) var(--space-m);
+        font-size: var(--font-size-xxs);
+    }
+
+    #mobile-menu {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .mobile-menu-backdrop {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        transition: opacity 0.3s;
+        cursor: pointer;
+    }
+
+    .mobile-menu-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 15em;
+        background-color: var(--color-black);
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+        display: flex;
+        flex-direction: column;
+        padding: var(--space-xxl) var(--space-l);
+    }
+
+    .mobile-menu-panel a {
+        color: var(--color-grey);
+        font-family: "Big Shoulders", sans-serif;
+        font-size: var(--font-size-m);
+        font-weight: bold;
+        padding: var(--space-s) 0;
+        border-bottom: var(--border-thin) solid var(--color-dark-grey);
+    }
+
+    #mobile-menu-toggle:checked ~ #mobile-menu {
+        pointer-events: auto;
+    }
+
+    #mobile-menu-toggle:checked ~ #mobile-menu .mobile-menu-panel {
+        transform: translateX(0);
+    }
+
+    #mobile-menu-toggle:checked ~ #mobile-menu .mobile-menu-backdrop {
+        opacity: 1;
+    }
+}

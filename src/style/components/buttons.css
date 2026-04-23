@@ -1,0 +1,22 @@
+.btn-ghost {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: var(--space-xs);
+    margin: var(--space-m) 0;
+    font-size: var(--font-size-xl);
+    text-align: center;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-l);
+    margin: 0;
+    font-size: var(--font-size-m);
+    text-align: center;
+}
