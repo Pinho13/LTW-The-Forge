@@ -1,0 +1,89 @@
+.calendar {
+    padding: var(--space-m);
+    overflow-x: auto;
+}
+
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar-nav h2 {
+    font-size: var(--font-size-m);
+    color: var(--color-almost-white);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: var(--space-xxl) repeat(7, 1fr);
+}
+
+.calendar-time-spacer {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.calendar-day-header {
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: var(--space-xs);
+
+}
+
+.calendar-day-header .day-name {
+    font-size: var(--font-size-xxs);
+    color: var(--color-grey);
+}
+
+.calendar-day-header .day-date { 
+    font-size: var(--font-size-m);
+    font-weight: bold; 
+}
+
+.calendar-day-header.today .day-date { 
+    color: var(--color-gold); 
+}
+
+.calendar-time-gutter {
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    /* each 15 mins is space-l, so 1 hour is space-l * 4 */
+    grid-template-rows: repeat(13, calc(var(--space-l) * 4));
+}
+
+.calendar-time-label {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: var(--space-xs);
+    font-size: var(--font-size-xxs);
+    color: var(--color-grey);
+}
+
+.calendar-day-column {
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    /* 13 hours * 4 slots of 15mins */
+    grid-template-rows: repeat(52, var(--space-l));
+
+    container-type: inline-size;
+    border-left: var(--border-1px) solid rgba(var(--color-grey-rgb), 0.2);
+    border-top: var(--border-1px) solid rgba(var(--color-grey-rgb), 0.2);
+
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent calc(var(--space-l) * 4 - var(--border-1px)),
+        rgba(var(--color-grey-rgb), 0.2) calc(var(--space-l) * 4 - var(--border-1px)),
+        rgba(var(--color-grey-rgb), 0.2) calc(var(--space-l) * 4)
+    );
+
+}
+
+.calendar-day-column:last-child {
+    border-right: var(--border-1px) solid rgba(var(--color-grey-rgb), 0.2);
+}

@@ -1,4 +1,4 @@
-footer {
+.site-footer {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -36,7 +36,7 @@ footer {
 }
 
 @media (max-width: 640px) {
-    footer {
+    .site-footer {
         font-size: var(--font-size-xxs);
     }
 }
