@@ -48,7 +48,7 @@ function drawHeader(array $extraCss = [], ?Session $session = null): void
       <link rel="stylesheet" href="<?= htmlspecialchars($css) ?>">
     <?php } ?>
 
-    <script src="../scripts/index.js" defer></script>
+    <script type="module" src="../scripts/index.js"></script>
   </head>
   <body>
     <input type="checkbox" id="mobile-menu-toggle">

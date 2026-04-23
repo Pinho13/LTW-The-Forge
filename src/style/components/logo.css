@@ -1,18 +1,18 @@
 .logo {
     display: flex;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
     gap: var(--space-xs);
     color: inherit;
     text-decoration: none;
-    flex: 0 0 auto;
 }
 
 .logo-text {
-    font-family: "Big Shoulders Inline", sans-serif;
-    font-weight: 900;
-    font-size: var(--font-size-xxl);
     color: var(--color-gold);
+    font-family: "Big Shoulders Inline", sans-serif;
+    font-size: var(--font-size-xxl);
+    font-weight: 900;
     line-height: 1;
 }
 

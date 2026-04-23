@@ -1,0 +1,39 @@
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: var(--space-xxl);
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: var(--space-s);
+    transform: translateY(-50%);
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    color: var(--color-grey);
+    font-size: var(--font-size-m);
+}
+
+.toggle-password:hover {
+    color: var(--color-almost-white);
+}
+
+.forgot-password {
+    display: inline-block;
+    margin-top: var(--space-xxs);
+    color: rgba(var(--color-gold-rgb), 0.9);
+    font-size: var(--font-size-xs);
+    text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+    .toggle-password {
+        right: var(--space-m);
+        font-size: var(--font-size-s);
+    }
+}
