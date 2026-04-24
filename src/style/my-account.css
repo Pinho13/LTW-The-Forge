@@ -28,15 +28,14 @@ section {
 .stats {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     text-align: center;
 }
 
 .stats .card {
     --accent: var(--color-light-gold);
-
     background-color: rgba(var(--color-grey-rgb), 0.035);
-    width: 23vw;
+    width: 23.5vw;
     border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.15);
     border-top: var(--border-m) solid var(--accent);
     color: rgba(var(--color-grey-rgb), 0.6);
@@ -56,7 +55,7 @@ section {
 
 .stats h2 {
     font-family: "Big Shoulders", sans-serif;
-    font-size: var(--font-size-hero);
+    font-size: var(--font-size-xxl);
     margin: var(--space-xs);
     color: var(--accent);
 }
