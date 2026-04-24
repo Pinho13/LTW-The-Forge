@@ -8,8 +8,10 @@ main > header {
     border-bottom: solid;
     border-color: rgba(var(--color-grey-rgb), 0.2);
     border-bottom-width: var(--border-xs);
-    padding-block: var(--space-m);
+    padding-block-start: var(--space-xs);
+    padding-block-end: var(--space-l);
     padding-inline-start: var(--space-m);
+    max-height: var(--space-xl);
 }
 
 h1 {

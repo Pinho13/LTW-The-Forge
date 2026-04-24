@@ -8,6 +8,7 @@
     margin-bottom: 0;
     color: inherit;
     text-decoration: none;
+    max-height: var(--space-xl);
 }
 
 .logo-text {
