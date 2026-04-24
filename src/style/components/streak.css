@@ -3,14 +3,27 @@
     justify-content: center;
     list-style: none;
     padding: 0;
+    margin: var(--space-s);
+    gap: var(--space-s);
+}
+
+.streak__item {
+    display: flex;
+    align-items: center;
 }
 
 .streak__item img {
+    display: block;
     opacity: 0.1;
-    margin: var(--space-xxs);
-    width: 2em;
+    width: clamp(1rem, 2vw, 2rem);
 }
 
 .streak__item--active img {
     opacity: 1;
+}
+
+@media (max-width: 640px) {
+    .streak__item img {
+        width: 2rem;
+    }
 }
