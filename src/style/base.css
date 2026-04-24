@@ -18,6 +18,8 @@
     --color-rust-rgb: 185, 83, 14;
     --color-success: #4e9055;
     --color-success-rgb: 78, 144, 85;
+    --color-missed: #C85050;
+    --color-missed-rgb: 200, 80, 80;
     --color-golden-brown: #201E19;
     --color-golden-brown-rgb: 32, 30, 25;
 
@@ -25,7 +27,7 @@
     --color-almost-white-rgb: 242, 237, 228;
     --color-light-grey: #D9D9D9;
     --color-light-grey-rgb: 217, 217, 217;
-    --color-grey: #ACA8A2;
+    --color-grey: #ACABA2;
     --color-grey-rgb: 172, 168, 162;
     --color-dark-grey: #595959;
     --color-dark-grey-rgb: 89, 89, 89;

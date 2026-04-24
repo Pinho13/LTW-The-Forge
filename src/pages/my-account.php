@@ -18,28 +18,28 @@
 
         <main>
             <header>
-                <h2>Welcome back, Tomás!</h2>
+                <h1>Welcome back, Tomás!</h1>
             </header>
 
             <section class="stats">
                 <article class="card">
-                    <h3 class="stat-number">12</h3>
+                    <h2 class="stat-number">12</h2>
                     <p class="stat-label">Classes this month</p>
                 </article>
 
                 <article class="card">
-                    <h3 class="stat-number">4</h3>
+                    <h2 class="stat-number">4</h2>
                     <p class="stat-label">Upcoming Reservations</p>
                 </article>
 
                 <article class="card">
-                    <h3 class="stat-label">Weekly Streak</h3>
+                    <h2 class="stat-label">Weekly Streak</h2>
                     <ul class="stat-streak">
-                        <li>
+                        <li class="active">
                             <img src="../assets/icons/streak.svg" alt="Fire icon">
                         </li>
 
-                        <li>
+                        <li class="active">
                             <img src="../assets/icons/streak.svg" alt="Fire icon">
                         </li>
 
@@ -63,7 +63,7 @@
             </section>
 
             <section class="next-class">
-                <h3>Next Class</h3>
+                <h2>NEXT CLASS</h2>
                 <ul class="class-details">
                     <li>CrossFit Advanced</li>
                     <li>
@@ -82,25 +82,25 @@
             </section>
 
             <section class="activity">
-                <h3>Recent Activity</h3>
+                <h2>RECENT ACTIVITY</h2>
 
                 <ul class="activity-list">
                     <li class="activity-item">
-                    <span class="activity-name">Yoga Flow</span>
-                    <span class="activity-date">Mon 28 Mar</span>
-                    <span class="status completed">Completed</span>
+                        <span class="activity-name">Yoga Flow</span>
+                        <span class="activity-date">Mon 28 Mar</span>
+                        <span class="status completed">Completed</span>
                     </li>
 
                     <li class="activity-item">
-                    <span class="activity-name">HIIT Burn</span>
-                    <span class="activity-date">Sat 26 Mar</span>
-                    <span class="status completed">Completed</span>
+                        <span class="activity-name">HITT Burn</span>
+                        <span class="activity-date">Sat 26 Mar</span>
+                        <span class="status completed">Completed</span>
                     </li>
 
                     <li class="activity-item">
-                    <span class="activity-name">Mobility Reset</span>
-                    <span class="activity-date">Thu 23 Mar</span>
-                    <span class="status missed">Missed</span>
+                        <span class="activity-name">Mobility Reset</span>
+                        <span class="activity-date">Thu 23 Mar</span>
+                        <span class="status missed">Missed</span>
                     </li>
                 </ul>
             </section>
@@ -108,5 +108,6 @@
         </main>
 
         <?php include '../components/footer.php'; ?>
+
     </body>
 </html>
