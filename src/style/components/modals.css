@@ -1,9 +1,11 @@
 .auth-modal {
-    background-color: var(--color-golden-brown);
-    border-top: var(--border-l) solid var(--color-gold);
     position: relative;
-    padding: var(--space-m) var(--space-hero);
-    width: 30%;
+    width: min(32rem, calc(100% - 2 * var(--space-l)));
+    padding: var(--space-xl) var(--space-xxl);
+    border: none;
+    border-top: var(--border-l) solid var(--color-gold);
+    background-color: var(--color-golden-brown);
+    color: var(--color-white);
 }
 
 .auth-modal::backdrop {
@@ -11,40 +13,61 @@
 }
 
 .modal-close-btn {
-    color: var(--color-almost-white);
-    font-size: var(--font-size-m);
-    position: absolute;
-    top: 0.5em;
-    right: 0.5em;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 1.2rem;
 }
 
 .auth-modal h1 {
+    margin: var(--space-xs) 0 0;
     color: var(--color-almost-white);
-    margin: var(--space-xs) 0 0 0;
-    text-align: center;
     font-size: var(--font-size-display);
+    text-align: center;
 }
 
 .auth-modal h1::after {
     content: '';
     display: block;
     width: 40%;
-    margin: 0 auto;
+    margin: var(--space-xxs) auto 0;
     border-bottom: var(--border-thin) solid var(--color-gold);
 }
 
 .auth-modal h2 {
+    margin-top: var(--space-xxs);
+    margin-bottom: var(--space-l);
     color: var(--color-grey);
     font-size: var(--font-size-l);
     font-weight: lighter;
     text-align: center;
-    margin-top: var(--space-xxs);
-    margin-bottom: 0;
+}
+
+.auth-modal form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-modal label {
+    padding-top: var(--space-s);
+}
+
+.auth-modal input {
+    margin-bottom: var(--space-xs);
+}
+
+.auth-modal .forgot-password {
+    margin-bottom: var(--space-s);
+}
+
+.auth-modal .btn-primary {
+    margin-top: var(--space-l);
+    margin-bottom: var(--space-s);
 }
 
 .auth-modal p {
-    text-align: center;
     color: var(--color-grey);
+    text-align: center;
 }
 
 .auth-modal p a {
@@ -53,6 +76,28 @@
 }
 
 .auth-modal .form-error {
+    margin-top: var(--space-xs);
     color: #ff8080;
     font-size: var(--font-size-s);
+    text-align: center;
+}
+
+@media (max-width: 640px) {
+    .auth-modal {
+        width: calc(100% - 2 * var(--space-m));
+        padding: var(--space-l) var(--space-m);
+    }
+
+    .auth-modal h1 {
+        font-size: var(--font-size-xxl);
+    }
+
+    .auth-modal h2 {
+        font-size: var(--font-size-m);
+    }
+
+    .toggle-password {
+        right: var(--space-m);
+        font-size: var(--font-size-s);
+    }
 }

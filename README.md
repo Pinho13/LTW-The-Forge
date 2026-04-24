@@ -1,15 +1,25 @@
-# The Forge - Gym Website 
+# The Forge - Gym Website
+
 # ltw12g01
+
+## Overview
+
+The Forge is a gym management web application developed for the LTW course.
+
+The platform supports three core user roles: members, trainers, and administrators.
+Members can browse and enroll in classes and track their activity, trainers manage sessions and profiles, and administrators oversee users, classes, and equipment.
+
+The system is being developed following the requirements of the course, including structured CSS, PHP with PDO, and role-based functionality.
 
 ## Features
 
 **All users:**
 - [x] Register a new account.
-- [ ] Log in and out.
+- [~] Log in and out.
 - [ ] Edit their profile, including name, username, password, and profile photo.
 
 **Members:**
-- [ ] Browse the schedule of available fitness classes, filtering by type, trainer, day, or time.
+- [~] Browse the schedule of available fitness classes, filtering by type, trainer, day, or time.
 - [ ] Enroll in and cancel enrollment from upcoming classes, subject to capacity limits.
 - [ ] View trainer profiles, including their specializations and the classes they teach.
 - [ ] Check the current availability of equipment in the main training area.
@@ -28,23 +38,89 @@
 - [ ] Oversee and ensure the smooth operation of the entire system.
 
 **Extra:**
-- [ ] Something extra (e.g., personal training bookings, membership plans, waitlist, ...).
+- [ ] Membership plans.
+- [ ] Personal logging of material.
 
 ## Running
-'''
-    sqlite3 database/database.db ".read database/schema.sql"
-    sqlite3 database/database.db ".read database/populate.sql"
-    php -S localhost:9000
-'''
-Then open [Website](http://localhost:9000/src/pages/index.php) in your browser.
+
+Make sure you are in the root directory of the project.
+
+```bash
+sqlite3 database/database.db ".read database/schema.sql"
+sqlite3 database/database.db ".read database/populate.sql"
+php -S localhost:9000
+```
+
+Then open [The Forge](http://localhost:9000/src/pages/index.php).
 
 
 ## Credentials
 
+### Member
 - normal@gmail.com / NormalTest1!
-- trainer@gmail.com / TrainerTest1!
-- admin@gmail.com / AdminTest1! 
 
+### Trainer
+- trainer@gmail.com / TrainerTest1!
+
+### Admin
+- admin@gmail.com / AdminTest1!
+
+
+## Project Structure
+
+- **src/pages/**  
+Contains the main application pages (entry points) that are directly accessed via the browser.
+
+- **src/templates/**  
+Holds reusable UI components and layout templates shared across multiple pages.
+
+- **src/style/**  
+Includes all CSS and styling files that define the visual appearance of the platform.
+
+- **src/actions/**  
+Contains server-side logic and request handlers (e.g., form submissions, database operations).
+
+- **src/scripts/**  
+Stores client-side JavaScript for interactivity and dynamic behavior.
+
+- **database/**  
+Includes database-related files such as schema definitions and population scripts.
+
+- **utils/**  
+Provides helper functions and utilities used across different parts of the project.
+
+- **docs/**  
+Contains project documentation, reports, and supporting written materials.
+
+- **design/**  
+Holds design assets, mockups, and visual references for the application.
+
+## Design and Mockups
+
+The project includes design assets and mockups used to guide the visual development of the platform.  
+These resources are available in the `design/` folder, which is organized into subfolders such as [`ui/`](design/ui/), [`colors/`](design/colors/), and [`fonts/`](design/fonts/).
+
+## Technologies Used
+
+- HTML5
+- CSS3
+- PHP
+- JavaScript
+- Ajax / JSON
+- SQLite
+- PDO
+
+## Security Measures
+
+The project includes the following security practices:
+
+- Use of prepared statements with PDO
+- Session-based authentication
+- Password hashing
+- Output escaping to mitigate XSS
+- Role-based access control
+
+(Some of these features are still being refined.)
 
 ## Extra project details
 > Faculdade de Engenharia da Universidade do Porto

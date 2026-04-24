@@ -8,12 +8,14 @@ body > footer {
     color: var(--color-gold);
     font-family: "Big Shoulders", sans-serif;
     font-size: var(--font-size-m);
+    text-align: center;
 }
 
 .symbol-container {
     position: relative;
     width: 1em;
     height: 1em;
+    flex: 0 0 auto;
 }
 
 .symbol {
@@ -36,7 +38,8 @@ body > footer {
 }
 
 @media (max-width: 640px) {
-    body > footer {
+    footer {
+        gap: var(--space-s);
         font-size: var(--font-size-xxs);
     }
 }
