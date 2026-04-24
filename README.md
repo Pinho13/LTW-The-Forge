@@ -14,6 +14,8 @@ The system is being developed following the requirements of the course, includin
 ## First Delivery 
 HTML files to be considered are [index](index.html); [my-account](my-account.html) and [classes](classes-static.html).
 
+After opening index, click the LogIn button to open the LogIn/Register forms. In any one of the two, if the Sign In/Register is pressed then you will be redirected to my-account.
+
 Styling for these pages can be found at src/style/
 
 ## Features
