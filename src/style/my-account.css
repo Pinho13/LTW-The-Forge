@@ -24,6 +24,7 @@ h1 {
 
 section {
     margin: var(--space-l);
+    max-width: 72rem;
 }
 
 .stats {

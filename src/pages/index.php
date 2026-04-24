@@ -7,24 +7,24 @@
   drawHeader(['../style/index.css'], $session);
 ?>
 
-  <div id="hero-content">
-    <section class="hero">
-      <h1>FORGE YOUR LIMITS</h1>
-      <h2>
+  <div class="hero" id="hero">
+    <section class="hero__content">
+      <h1 class="hero__title">FORGE YOUR LIMITS</h1>
+      <h2 class="hero__subtitle">
         <span>Every workout. Every session. Every day.</span>
       </h2>
-      <a href="#plans"><button class="btn-page">EXPLORE PLANS</button></a>
+      <a href="#plans"><button class="hero__cta btn-page">EXPLORE PLANS</button></a>
     </section>
   </div>
 
-  <section id="facilities" class="photos-container">
-    <div class="image left">
+  <section class="facilities" id="facilities">
+    <div class="facilities__image facilities__image--left">
       <img src="../assets/images/main-page/left-image.png" alt="Gym Equipment">
     </div>
 
-    <div class="splitter">
-      <div class="border-left"></div>
-      <div class="slant">
+    <div class="facilities__splitter">
+      <div class="facilities__splitter-border facilities__splitter-border--left"></div>
+      <div class="facilities__slant">
         <div></div>
         <div></div>
         <div></div>
@@ -32,113 +32,113 @@
         <div></div>
         <div></div>
       </div>
-      <div class="border-right"></div>
+      <div class="facilities__splitter-border facilities__splitter-border--right"></div>
     </div>
 
-    <div class="image right">
+    <div class="facilities__image facilities__image--right">
       <img src="../assets/images/main-page/right-image.png" alt="People Training">
     </div>
   </section>
 
-  <section id="plans" class="plans-section">
-    <h2>MEMBERSHIP PLANS</h2>
+  <section class="plans" id="plans">
+    <h2 class="plans__title">MEMBERSHIP PLANS</h2>
 
-    <div class="plans-container">
+    <div class="plans__grid">
       <article class="plan-card">
-        <h3>Basic</h3>
-        <p class="price">19.99€ / month</p>
-        <p class="description">Access to the gym floor and cardio equipment.</p>
-        <ul>
+        <h3 class="plan-card__name">Basic</h3>
+        <p class="plan-card__price">19.99€ / month</p>
+        <p class="plan-card__description">Access to the gym floor and cardio equipment.</p>
+        <ul class="plan-card__features">
           <li>Gym access</li>
           <li>Cardio machines</li>
           <li>Basic training support</li>
         </ul>
-        <a class="plan-button" href="#"><button class="btn-page">Be Basic!</button></a>
+        <a class="plan-card__cta" href="#"><button class="btn-page">Be Basic!</button></a>
       </article>
 
-      <article class="plan-card">
-        <h3>Premium</h3>
-        <p class="price">39.99€ / month</p>
-        <p class="description">Unlimited classes and full access to all facilities.</p>
-        <ul>
+      <article class="plan-card plan-card--featured">
+        <h3 class="plan-card__name">Premium</h3>
+        <p class="plan-card__price">39.99€ / month</p>
+        <p class="plan-card__description">Unlimited classes and full access to all facilities.</p>
+        <ul class="plan-card__features">
           <li>All Basic features</li>
           <li>Unlimited classes</li>
           <li>Full facility access</li>
         </ul>
-        <a class="plan-button" href="#"><button class="btn-page">Be Premium!</button></a>
+        <a class="plan-card__cta" href="#"><button class="btn-page">Be Premium!</button></a>
       </article>
     </div>
   </section>
 
-  <section id="about" class="about-section">
-  <h2>ABOUT US</h2>
+  <section class="about" id="about">
+    <h2 class="about__title">ABOUT US</h2>
 
-  <div class="about-content">
+    <div class="about__content">
 
-    <p class="about-intro">
-      At <strong>THE FORGE</strong>, we don’t just train bodies — we build discipline,
-      resilience, and consistency. Our space is designed for those who take
-      performance seriously.
-    </p>
+      <p class="about__intro">
+        At <strong>THE FORGE</strong>, we don't just train bodies — we build discipline,
+        resilience, and consistency. Our space is designed for those who take
+        performance seriously.
+      </p>
 
-    <div class="about-grid">
+      <div class="about__grid">
 
-      <div class="about-block">
-        <h3>FACILITIES</h3>
-        <p>
-          Over 2,500m² of training space including free weight zones,
-          machine circuits, functional training areas, and dedicated
-          recovery zones. Every section is optimized for flow and performance.
-        </p>
-      </div>
+        <div class="about__block">
+          <h3 class="about__block-title">FACILITIES</h3>
+          <p>
+            Over 2,500m² of training space including free weight zones,
+            machine circuits, functional training areas, and dedicated
+            recovery zones. Every section is optimized for flow and performance.
+          </p>
+        </div>
 
-      <div class="about-block">
-        <h3>EQUIPMENT</h3>
-        <p>
-          Premium-grade machines from leading brands, Olympic lifting platforms,
-          calibrated plates, and high-end cardio systems. Built to handle
-          both beginners and elite athletes.
-        </p>
-      </div>
+        <div class="about__block">
+          <h3 class="about__block-title">EQUIPMENT</h3>
+          <p>
+            Premium-grade machines from leading brands, Olympic lifting platforms,
+            calibrated plates, and high-end cardio systems. Built to handle
+            both beginners and elite athletes.
+          </p>
+        </div>
 
-      <div class="about-block">
-        <h3>FUNCTIONAL TRAINING</h3>
-        <p>
-          A complete functional zone with sled tracks, battle ropes,
-          kettlebells, rigs, and open space for mobility and conditioning.
-          Designed for real-world strength and performance.
-        </p>
-      </div>
+        <div class="about__block">
+          <h3 class="about__block-title">FUNCTIONAL TRAINING</h3>
+          <p>
+            A complete functional zone with sled tracks, battle ropes,
+            kettlebells, rigs, and open space for mobility and conditioning.
+            Designed for real-world strength and performance.
+          </p>
+        </div>
 
-      <div class="about-block">
-        <h3>RECOVERY</h3>
-        <p>
-          Recovery is part of the process. We provide stretching areas,
-          foam rolling stations, and guided mobility zones to keep
-          your performance sustainable.
-        </p>
-      </div>
+        <div class="about__block">
+          <h3 class="about__block-title">RECOVERY</h3>
+          <p>
+            Recovery is part of the process. We provide stretching areas,
+            foam rolling stations, and guided mobility zones to keep
+            your performance sustainable.
+          </p>
+        </div>
 
-      <div class="about-block">
-        <h3>COMMUNITY</h3>
-        <p>
-          THE FORGE is built around a focused and driven community.
-          No distractions — just people committed to improving every day.
-        </p>
-      </div>
+        <div class="about__block">
+          <h3 class="about__block-title">COMMUNITY</h3>
+          <p>
+            THE FORGE is built around a focused and driven community.
+            No distractions — just people committed to improving every day.
+          </p>
+        </div>
 
-      <div class="about-block">
-        <h3>COACHING</h3>
-        <p>
-          Access to experienced trainers, structured programs,
-          and performance tracking tools to help you push past limits
-          and stay consistent.
-        </p>
+        <div class="about__block">
+          <h3 class="about__block-title">COACHING</h3>
+          <p>
+            Access to experienced trainers, structured programs,
+            and performance tracking tools to help you push past limits
+            and stay consistent.
+          </p>
+        </div>
+
       </div>
 
     </div>
-
-  </div>
-</section>
+  </section>
 
 <?php drawFooter(); ?>

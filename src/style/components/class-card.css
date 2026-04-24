@@ -63,6 +63,6 @@
     text-align: right;
 }
 
-.class-card.full footer > span {
+.class-card--full footer > span {
     color: var(--color-rust);
 }

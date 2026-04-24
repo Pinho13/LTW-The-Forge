@@ -23,31 +23,30 @@ require_once(__DIR__ . '/../../utils/session.php');
     <link rel="stylesheet" href="<?=$css?>">
     <?php } ?>
     <script type="module" src="../scripts/index.js"></script>
-    <script src="/src/scripts/terminalTyping.js"></script>
   </head>
   <body>
     <input type="checkbox" id="mobile-menu-toggle">
     <nav id="mobile-menu">
-      <label for="mobile-menu-toggle" class="mobile-menu-backdrop"></label>
-      <div class="mobile-menu-panel">
+      <label for="mobile-menu-toggle" class="mobile-menu__backdrop"></label>
+      <div class="mobile-menu__panel">
         <a href="#about">ABOUT US</a>
         <a href="#facilities">FACILITIES</a>
         <a href="#plans">PLANS</a>
       </div>
     </nav>
-    <header>
-      <nav id="top-nav-bar">
-        <a href="#about">ABOUT US</a>
-        <a href="#facilities">FACILITIES</a>
+    <header class="site-header">
+      <nav class="top-nav" id="top-nav-bar">
+        <a class="top-nav__link" href="#about">ABOUT US</a>
+        <a class="top-nav__link" href="#facilities">FACILITIES</a>
 
         <?php include __DIR__ . '/../components/logo.php'; ?>
 
-        <a href="#plans">PLANS</a>
-        <div class="login-wrapper">
+        <a class="top-nav__link" href="#plans">PLANS</a>
+        <div class="top-nav__actions">
           <?php if ($session?->isLoggedIn()): ?>
-            <a href="/src/pages/my-account.php"><button id="account-btn">MY ACCOUNT</button></a>
+            <a href="/src/pages/my-account.php"><button class="top-nav__btn top-nav__btn--account">MY ACCOUNT</button></a>
           <?php else: ?>
-            <button id="login-btn">LOG IN</button>
+            <button class="top-nav__btn" id="login-btn">LOG IN</button>
           <?php endif; ?>
         </div>
       </nav>
@@ -57,9 +56,9 @@ require_once(__DIR__ . '/../../utils/session.php');
 <?php } ?>
 
 <?php function drawPasswordField(string $id, string $name) { ?>
-  <div class="password-wrapper">
+  <div class="form__password-wrapper">
     <input type="password" id="<?=$id?>" name="<?=$name?>">
-    <button type="button" class="toggle-password">&#128065;</button>
+    <button type="button" class="form__toggle-password">&#128065;</button>
   </div>
 <?php } ?>
 
@@ -74,10 +73,10 @@ require_once(__DIR__ . '/../../utils/session.php');
   $submit   = $isLogin ? 'SIGN IN'                 : 'REGISTER';
 ?>
   <dialog id="<?=$id?>" class="auth-modal">
-    <button class="btn-ghost modal-close-btn">&times;</button>
-    <h1><?=$title?></h1>
-    <h2><?=$subtitle?></h2>
-    <form method="post" action="<?= $isLogin ? '../actions/action_login.php' : '../actions/action_register.php' ?>">
+    <button class="btn-ghost auth-modal__close">&times;</button>
+    <h1 class="auth-modal__title"><?=$title?></h1>
+    <h2 class="auth-modal__subtitle"><?=$subtitle?></h2>
+    <form class="auth-modal__form" method="post" action="<?= $isLogin ? '../actions/action_login.php' : '../actions/action_register.php' ?>">
 
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session?->generateCsrfToken() ?? '') ?>">
 
@@ -95,7 +94,7 @@ require_once(__DIR__ . '/../../utils/session.php');
       <?php drawPasswordField($isLogin ? 'password' : 'register-password', 'password'); ?>
 
       <?php if ($isLogin) { ?>
-        <a href="index.php" class="forgot-password">Forgot your password?</a>
+        <a href="index.php" class="form__forgot">Forgot your password?</a>
       <?php } else { ?>
         <label for="register-confirm-password">CONFIRM PASSWORD</label>
         <?php drawPasswordField('register-confirm-password', 'confirm-password'); ?>
@@ -103,13 +102,13 @@ require_once(__DIR__ . '/../../utils/session.php');
 
       <button type="submit" class="btn-primary"><?=$submit?></button>
       <?php if ($error): ?>
-        <p class="form-error"><?= htmlspecialchars($error) ?></p>
+        <p class="auth-modal__error"><?= htmlspecialchars($error) ?></p>
       <?php endif; ?>
     </form>
     <?php if ($isLogin) { ?>
-      <p>New member? <a href="#" id="open-register-btn">Register for free</a></p>
+      <p class="auth-modal__switch">New member? <a href="#" id="open-register-btn">Register for free</a></p>
     <?php } else { ?>
-      <p>Already have an account? <a href="#" id="open-login-btn">Sign In</a></p>
+      <p class="auth-modal__switch">Already have an account? <a href="#" id="open-login-btn">Sign In</a></p>
     <?php } ?>
   </dialog>
 <?php } ?>

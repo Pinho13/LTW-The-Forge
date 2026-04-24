@@ -1,12 +1,12 @@
-.password-wrapper {
+.form__password-wrapper {
     position: relative;
 }
 
-.password-wrapper input {
+.form__password-wrapper input {
     padding-right: var(--space-xxl);
 }
 
-.toggle-password {
+.form__toggle-password {
     position: absolute;
     right: 0.6em;
     top: 25%;
@@ -19,7 +19,7 @@
     padding: 0;
 }
 
-.forgot-password {
+.form__forgot {
     display: block;
     text-align: right;
     margin-top: var(--space-xs);

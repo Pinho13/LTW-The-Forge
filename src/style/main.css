@@ -9,6 +9,10 @@
 @import url('./components/modals.css');
 @import url('./components/footer.css');
 @import url('./components/logo.css');
+@import url('./components/top-nav-bar.css');
+@import url('./components/hero.css');
+@import url('./components/facilities.css');
+@import url('./components/about.css');
 @import url('./components/side-menu.css');
 @import url('./components/calendar.css');
 @import url('./components/class-card.css');
@@ -19,7 +23,6 @@
 @import url('./components/status.css');
 @import url('./components/streak.css');
 @import url('./components/terminal-box.css');
-@import url('./components/top-nav-bar.css');
 @import url('./components/activity-list.css');
 
 /* Layer 3: Shared layout styles */

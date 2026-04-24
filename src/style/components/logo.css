@@ -11,7 +11,7 @@
     max-height: var(--space-xl);
 }
 
-.logo-text {
+.logo__text {
     font-family: "Big Shoulders Inline", sans-serif;
     font-weight: 900;
     font-size: var(--font-size-xl);
@@ -19,20 +19,18 @@
     line-height: 1;
 }
 
-.logo-img {
+.logo__img {
     display: block;
     width: 2.5em;
     height: auto;
 }
 
 @media (max-width: 640px) {
-    .logo-text {
+    .logo__text {
         font-size: var(--font-size-l);
     }
 
-    .logo-img {
+    .logo__img {
         width: 1.5em;
     }
-
-
 }
