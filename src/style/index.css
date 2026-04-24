@@ -1,13 +1,8 @@
-main {
-    display: flex;
-    flex-direction: column;
-}
-
 .hero {
     text-align: center;
 }
 
-.hero-content {
+#hero-content {
     position: relative;
     width: fit-content;
     margin: 0 auto 0;
@@ -50,8 +45,7 @@ main {
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 50%);
-    z-index: 1; /* above images so its clickable */
-    padding: var(--space-xs) var(--space-m);
+    z-index: 1;
     font-size: var(--font-size-m);
 }
 
@@ -177,10 +171,6 @@ main {
         font-size: var(--font-size-xxs);
     }
 
-    .hero button {
-        font-size: var(--font-size-xxs);
-    }
-
     .photos-container {
         display: flex;
         flex-direction: column;
@@ -237,4 +227,174 @@ main {
         display: none;
     }
 
+}
+
+
+/* Plans and About sections placed after the image section */
+
+.plans-section,
+.about-section {
+    width: min(72rem, calc(100% - 2 * var(--space-xl)));
+    margin: 0 auto var(--space-hero);
+    margin-top: var(--space-l);
+}
+
+.plans-section h2,
+.about-section h2 {
+    margin-top: 0;
+    margin-bottom: var(--space-m);
+    color: var(--color-light-gold);
+    font-size: var(--font-size-xxl);
+    text-align: center;
+}
+
+.plans-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl);
+}
+
+.plan-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    padding: var(--space-xl);
+    border: var(--border-1px) solid var(--color-light-gold);
+    box-shadow: 0 0 0 1px rgba(var(--color-light-gold-rgb), 0.25);
+    background-color: rgba(var(--color-golden-brown-rgb), 0.55);
+}
+
+.plan-card h3 {
+    margin: 0;
+    color: var(--color-almost-white);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xxl);
+}
+
+.plan-card .price {
+    margin: 0;
+    color: var(--color-light-gold);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+}
+
+.plan-card .description {
+    margin: 0;
+    color: var(--color-light-grey);
+    line-height: 1.6;
+}
+
+.about-section p {
+    max-width: 48rem;
+    margin: 0 auto;
+    color: var(--color-light-grey);
+    font-size: var(--font-size-m);
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+}
+
+.plan-card ul {
+    margin: 0;
+    padding-left: 1.2em;
+    color: var(--color-grey);
+    line-height: 1.8;
+}
+
+.plan-card li + li {
+    margin-top: var(--space-xxs);
+}
+
+.about-section {
+    width: min(56rem, calc(100% - 2 * var(--space-xl)));
+    margin-top: var(--space-l);
+    padding: var(--space-xxl) var(--space-xl);
+    border: var(--border-1px) solid var(--color-light-gold);
+    box-shadow: 0 0 0 1px rgba(var(--color-light-gold-rgb), 0.25);
+    background-color: rgba(var(--color-golden-brown-rgb), 0.55);
+    text-align: center;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+.about-intro {
+    max-width: 52rem;
+    margin: 0 auto;
+    font-size: var(--font-size-m);
+    line-height: 1.8;
+    color: var(--color-light-grey);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xl);
+}
+
+.about-block {
+    border: var(--border-1px) solid rgba(var(--color-gold-rgb), 0.3);
+    padding: var(--space-l);
+    background: rgba(var(--color-black-rgb), 0.4);
+}
+
+.about-block h3 {
+    margin-bottom: var(--space-xs);
+    font-size: var(--font-size-m);
+    color: var(--color-gold);
+}
+
+.about-block p {
+    margin: 0;
+    font-size: var(--font-size-s);
+    line-height: 1.6;
+    color: var(--color-light-grey);
+}
+
+.terminal-text::after {
+    content: "|";
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    75% { opacity: 1; }
+    0%, 25%, 50%, 100% { opacity: 0; }
+}
+
+@media (max-width: 640px) {
+    .plans-section,
+    .about-section {
+        width: calc(100% - 2 * var(--space-m));
+        margin-bottom: var(--space-xxl);
+    }
+
+    .plans-section h2,
+    .about-section h2 {
+        font-size: var(--font-size-l);
+    }
+
+    .plans-container {
+        grid-template-columns: 1fr;
+        gap: var(--space-l);
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .plan-card,
+    .about-section {
+        padding: var(--space-l);
+    }
+
+    .plan-card h3 {
+        font-size: var(--font-size-xl);
+    }
+
+    .plan-card .price {
+        font-size: var(--font-size-l);
+    }
 }

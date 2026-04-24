@@ -62,15 +62,11 @@
 
 html {
     scroll-behavior: smooth;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
+    scroll-padding-top: 5.5em;
 }
 
 body {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
     background-color: var(--color-black);
@@ -79,19 +75,11 @@ body {
 }
 
 h1 {
-    margin: 0;
     font-family: "Big Shoulders", sans-serif;
 }
 
 h2 {
-    margin: 0;
     font-family: "Italiana", serif;
-}
-
-h3,
-p,
-ul {
-    margin: 0;
 }
 
 a {
@@ -111,9 +99,10 @@ button {
     outline-offset: calc(-1 * var(--border-m));
     font-family: "Big Shoulders", sans-serif;
     font-size: inherit;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: var(--space-xxs) var(--space-xl);
 }
-
-
 
 label {
     display: block;
@@ -125,6 +114,7 @@ label {
 input {
     display: block;
     width: 100%;
+    box-sizing: border-box;
     padding: var(--space-s) var(--space-m);
     border: var(--border-xs) solid var(--color-dark-grey);
     background-color: rgba(var(--color-dark-grey-rgb), 0.1);

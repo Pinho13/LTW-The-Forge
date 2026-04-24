@@ -14,10 +14,8 @@ export function initTerminalTyping() {
     terminalText.textContent = '';
 
     function getCharacterDelay(char) {
-        // base typing speed (fast)
         let delay = 18 + Math.random() * 14;
 
-        // punctuation pauses (natural reading rhythm)
         if (char === ',' || char === ';') {
             delay += 120 + Math.random() * 80;
         }
@@ -26,7 +24,6 @@ export function initTerminalTyping() {
             delay += 220 + Math.random() * 140;
         }
 
-        // ONLY allow "thinking pauses" on spaces
         if (char === ' ' && Math.random() < 0.15) {
             delay += 260 + Math.random() * 280;
         }

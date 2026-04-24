@@ -1,22 +1,22 @@
+/* Buttons component */
+
 .btn-ghost {
+    background: none;
     border: none;
     outline: none;
-    background: none;
+    color: inherit;
+    padding: 0;
 }
 
-.btn-primary {
-    display: block;
-    width: 100%;
-    margin: var(--space-m) 0;
-    padding: var(--space-xs);
-    font-size: var(--font-size-xl);
-    text-align: center;
-}
-
+.btn-primary,
 .btn-secondary {
     display: inline-block;
-    margin: 0;
-    padding: var(--space-xs) var(--space-l);
-    font-size: var(--font-size-m);
-    text-align: center;
+    width: auto;
+    padding: var(--space-xxs) var(--space-xl);
+    font-size: inherit;
+    text-transform: uppercase;
+}
+
+.btn-page {
+    padding: var(--space-xs) var(--space-m);
 }
