@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account — The Forge</title>
+    <link rel="stylesheet" href="src/style/base.css">
+    <link rel="stylesheet" href="src/style/layout.css">
+    <link rel="stylesheet" href="src/style/components/logo.css">
+    <link rel="stylesheet" href="src/style/components/footer.css">
+    <link rel="stylesheet" href="src/style/components/side-menu.css">
+    <link rel="stylesheet" href="src/style/my-account.css">
+</head>
+<body>
+
+    <input type="checkbox" id="side-menu-toggle">
+
+    <header class="mobile-top-bar">
+        <label for="side-menu-toggle" class="logo">
+            <img src="src/assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo-img">
+            <span class="logo-text">THE FORGE</span>
+        </label>
+    </header>
+
+    <label for="side-menu-toggle" class="side-menu-backdrop"></label>
+
+    <aside class="side-menu">
+        <label for="side-menu-toggle" class="logo">
+            <img src="src/assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo-img">
+            <span class="logo-text">THE FORGE</span>
+        </label>
+        <nav class="side-nav" aria-label="Site navigation">
+            <a href="my-account.html" class="active">MY ACCOUNT</a>
+            <a href="classes-static.html">CLASSES</a>
+            <a href="#">TRAINERS</a>
+            <a href="#">MY CLASSES</a>
+            <a href="#">RESERVATIONS</a>
+            <a href="#">NEWS</a>
+        </nav>
+    </aside>
+
+    <main>
+        <header>
+            <h1>Welcome back, Tomás!</h1>
+        </header>
+
+        <section class="stats">
+            <article class="card">
+                <h2 class="stat-number">12</h2>
+                <p class="stat-label">Classes this month</p>
+            </article>
+
+            <article class="card">
+                <h2 class="stat-number">4</h2>
+                <p class="stat-label">Upcoming Reservations</p>
+            </article>
+
+            <article class="card">
+                <h2 class="stat-label">Weekly Streak</h2>
+                <ul class="stat-streak">
+                    <li class="active">
+                        <img src="src/assets/icons/streak.svg" alt="Fire icon">
+                    </li>
+                    <li class="active">
+                        <img src="src/assets/icons/streak.svg" alt="Fire icon">
+                    </li>
+                    <li>
+                        <img src="src/assets/icons/streak.svg" alt="Fire icon">
+                    </li>
+                    <li>
+                        <img src="src/assets/icons/streak.svg" alt="Fire icon">
+                    </li>
+                    <li>
+                        <img src="src/assets/icons/streak.svg" alt="Fire icon">
+                    </li>
+                    <li>
+                        <img src="src/assets/icons/streak.svg" alt="Fire icon">
+                    </li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="next-class">
+            <h2>NEXT CLASS</h2>
+            <ul class="class-details">
+                <li>CrossFit Advanced</li>
+                <li>
+                    <img src="src/assets/icons/separator.svg" alt="">
+                    Thursday 09:30
+                </li>
+                <li>
+                    <img src="src/assets/icons/separator.svg" alt="">
+                    Studio B
+                </li>
+                <li>
+                    <img src="src/assets/icons/separator.svg" alt="">
+                    Trainer: Quim Barreiros
+                </li>
+            </ul>
+        </section>
+
+        <section class="activity">
+            <h2>RECENT ACTIVITY</h2>
+
+            <ul class="activity-list">
+                <li class="activity-item">
+                    <span class="activity-name">Yoga Flow</span>
+                    <span class="activity-date">Mon 28 Mar</span>
+                    <span class="status completed">Completed</span>
+                </li>
+
+                <li class="activity-item">
+                    <span class="activity-name">HITT Burn</span>
+                    <span class="activity-date">Sat 26 Mar</span>
+                    <span class="status completed">Completed</span>
+                </li>
+
+                <li class="activity-item">
+                    <span class="activity-name">Mobility Reset</span>
+                    <span class="activity-date">Thu 23 Mar</span>
+                    <span class="status missed">Missed</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <span class="footer-text">THE FORGE</span>
+
+        <div class="symbol-container">
+            <span class="symbol layer-1">&times;</span>
+            <span class="symbol layer-2">&times;</span>
+        </div>
+
+        <span class="footer-text">TRAINING FACILITIES</span>
+
+        <div class="symbol-container">
+            <span class="symbol layer-1">&times;</span>
+            <span class="symbol layer-2">&times;</span>
+        </div>
+
+        <span class="footer-text">2026</span>
+    </footer>
+
+</body>
+</html>
