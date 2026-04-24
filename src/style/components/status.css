@@ -1,0 +1,11 @@
+.status {
+    font-weight: 500;
+}
+
+.status--completed {
+    color: var(--color-success);
+}
+
+.status--missed {
+    color: rgba(var(--color-missed-rgb), 0.85);
+}

@@ -4,12 +4,22 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>The Forge</title>
+        <!-- Core -->
         <link rel="stylesheet" href="../style/base.css">
         <link rel="stylesheet" href="../style/layout.css">
+
+        <!-- Components -->
+        <link rel="stylesheet" href="../style/my-account.css">
+
+        <!-- Page -->
         <link rel="stylesheet" href="../style/components/logo.css">
         <link rel="stylesheet" href="../style/components/footer.css">
         <link rel="stylesheet" href="../style/components/side-menu.css">
-        <link rel="stylesheet" href="../style/my-account.css">
+        <link rel="stylesheet" href="../style/components/class-preview.css">
+        <link rel="stylesheet" href="../style/components/activity-list.css">
+        <link rel="stylesheet" href="../style/components/status.css">
+        <link rel="stylesheet" href="../style/components/stats-card.css">
+        <link rel="stylesheet" href="../style/components/streak.css">
     </head>
 
 
@@ -22,49 +32,49 @@
             </header>
 
             <section class="stats">
-                <article class="card">
-                    <h2 class="stat-number">12</h2>
-                    <p class="stat-label">Classes this month</p>
+                <article class="stat-card">
+                    <h2 class="stat-card__value">12</h2>
+                    <p class="stat-card__label">Classes This Month</p>
                 </article>
 
-                <article class="card">
-                    <h2 class="stat-number">4</h2>
-                    <p class="stat-label">Upcoming Reservations</p>
+                <article class="stat-card">
+                    <h2 class="stat-card__value">4</h2>
+                    <p class="stat-card__label">Upcoming Reservations</p>
                 </article>
 
-                <article class="card">
-                    <h2 class="stat-label">Weekly Streak</h2>
-                    <ul class="stat-streak">
-                        <li class="active">
+                <article class="stat-card">
+                    <h2 class="stat-card__value">Weekly Streak</h2>
+                    <ul class="streak">
+                        <li class="streak__item streak__item--active">
                             <img src="../assets/icons/streak.svg" alt="Fire icon">
                         </li>
 
-                        <li class="active">
+                        <li class="streak__item streak__item--active">
                             <img src="../assets/icons/streak.svg" alt="Fire icon">
                         </li>
 
-                        <li>
+                        <li class="streak__item">
                             <img src="../assets/icons/streak.svg" alt="Fire icon">
                         </li>
 
-                        <li>
+                        <li class="streak__item">
                             <img src="../assets/icons/streak.svg" alt="Fire icon">
                         </li>
 
-                        <li>
+                        <li class="streak__item">
                             <img src="../assets/icons/streak.svg" alt="Fire icon">
                         </li>
 
-                        <li>
+                        <li class="streak__item">
                             <img src="../assets/icons/streak.svg" alt="Fire icon">
                         </li>
                     </ul>
                 </article>
             </section>
 
-            <section class="next-class">
-                <h2>NEXT CLASS</h2>
-                <ul class="class-details">
+            <section class="class-preview">
+                <h2 class="class-preview__title">NEXT CLASS</h2>
+                <ul class="class-preview__details">
                     <li>CrossFit Advanced</li>
                     <li>
                         <img src="../assets/icons/separator.svg" alt="">
@@ -85,22 +95,22 @@
                 <h2>RECENT ACTIVITY</h2>
 
                 <ul class="activity-list">
-                    <li class="activity-item">
-                        <span class="activity-name">Yoga Flow</span>
-                        <span class="activity-date">Mon 28 Mar</span>
-                        <span class="status completed">Completed</span>
+                    <li class="activity-list__item">
+                        <span class="activity-list__name">Yoga Flow</span>
+                        <span class="activity-list__date">Mon 28 Mar</span>
+                        <span class="activity-list__status status status--completed">Completed</span>
                     </li>
 
-                    <li class="activity-item">
-                        <span class="activity-name">HITT Burn</span>
-                        <span class="activity-date">Sat 26 Mar</span>
-                        <span class="status completed">Completed</span>
+                    <li class="activity-list__item">
+                        <span class="activity-list__name">HITT Burn</span>
+                        <span class="activity-list__date">Sat 26 Mar</span>
+                        <span class="activity-list__status status status--completed">Completed</span>
                     </li>
 
-                    <li class="activity-item">
-                        <span class="activity-name">Mobility Reset</span>
-                        <span class="activity-date">Thu 23 Mar</span>
-                        <span class="status missed">Missed</span>
+                    <li class="activity-list__item">
+                        <span class="activity-list__name">Mobility Reset</span>
+                        <span class="activity-list__date">Thu 23 Mar</span>
+                        <span class="activity-list__status status status--missed">Missed</span>
                     </li>
                 </ul>
             </section>
