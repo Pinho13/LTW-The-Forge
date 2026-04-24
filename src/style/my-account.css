@@ -1,4 +1,4 @@
-/* Page-specific styles for my-account.php */
+/* Page-specific styles for my-account */
 
 main {
     background-color: rgba(var(--color-brown-rgb), 0.03);
@@ -24,15 +24,13 @@ h1 {
 
 section {
     margin: var(--space-l);
+    max-width: 72rem;
 }
 
 .stats {
-    display: flex;
-    justify-content: space-between;
-}
-
-.stats .stat-card {
-    width: 23.5vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-m);
 }
 
 .activity {
@@ -49,15 +47,14 @@ section {
 
 @media (max-width: 640px) {
     .stats {
-        flex-direction: column;
-        gap: var(--space-m);
+        grid-template-columns: 1fr 1fr;
     }
 
-    .stats .stat-card {
-        width: auto;
+    .stats .stat-card:last-child {
+        grid-column: 1 / -1;
     }
 
-    body > footer {
+    .site-footer {
         font-size: var(--font-size-s);
     }
 }

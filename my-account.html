@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Account — The Forge</title>
+    <title>My Account - The Forge</title>
     <link rel="stylesheet" href="src/style/main.css">
     <link rel="stylesheet" href="src/style/layout.css">
     <link rel="stylesheet" href="src/style/my-account.css">
@@ -14,8 +14,8 @@
 
     <header class="mobile-top-bar">
         <label for="side-menu-toggle" class="logo">
-            <img src="src/assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo-img">
-            <span class="logo-text">THE FORGE</span>
+            <img src="src/assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo__img">
+            <span class="logo__text">THE FORGE</span>
         </label>
     </header>
 
@@ -23,8 +23,8 @@
 
     <aside class="side-menu">
         <label for="side-menu-toggle" class="logo">
-            <img src="src/assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo-img">
-            <span class="logo-text">THE FORGE</span>
+            <img src="src/assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo__img">
+            <span class="logo__text">THE FORGE</span>
         </label>
         <nav class="side-nav" aria-label="Site navigation">
             <a href="my-account.html" class="active">MY ACCOUNT</a>
@@ -52,29 +52,24 @@
                 <p class="stat-card__label">Upcoming Reservations</p>
             </article>
 
-                <article class="stat-card">
-                    <h2 class="stat-card__value">Weekly Streak</h2>
-                    <ul class="streak">
+            <article class="stat-card">
+                <h2 class="stat-card__value">Weekly Streak</h2>
+                <ul class="streak">
                     <li class="streak__item streak__item--active">
                         <img src="src/assets/icons/streak.svg" alt="Fire icon">
                     </li>
-
                     <li class="streak__item streak__item--active">
                         <img src="src/assets/icons/streak.svg" alt="Fire icon">
                     </li>
-
                     <li class="streak__item">
                         <img src="src/assets/icons/streak.svg" alt="Fire icon">
                     </li>
-
                     <li class="streak__item">
                         <img src="src/assets/icons/streak.svg" alt="Fire icon">
                     </li>
-
                     <li class="streak__item">
                         <img src="src/assets/icons/streak.svg" alt="Fire icon">
                     </li>
-
                     <li class="streak__item">
                         <img src="src/assets/icons/streak.svg" alt="Fire icon">
                     </li>
@@ -82,67 +77,65 @@
             </article>
         </section>
 
-            <section class="class-preview">
-                <h2 class="class-preview__title">NEXT CLASS</h2>
-                <ul class="class-preview__details">
-                    <li>CrossFit Advanced</li>
-                    <li>
-                        <img src="../assets/icons/separator.svg" alt="">
-                        Thursday 09:30
-                    </li>
-                    <li>
-                        <img src="../assets/icons/separator.svg" alt="">
-                        Studio B
-                    </li>
-                    <li>
-                        <img src="../assets/icons/separator.svg" alt="">
-                        Trainer: Quim Barreiros
-                    </li>
-                </ul>
-            </section>
+        <section class="class-preview">
+            <h2 class="class-preview__title">NEXT CLASS</h2>
+            <ul class="class-preview__details">
+                <li>CrossFit Advanced</li>
+                <li>
+                    <img src="src/assets/icons/separator.svg" alt="">
+                    Thursday 09:30
+                </li>
+                <li>
+                    <img src="src/assets/icons/separator.svg" alt="">
+                    Studio B
+                </li>
+                <li>
+                    <img src="src/assets/icons/separator.svg" alt="">
+                    Trainer: Quim Barreiros
+                </li>
+            </ul>
+        </section>
 
-            <section class="activity">
-                <h2>RECENT ACTIVITY</h2>
+        <section class="activity">
+            <h2>RECENT ACTIVITY</h2>
 
-                <ul class="activity-list">
-                    <li class="activity-list__item">
-                        <span class="activity-list__name">Yoga Flow</span>
-                        <span class="activity-list__date">Mon 28 Mar</span>
-                        <span class="activity-list__status status status--completed">Completed</span>
-                    </li>
+            <ul class="activity-list">
+                <li class="activity-list__item">
+                    <span class="activity-list__name">Yoga Flow</span>
+                    <span class="activity-list__date">Mon 28 Mar</span>
+                    <span class="activity-list__status status status--completed">Completed</span>
+                </li>
+                <li class="activity-list__item">
+                    <span class="activity-list__name">HITT Burn</span>
+                    <span class="activity-list__date">Sat 26 Mar</span>
+                    <span class="activity-list__status status status--completed">Completed</span>
+                </li>
+                <li class="activity-list__item">
+                    <span class="activity-list__name">Mobility Reset</span>
+                    <span class="activity-list__date">Thu 23 Mar</span>
+                    <span class="activity-list__status status status--missed">Missed</span>
+                </li>
+            </ul>
+        </section>
 
-                    <li class="activity-list__item">
-                        <span class="activity-list__name">HITT Burn</span>
-                        <span class="activity-list__date">Sat 26 Mar</span>
-                        <span class="activity-list__status status status--completed">Completed</span>
-                    </li>
+    </main>
 
-                    <li class="activity-list__item">
-                        <span class="activity-list__name">Mobility Reset</span>
-                        <span class="activity-list__date">Thu 23 Mar</span>
-                        <span class="activity-list__status status status--missed">Missed</span>
-                    </li>
-                </ul>
-            </section>
+    <footer class="site-footer">
+        <span class="site-footer__text">THE FORGE</span>
 
-        </main>
-
-    <footer>
-        <span class="footer-text">THE FORGE</span>
-
-        <div class="symbol-container">
-            <span class="symbol layer-1">&times;</span>
-            <span class="symbol layer-2">&times;</span>
+        <div class="site-footer__symbol">
+            <span class="site-footer__symbol-layer site-footer__symbol-layer--front">&times;</span>
+            <span class="site-footer__symbol-layer site-footer__symbol-layer--back">&times;</span>
         </div>
 
-        <span class="footer-text">TRAINING FACILITIES</span>
+        <span class="site-footer__text">TRAINING FACILITIES</span>
 
-        <div class="symbol-container">
-            <span class="symbol layer-1">&times;</span>
-            <span class="symbol layer-2">&times;</span>
+        <div class="site-footer__symbol">
+            <span class="site-footer__symbol-layer site-footer__symbol-layer--front">&times;</span>
+            <span class="site-footer__symbol-layer site-footer__symbol-layer--back">&times;</span>
         </div>
 
-        <span class="footer-text">2026</span>
+        <span class="site-footer__text">2026</span>
     </footer>
 
 </body>
