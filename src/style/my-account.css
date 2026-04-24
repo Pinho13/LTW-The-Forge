@@ -4,7 +4,7 @@ main {
     background-color: rgba(var(--color-brown-rgb), 0.03);
 }
 
-header {
+main > header {
     border-bottom: solid;
     border-color: rgba(var(--color-grey-rgb), 0.2);
     border-bottom-width: var(--border-xs);
@@ -106,17 +106,6 @@ section {
     margin-inline-start: var(--space-xxs);
 }
 
-.activity {
-    color: rgba(var(--color-grey-rgb), 0.6);
-}
-
-.activity h2 {
-    color: rgba(var(--color-grey-rgb), 0.6);
-    font-size: var(--font-size-m);
-    margin-bottom: var(--space-m);
-    letter-spacing: 0.1em;
-    margin-bottom: 0;
-}
 
 .activity-list {
     list-style-type: none;
@@ -166,5 +155,25 @@ section {
 }
 
 .activity h2 {
+    color: rgba(var(--color-grey-rgb), 0.6);
+    font-size: var(--font-size-m);
+    letter-spacing: 0.1em;
+    margin-bottom: 0;
     border-bottom: var(--border-thin) solid rgba(var(--color-almost-white-rgb), 0.5);
+}
+
+@media (max-width: 640px) {
+    .stats {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-m);
+    }
+
+    .stats .card {
+        width: auto;
+    }
+
+    body > footer {
+        font-size: var(--font-size-s);
+    }
 }

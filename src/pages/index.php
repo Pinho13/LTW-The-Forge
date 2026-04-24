@@ -36,7 +36,7 @@
     </div>
 
     <div class="image right">
-      <img src="../assets/images/main-page/right-image.webp" alt="People Training">
+      <img src="../assets/images/main-page/right-image.png" alt="People Training">
     </div>
   </section>
 
