@@ -1,0 +1,26 @@
+/* Main CSS - Shared styles only */
+
+/* Layer 1: Base styles */
+@import url('./base.css');
+
+/* Layer 2: Component styles */
+@import url('./components/buttons.css');
+@import url('./components/forms.css');
+@import url('./components/modals.css');
+@import url('./components/footer.css');
+@import url('./components/logo.css');
+@import url('./components/side-menu.css');
+@import url('./components/calendar.css');
+@import url('./components/class-card.css');
+@import url('./components/class-preview.css');
+@import url('./components/flash-messages.css');
+@import url('./components/plans.css');
+@import url('./components/stats-card.css');
+@import url('./components/status.css');
+@import url('./components/streak.css');
+@import url('./components/terminal-box.css');
+@import url('./components/top-nav-bar.css');
+@import url('./components/activity-list.css');
+
+/* Layer 3: Shared layout styles */
+/* layout.css is loaded only for logged-in pages */
