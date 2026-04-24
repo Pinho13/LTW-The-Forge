@@ -11,6 +11,11 @@ Members can browse and enroll in classes and track their activity, trainers mana
 
 The system is being developed following the requirements of the course, including structured CSS, PHP with PDO, and role-based functionality.
 
+## First Delivery 
+HTML files to be considered are [index](index.html); [my-account](my-account.html) and [classes](classes-static.html).
+
+Styling for these pages can be found at src/style/
+
 ## Features
 
 **All users:**
