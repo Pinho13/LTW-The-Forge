@@ -4,7 +4,7 @@
     list-style: none;
     padding: 0;
     margin: var(--space-s);
-    gap: var(--space-s);
+    gap: clamp(var(--space-xxs), 1vw, var(--space-s));
 }
 
 .streak__item {
@@ -15,7 +15,7 @@
 .streak__item img {
     display: block;
     opacity: 0.1;
-    width: clamp(1rem, 2vw, 2rem);
+    width: clamp(var(--space-m), 2vw, var(--font-size-xl));
 }
 
 .streak__item--active img {
