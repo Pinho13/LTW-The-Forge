@@ -1,17 +1,17 @@
-<footer>
-    <span class="footer-text">THE FORGE</span>
+<footer class="site-footer">
+    <span class="site-footer__text">THE FORGE</span>
 
-    <div class="symbol-container">
-        <span class="symbol layer-1">&times;</span>
-        <span class="symbol layer-2">&times;</span>
+    <div class="site-footer__symbol">
+        <span class="site-footer__symbol-layer site-footer__symbol-layer--front">&times;</span>
+        <span class="site-footer__symbol-layer site-footer__symbol-layer--back">&times;</span>
     </div>
 
-    <span class="footer-text">TRAINING FACILITIES</span>
+    <span class="site-footer__text">TRAINING FACILITIES</span>
 
-    <div class="symbol-container">
-        <span class="symbol layer-1">&times;</span>
-        <span class="symbol layer-2">&times;</span>
+    <div class="site-footer__symbol">
+        <span class="site-footer__symbol-layer site-footer__symbol-layer--front">&times;</span>
+        <span class="site-footer__symbol-layer site-footer__symbol-layer--back">&times;</span>
     </div>
 
-    <span class="footer-text">2026</span>
+    <span class="site-footer__text">2026</span>
 </footer>

@@ -1,4 +1,4 @@
-body > footer {
+.site-footer {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,34 +11,34 @@ body > footer {
     text-align: center;
 }
 
-.symbol-container {
+.site-footer__symbol {
     position: relative;
     width: 1em;
     height: 1em;
     flex: 0 0 auto;
 }
 
-.symbol {
+.site-footer__symbol-layer {
     position: absolute;
     top: 0;
     left: 0;
     font-size: var(--font-size-m);
     font-weight: bold;
     line-height: 1;
+}
+
+.site-footer__symbol-layer--front {
+    color: var(--color-gold);
     transform: translateY(-0.2em);
 }
 
-.symbol.layer-1 {
-    color: var(--color-gold);
-}
-
-.symbol.layer-2 {
+.site-footer__symbol-layer--back {
     color: var(--color-dark-gold);
     transform: translateY(0.14em);
 }
 
 @media (max-width: 640px) {
-    footer {
+    .site-footer {
         gap: var(--space-s);
         font-size: var(--font-size-xxs);
     }

@@ -1,0 +1,152 @@
+.facilities {
+    display: grid;
+    min-height: 35em;
+    padding-top: var(--space-hero);
+    padding-bottom: var(--space-hero);
+    position: relative;
+    overflow: hidden;
+}
+
+.facilities__image {
+    grid-area: 1 / 1;
+    box-sizing: border-box;
+    border-top: var(--border-m) solid var(--color-gold);
+    border-bottom: var(--border-m) solid var(--color-gold);
+}
+
+.facilities__image--left {
+    clip-path: polygon(0 0, 46% 0, 36% 100%, 0 100%);
+    z-index: 1;
+}
+
+.facilities__image--right {
+    clip-path: polygon(64% 0, 100% 0, 100% 100%, 54% 100%);
+    z-index: 1;
+}
+
+.facilities__image--left img {
+    width: 50%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.facilities__image--right img {
+    width: 55%;
+    margin-left: 45%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.facilities__splitter {
+    display: grid;
+    grid-area: 1 / 1;
+    box-sizing: border-box;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.facilities__splitter > * {
+    grid-area: 1 / 1;
+    box-sizing: border-box;
+    background-color: var(--color-gold);
+}
+
+.facilities__splitter-border--left {
+    clip-path: polygon(
+        calc(46% - var(--border-m)) 0,
+        46% 0,
+        36% 100%,
+        calc(36% - var(--border-m)) 100%
+    );
+}
+
+.facilities__splitter-border--right {
+    clip-path: polygon(
+        64% 0,
+        calc(64% + var(--border-m)) 0,
+        calc(54% + var(--border-m)) 100%,
+        54% 100%
+    );
+}
+
+.facilities__slant {
+    clip-path: polygon(51.9% 0, 58.1% 0, 48.1% 100%, 41.9% 100%);
+    display: grid;
+    background-color: transparent;
+}
+
+.facilities__slant > div {
+    grid-area: 1 / 1;
+}
+
+.facilities__slant > div:nth-child(1) {
+    background-color: var(--color-gold);
+}
+
+.facilities__slant > div:nth-child(n+2) {
+    background-color: var(--color-almost-white);
+}
+
+.facilities__slant > div:nth-child(2) { clip-path: polygon(51.9% 0, 52.1% 0, 42.1% 100%, 41.9% 100%); }
+.facilities__slant > div:nth-child(3) { clip-path: polygon(53.4% 0, 53.6% 0, 43.6% 100%, 43.4% 100%); }
+.facilities__slant > div:nth-child(4) { clip-path: polygon(54.9% 0, 55.1% 0, 45.1% 100%, 44.9% 100%); }
+.facilities__slant > div:nth-child(5) { clip-path: polygon(56.4% 0, 56.6% 0, 46.6% 100%, 46.4% 100%); }
+.facilities__slant > div:nth-child(6) { clip-path: polygon(57.9% 0, 58.1% 0, 48.1% 100%, 47.9% 100%); }
+
+@media (max-width: 640px) {
+    .facilities {
+        display: flex;
+        flex-direction: column;
+        padding: 0 var(--space-m);
+        margin-top: var(--space-xxl);
+        min-height: unset;
+    }
+
+    .facilities__image {
+        clip-path: none;
+        border: none;
+    }
+
+    .facilities__image--left img {
+        border-top: var(--border-xs) solid var(--color-gold);
+    }
+
+    .facilities__image--left img,
+    .facilities__image--right img {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-left: 0;
+    }
+
+    .facilities__splitter {
+        display: block;
+        height: 1em;
+        background-color: var(--color-gold);
+    }
+
+    .facilities__splitter-border--left,
+    .facilities__splitter-border--right {
+        display: none;
+    }
+
+    .facilities__slant {
+        clip-path: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .facilities__slant > div:nth-child(n) {
+        clip-path: none;
+        height: 0.02em;
+        background-color: var(--color-almost-white);
+    }
+
+    .facilities__slant > div:nth-child(6) {
+        display: none;
+    }
+}

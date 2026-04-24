@@ -1,7 +1,7 @@
 .auth-modal {
     position: relative;
-    width: min(32rem, calc(100% - 2 * var(--space-l)));
-    padding: var(--space-xl) var(--space-xxl);
+    width: min(32rem, calc(100% - 2 * var(--space-m)));
+    padding: var(--space-xl) clamp(var(--space-m), 8vw, var(--space-xxl));
     border: none;
     border-top: var(--border-l) solid var(--color-gold);
     background-color: var(--color-golden-brown);
@@ -12,21 +12,21 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.modal-close-btn {
+.auth-modal__close {
     position: absolute;
     top: var(--space-m);
     right: var(--space-m);
     font-size: var(--font-size-m);
 }
 
-.auth-modal h1 {
+.auth-modal__title {
     margin: 0;
     color: var(--color-almost-white);
     font-size: var(--font-size-display);
     text-align: center;
 }
 
-.auth-modal h1::after {
+.auth-modal__title::after {
     content: '';
     display: block;
     width: 40%;
@@ -34,7 +34,7 @@
     border-bottom: var(--border-thin) solid var(--color-gold);
 }
 
-.auth-modal h2 {
+.auth-modal__subtitle {
     margin-top: var(--space-xxs);
     margin-bottom: var(--space-l);
     color: var(--color-grey);
@@ -43,40 +43,50 @@
     text-align: center;
 }
 
-.auth-modal form {
+.auth-modal__form {
     display: flex;
     flex-direction: column;
 }
 
-.auth-modal label {
+.auth-modal__form label {
     padding-top: var(--space-s);
 }
 
-.auth-modal input {
+.auth-modal__form input {
     margin-bottom: var(--space-xs);
 }
 
-.auth-modal .forgot-password {
+.auth-modal__forgot {
+    display: block;
     margin-bottom: var(--space-s);
+    text-align: right;
 }
 
-.auth-modal .btn-primary {
+.auth-modal__form a {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.auth-modal__form .btn-primary {
+    width: 100%;
+    text-align: center;
     margin-top: var(--space-l);
     margin-bottom: var(--space-s);
     font-size: var(--font-size-l);
 }
 
-.auth-modal p {
+.auth-modal__switch {
     color: var(--color-grey);
     text-align: center;
 }
 
-.auth-modal p a {
+.auth-modal__switch a {
     color: rgba(var(--color-gold-rgb), 0.9);
     text-decoration: underline;
 }
 
-.auth-modal .form-error {
+.auth-modal__error {
     margin-top: var(--space-xs);
     color: #ff8080;
     font-size: var(--font-size-s);
@@ -85,19 +95,24 @@
 
 @media (max-width: 640px) {
     .auth-modal {
-        width: calc(100% - 2 * var(--space-m));
-        padding: var(--space-l) var(--space-m);
+        width: min(26rem, calc(100% - 2 * var(--space-m)));
+        padding-top: clamp(var(--space-s), 4vw, var(--space-xl));
+        padding-bottom: clamp(var(--space-s), 4vw, var(--space-xl));
     }
 
-    .auth-modal h1 {
+    .auth-modal__close {
+        display: none;
+    }
+
+    .auth-modal__title {
         font-size: var(--font-size-xxl);
     }
 
-    .auth-modal h2 {
+    .auth-modal__subtitle {
         font-size: var(--font-size-m);
     }
 
-    .toggle-password {
+    .form__toggle-password {
         right: var(--space-m);
         font-size: var(--font-size-s);
     }
