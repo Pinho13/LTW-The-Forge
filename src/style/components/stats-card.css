@@ -11,16 +11,20 @@
 .stat-card__value {
     font-family: "Big Shoulders", sans-serif;
     font-size: var(--font-size-xxl);
-    margin: var(--space-xs);
+    margin: var(--space-s);
     color: var(--accent);
+    font-size: clamp(var(--font-size-s), 2.5vw, var(--font-size-xl));
+    white-space: nowrap;
 }
 
 .stat-card__label {
     font-size: var(--font-size-l);
+    font-size: clamp(var(--font-size-s), 1.5vw, var(--font-size-xl));
+    white-space: nowrap;
 }
 
 @media (min-width: 640px) {
-    .stat-card:nth-child(2) {
+    .stat-card:nth-child(even) {
         --accent: var(--color-almost-white);
     }
 }
