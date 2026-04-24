@@ -18,8 +18,8 @@
         <link rel="stylesheet" href="../style/components/class-preview.css">
         <link rel="stylesheet" href="../style/components/activity-list.css">
         <link rel="stylesheet" href="../style/components/status.css">
-        <link rel="stylesheet" href="../style/components/stats-card.css">
         <link rel="stylesheet" href="../style/components/streak.css">
+        <link rel="stylesheet" href="../style/components/stats-card.css">
     </head>
 
 
