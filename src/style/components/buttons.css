@@ -4,12 +4,19 @@
     background: none;
     border: none;
     outline: none;
+    color: inherit;
+    padding: 0;
 }
 
-.btn-primary {
-    display: block;
-    width: 100%;
-    padding: var(--space-xs);
-    font-size: var(--font-size-xl);
-    margin: var(--space-m) 0;
+.btn-primary,
+.btn-secondary {
+    display: inline-block;
+    width: auto;
+    padding: var(--space-xxs) var(--space-xl);
+    font-size: inherit;
+    text-transform: uppercase;
+}
+
+.btn-page {
+    padding: var(--space-xs) var(--space-m);
 }

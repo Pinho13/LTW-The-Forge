@@ -1,0 +1,32 @@
+.flash-messages {
+    width: min(48rem, calc(100% - 2 * var(--space-xl)));
+    margin: var(--space-l) auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+}
+
+.flash-message {
+    padding: var(--space-m) var(--space-l);
+    border-left: var(--border-s) solid;
+    background-color: rgba(var(--color-golden-brown-rgb), 0.75);
+    color: var(--color-almost-white);
+}
+
+.flash-success {
+    border-left-color: var(--color-light-gold);
+}
+
+.flash-error {
+    border-left-color: #ff8080;
+}
+
+.flash-warning {
+    border-left-color: var(--color-rust);
+}
+
+@media (max-width: 640px) {
+    .flash-messages {
+        width: calc(100% - 2 * var(--space-m));
+    }
+}

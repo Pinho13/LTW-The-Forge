@@ -1,22 +1,27 @@
 .logo {
     display: flex;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
     gap: var(--space-xs);
     padding-top: 0;
     margin-bottom: 0;
     color: inherit;
+    text-decoration: none;
 }
 
 .logo-text {
     font-family: "Big Shoulders Inline", sans-serif;
     font-weight: 900;
-    font-size: var(--font-size-xxl);
+    font-size: var(--font-size-xl);
     color: var(--color-gold);
+    line-height: 1;
 }
 
 .logo-img {
-    width: 3em;
+    display: block;
+    width: 2.5em;
+    height: auto;
 }
 
 @media (max-width: 640px) {

@@ -22,26 +22,27 @@ require_once(__DIR__ . '/../../utils/session.php');
     <?php foreach ($extraCss as $css) { ?>
     <link rel="stylesheet" href="<?=$css?>">
     <?php } ?>
-    <script src="../scripts/index.js" defer></script>
+    <script type="module" src="../scripts/index.js"></script>
+    <script src="/src/scripts/terminalTyping.js"></script>
   </head>
   <body>
     <input type="checkbox" id="mobile-menu-toggle">
     <nav id="mobile-menu">
       <label for="mobile-menu-toggle" class="mobile-menu-backdrop"></label>
       <div class="mobile-menu-panel">
-        <a href="index.php">ABOUT US</a>
-        <a href="index.php">FACILITIES</a>
-        <a href="index.php">PLANS</a>
+        <a href="#about">ABOUT US</a>
+        <a href="#facilities">FACILITIES</a>
+        <a href="#plans">PLANS</a>
       </div>
     </nav>
     <header>
       <nav id="top-nav-bar">
-        <a href="index.php">ABOUT US</a>
-        <a href="index.php">FACILITIES</a>
+        <a href="#about">ABOUT US</a>
+        <a href="#facilities">FACILITIES</a>
 
         <?php include __DIR__ . '/../components/logo.php'; ?>
 
-        <a href="index.php">PLANS</a>
+        <a href="#plans">PLANS</a>
         <div class="login-wrapper">
           <?php if ($session?->isLoggedIn()): ?>
             <a href="/src/pages/my-account.php"><button id="account-btn">MY ACCOUNT</button></a>
