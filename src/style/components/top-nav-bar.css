@@ -38,6 +38,7 @@ header {
     #top-nav-bar {
         position: relative;
         z-index: 20;
+        font-size: var(--font-size-l);
     }
     #top-nav-bar > a:not(.logo) {
         display: none;

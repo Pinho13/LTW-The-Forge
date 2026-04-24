@@ -171,6 +171,11 @@ main {
         font-size: var(--font-size-xxs);
     }
 
+    .hero button {
+        font-size: var(--font-size-xxs);
+        padding: var(--space-xxs) var(--space-s);
+    }
+
     .photos-container {
         display: flex;
         flex-direction: column;
