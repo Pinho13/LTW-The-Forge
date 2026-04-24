@@ -1,0 +1,28 @@
+.class-preview {
+    font-family: "Instrument Sans", sans-serif;
+    background-color: rgba(var(--color-light-gold-rgb), 0.08);
+    border: var(--border-thin) solid rgba(var(--color-light-gold-rgb), 0.3);
+    border-left: var(--border-s) solid var(--color-light-gold);
+    padding-inline-start: var(--space-m);
+}
+
+.class-preview__title {
+    margin: 0;
+    color: var(--color-light-gold);
+    font-size: var(--font-size-s);
+    margin-block: var(--space-xs);
+}
+
+.class-preview__details {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin-block: var(--space-xs);
+}
+
+.class-preview__details li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xxs);
+    margin-inline-start: var(--space-xxs);
+}

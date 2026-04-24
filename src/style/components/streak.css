@@ -1,0 +1,16 @@
+.streak {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.streak__item img {
+    opacity: 0.1;
+    margin: var(--space-xxs);
+    width: 2em;
+}
+
+.streak__item--active img {
+    opacity: 1;
+}

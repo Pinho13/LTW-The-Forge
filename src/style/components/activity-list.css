@@ -1,0 +1,32 @@
+.activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-list__item {
+    display: flex;
+    align-items: center;
+    padding-block: var(--space-m);
+    border-bottom: 1px solid rgba(var(--color-grey-rgb), 0.15);
+}
+
+.activity-list__item:last-child {
+    border-bottom: none;
+}
+
+.activity-list__name {
+    font-weight: bold;
+    color: var(--color-almost-white);
+    flex: 1;
+}
+
+.activity-list__date {
+    color: rgba(var(--color-grey-rgb), 0.5);
+    flex: 1;
+}
+
+.activity-list__status {
+    flex: 2;
+    text-align: right;
+}
