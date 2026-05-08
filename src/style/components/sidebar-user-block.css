@@ -1,0 +1,52 @@
+.sidebar-user-block {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    padding: var(--space-xs);
+    border-top: var(--border-xs) solid var(--color-gold);
+    text-decoration: none;
+}
+
+.sidebar-user-block:hover,
+.sidebar-user-block--active {
+    background-color: rgba(var(--color-brown-rgb), 0.3);
+    border-left-color: var(--color-light-gold);
+}
+
+.sidebar-user-block__avatar {
+    flex-shrink: 0;
+    width: var(--font-size-xxl);
+    height: var(--font-size-xxl);
+    border-radius: 50%;
+    background-color: var(--color-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--color-black);
+    letter-spacing: 0.05em;
+}
+
+.sidebar-user-block__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sidebar-user-block__name {
+    font-size: var(--font-size-s);
+    font-weight: bold;
+    color: var(--color-almost-white);
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0;
+}
+
+.sidebar-user-block__role {
+    font-size: var(--font-size-xxs);
+    color: var(--color-grey);
+    margin: 0;
+}
+
+.sidebar-user-block__chevron {
+    font-size: var(--font-size-xl);
+}

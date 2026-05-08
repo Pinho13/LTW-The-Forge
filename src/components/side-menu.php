@@ -9,4 +9,6 @@
         <a href="/src/pages/reservations.php"    <?= $activePage === 'reservations' ? 'class="active"' : '' ?>>RESERVATIONS</a>
         <a href="/src/pages/news.php"            <?= $activePage === 'news'         ? 'class="active"' : '' ?>>NEWS</a>
     </div>
+
+    <?php include __DIR__ . '/sidebar-user-block.php'; ?>
 </nav>
