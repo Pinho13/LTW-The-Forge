@@ -1,3 +1,10 @@
+<?php
+declare(strict_types=1);
+require_once(__DIR__ . '/../../utils/session.php');
+
+$session = new Session();
+$session->requireLogin('/src/pages/index.php?open=login');
+?>
 <!DOCTYPE html>
     <html lang="en-US">
     <head>
@@ -25,7 +32,7 @@
 
         <main>
             <header>
-                <h1>Welcome back, Tomás!</h1>
+                <h1>Welcome back, <?= htmlspecialchars($session->getName()) ?>!</h1>
             </header>
 
             <section class="stats">
