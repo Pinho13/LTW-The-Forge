@@ -33,6 +33,11 @@ $session->requireLogin('/src/pages/index.php?open=login');
         <header>
             <h1>Account</h1>
         </header>
+
+        <form method="post" action="../actions/action_logout.php">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+            <button type="submit" class="btn-secondary">Log Out</button>
+        </form>
     </main>
 
     <?php include '../components/footer.php'; ?>
