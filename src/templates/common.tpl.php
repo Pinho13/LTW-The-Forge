@@ -12,13 +12,7 @@ require_once(__DIR__ . '/../../utils/session.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Forge</title>
-    <link rel="stylesheet" href="../style/base.css">
-    <link rel="stylesheet" href="../style/components/buttons.css">
-    <link rel="stylesheet" href="../style/components/top-nav-bar.css">
-    <link rel="stylesheet" href="../style/components/forms.css">
-    <link rel="stylesheet" href="../style/components/modals.css">
-    <link rel="stylesheet" href="../style/components/footer.css">
-    <link rel="stylesheet" href="../style/components/logo.css">
+    <link rel="stylesheet" href="../style/main.css">
     <?php foreach ($extraCss as $css) { ?>
     <link rel="stylesheet" href="<?=$css?>">
     <?php } ?>

@@ -3,27 +3,24 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>The Forge</title>
-        <!-- Core -->
-        <link rel="stylesheet" href="../style/base.css">
+        <title>My Account - The Forge</title>
+        <link rel="stylesheet" href="../style/main.css">
         <link rel="stylesheet" href="../style/layout.css">
-
-        <!-- Components -->
         <link rel="stylesheet" href="../style/my-account.css">
-
-        <!-- Page -->
-        <link rel="stylesheet" href="../style/components/logo.css">
-        <link rel="stylesheet" href="../style/components/footer.css">
-        <link rel="stylesheet" href="../style/components/side-menu.css">
-        <link rel="stylesheet" href="../style/components/class-preview.css">
-        <link rel="stylesheet" href="../style/components/activity-list.css">
-        <link rel="stylesheet" href="../style/components/status.css">
-        <link rel="stylesheet" href="../style/components/streak.css">
-        <link rel="stylesheet" href="../style/components/stats-card.css">
     </head>
 
-
     <body>
+        <input type="checkbox" id="side-menu-toggle">
+
+        <header class="mobile-top-bar">
+            <label for="side-menu-toggle" class="logo">
+                <img src="../assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo__img">
+                <span class="logo__text">THE FORGE</span>
+            </label>
+        </header>
+
+        <label for="side-menu-toggle" class="side-menu-backdrop"></label>
+
         <?php $activePage = 'account'; include '../components/side-menu.php'; ?>
 
         <main>
