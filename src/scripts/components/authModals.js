@@ -1,23 +1,30 @@
-function openModal(modal) {
-    if (modal && typeof modal.showModal === 'function') {
-        modal.showModal();
-    }
-}
-
-function closeModal(modal) {
-    if (modal && typeof modal.close === 'function') {
-        modal.close();
-    }
-}
-
 export function initAuthModals() {
     const params = new URLSearchParams(window.location.search);
 
-    const loginModal = document.getElementById('login-modal');
+    const loginModal    = document.getElementById('login-modal');
     const registerModal = document.getElementById('register-modal');
-    const loginBtn = document.getElementById('login-btn');
+    const backdrop      = document.getElementById('modal-backdrop');
+    const loginBtn      = document.getElementById('login-btn');
     const openRegisterBtn = document.getElementById('open-register-btn');
-    const openLoginBtn = document.getElementById('open-login-btn');
+    const openLoginBtn    = document.getElementById('open-login-btn');
+
+    function openModal(modal) {
+        if (modal) {
+            modal.show();
+            backdrop?.classList.add('modal-backdrop--visible');
+        }
+    }
+
+    function closeModal(modal) {
+        if (modal) {
+            modal.close();
+            backdrop?.classList.remove('modal-backdrop--visible');
+        }
+    }
+
+    function closeAll() {
+        [loginModal, registerModal].forEach(m => { if (m?.open) closeModal(m); });
+    }
 
     if (params.get('open') === 'register') {
         openModal(registerModal);
@@ -27,9 +34,7 @@ export function initAuthModals() {
         history.replaceState(null, '', window.location.pathname);
     }
 
-    loginBtn?.addEventListener('click', () => {
-        openModal(loginModal);
-    });
+    loginBtn?.addEventListener('click', () => openModal(loginModal));
 
     openRegisterBtn?.addEventListener('click', (event) => {
         event.preventDefault();
@@ -43,36 +48,21 @@ export function initAuthModals() {
         openModal(loginModal);
     });
 
-    document.querySelectorAll('.modal-close-btn').forEach((button) => {
-        button.addEventListener('click', () => {
-            closeModal(button.closest('dialog'));
-        });
+    backdrop?.addEventListener('click', closeAll);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeAll();
     });
 
-    document.querySelectorAll('.auth-modal').forEach((modal) => {
-        modal.addEventListener('click', (event) => {
-            const rect = modal.getBoundingClientRect();
+    document.querySelectorAll('.auth-modal__close').forEach((button) => {
+        button.addEventListener('click', () => closeModal(button.closest('dialog')));
+    });
 
-            const clickedOutside =
-                event.clientX < rect.left ||
-                event.clientX > rect.right ||
-                event.clientY < rect.top ||
-                event.clientY > rect.bottom;
-
-            if (clickedOutside) {
-                closeModal(modal);
-            }
-        });
-
-        modal.addEventListener('close', () => {
-            modal.querySelectorAll('.toggle-password').forEach((button) => {
+    [loginModal, registerModal].forEach(modal => {
+        modal?.addEventListener('close', () => {
+            modal.querySelectorAll('.form__toggle-password').forEach((button) => {
                 const input = button.previousElementSibling;
-
-                if (input instanceof HTMLInputElement) {
-                    input.type = 'password';
-                }
-
-                button.textContent = '\u{1F441}';
+                if (input instanceof HTMLInputElement) input.type = 'password';
             });
         });
     });

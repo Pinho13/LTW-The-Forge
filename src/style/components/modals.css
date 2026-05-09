@@ -1,15 +1,29 @@
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 4;
+}
+
+.modal-backdrop--visible {
+    display: block;
+}
+
 .auth-modal {
-    position: relative;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+    margin: 0;
     width: min(32rem, calc(100% - 2 * var(--space-m)));
     padding: var(--space-xl) clamp(var(--space-m), 8vw, var(--space-xxl));
     border: none;
     border-top: var(--border-l) solid var(--color-gold);
     background-color: var(--color-golden-brown);
     color: var(--color-white);
-}
-
-.auth-modal::backdrop {
-    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 5;
 }
 
 .auth-modal__close {

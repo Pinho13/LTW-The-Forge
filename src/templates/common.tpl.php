@@ -12,13 +12,7 @@ require_once(__DIR__ . '/../../utils/session.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Forge</title>
-    <link rel="stylesheet" href="../style/base.css">
-    <link rel="stylesheet" href="../style/components/buttons.css">
-    <link rel="stylesheet" href="../style/components/top-nav-bar.css">
-    <link rel="stylesheet" href="../style/components/forms.css">
-    <link rel="stylesheet" href="../style/components/modals.css">
-    <link rel="stylesheet" href="../style/components/footer.css">
-    <link rel="stylesheet" href="../style/components/logo.css">
+    <link rel="stylesheet" href="../style/main.css">
     <?php foreach ($extraCss as $css) { ?>
     <link rel="stylesheet" href="<?=$css?>">
     <?php } ?>
@@ -55,9 +49,9 @@ require_once(__DIR__ . '/../../utils/session.php');
     <main>
 <?php } ?>
 
-<?php function drawPasswordField(string $id, string $name) { ?>
+<?php function drawPasswordField(string $id, string $name, string $autocomplete = 'current-password') { ?>
   <div class="form__password-wrapper">
-    <input type="password" id="<?=$id?>" name="<?=$name?>">
+    <input type="password" id="<?=$id?>" name="<?=$name?>" autocomplete="<?=$autocomplete?>">
     <button type="button" class="form__toggle-password">&#128065;</button>
   </div>
 <?php } ?>
@@ -88,16 +82,17 @@ require_once(__DIR__ . '/../../utils/session.php');
 
       <label for="<?=$isLogin ? 'login-email' : 'register-email'?>">EMAIL ADDRESS</label>
       <input type="email" id="<?=$isLogin ? 'login-email' : 'register-email'?>" name="email" placeholder="example@gmail.com"
+             autocomplete="email"
              value="<?= htmlspecialchars($formData['email'] ?? '') ?>">
 
       <label for="<?=$isLogin ? 'password' : 'register-password'?>">PASSWORD</label>
-      <?php drawPasswordField($isLogin ? 'password' : 'register-password', 'password'); ?>
+      <?php drawPasswordField($isLogin ? 'password' : 'register-password', 'password', $isLogin ? 'current-password' : 'new-password'); ?>
 
       <?php if ($isLogin) { ?>
         <a href="index.php" class="form__forgot">Forgot your password?</a>
       <?php } else { ?>
         <label for="register-confirm-password">CONFIRM PASSWORD</label>
-        <?php drawPasswordField('register-confirm-password', 'confirm-password'); ?>
+        <?php drawPasswordField('register-confirm-password', 'confirm-password', 'new-password'); ?>
       <?php } ?>
 
       <button type="submit" class="btn-primary"><?=$submit?></button>
@@ -118,6 +113,7 @@ require_once(__DIR__ . '/../../utils/session.php');
 
     <?php include __DIR__ . '/../components/footer.php'; ?>
 
+    <div class="modal-backdrop" id="modal-backdrop"></div>
     <?php drawAuthModal(true); ?>
     <?php drawAuthModal(false); ?>
 
