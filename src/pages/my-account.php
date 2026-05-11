@@ -1,9 +1,15 @@
 <?php
 declare(strict_types=1);
 require_once(__DIR__ . '/../../utils/session.php');
+require_once(__DIR__ . '/../../database/connection.db.php');
+require_once(__DIR__ . '/../../database/Enrollment.class.php');
 
 $session = new Session();
 $session->requireLogin('/src/pages/index.php?open=login');
+
+$db = getDatabaseConnection();
+$classesThisMonth = Enrollment::countEnrolledThisMonth($db, $session->getId());
+$upcomingReservations = Enrollment::countUpcoming($db, $session->getId());
 ?>
 <!DOCTYPE html>
     <html lang="en-US">
@@ -37,12 +43,12 @@ $session->requireLogin('/src/pages/index.php?open=login');
 
             <section class="stats">
                 <article class="stat-card">
-                    <h2 class="stat-card__value">12</h2>
+                    <h2 class="stat-card__value"><?= $classesThisMonth ?></h2>
                     <p class="stat-card__label">Classes This Month</p>
                 </article>
 
                 <article class="stat-card">
-                    <h2 class="stat-card__value">4</h2>
+                    <h2 class="stat-card__value"><?= $upcomingReservations ?></h2>
                     <p class="stat-card__label">Upcoming Reservations</p>
                 </article>
 

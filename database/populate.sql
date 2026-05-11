@@ -75,7 +75,10 @@ INSERT INTO class_session (class_id, datetime, room, capacity) VALUES
     (3, '2026-05-02 10:00:00', 'Room C', 20),  -- id 6
 
     -- capacity=1: normal@gmail.com fills it; member2@gmail.com is waitlisted
-    (2, '2026-04-24 18:00:00', 'Room B', 1);   -- id 7
+    (2, '2026-04-24 18:00:00', 'Room B', 1),   -- id 7
+
+    -- May session for verifying monthly count
+    (1, '2026-05-15 08:00:00', 'Room A', 15);  -- id 8
 
 
 -- ============================================================
@@ -85,7 +88,10 @@ INSERT INTO enrollment (member_id, session_id, status) VALUES
     (1, 1, 'enrolled'),   -- normal enrolled in Morning Yoga (Wed 22 Apr)
     (1, 3, 'enrolled'),   -- normal enrolled in HIIT Blast (Thu 23 Apr)
     (1, 7, 'enrolled'),   -- normal fills the capacity-1 HIIT session (Thu 24 Apr)
-    (4, 7, 'waitlisted'); -- member2 is waitlisted — session is full
+    (4, 7, 'waitlisted'), -- member2 is waitlisted — session is full
+    (1, 8, 'enrolled');   -- normal enrolled in May session (Fri 15 May) — for monthly count
+    (1, 8, 'enrolled');   -- normal enrolled in May session (Fri 15 May) — for monthly count
+    (2, 8, 'enrolled');   -- normal enrolled in May session (Fri 15 May) — for monthly count
 
 
 -- ============================================================
