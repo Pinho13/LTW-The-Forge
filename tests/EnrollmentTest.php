@@ -11,56 +11,14 @@ class EnrollmentTest extends TestCase
 
     protected function setUp(): void
     {
+        date_default_timezone_set('UTC');
+
         $this->db = new PDO('sqlite::memory:');
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-        $this->db->exec('PRAGMA foreign_keys = ON');
-
-        $this->db->exec("
-            CREATE TABLE user (
-                user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name VARCHAR NOT NULL,
-                username VARCHAR NOT NULL UNIQUE,
-                email VARCHAR NOT NULL UNIQUE,
-                password_hash VARCHAR NOT NULL,
-                profile_photo VARCHAR,
-                is_active BOOLEAN NOT NULL DEFAULT 1,
-                role VARCHAR NOT NULL,
-                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-            );
-            CREATE TABLE class_type (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name VARCHAR NOT NULL UNIQUE
-            );
-            CREATE TABLE class (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name VARCHAR NOT NULL,
-                type_id INTEGER,
-                description TEXT,
-                duration_minutes INTEGER NOT NULL,
-                intensity INTEGER NOT NULL,
-                trainer_id INTEGER
-            );
-            CREATE TABLE class_session (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                class_id INTEGER NOT NULL,
-                datetime DATETIME NOT NULL,
-                room VARCHAR NOT NULL,
-                capacity INTEGER NOT NULL,
-                FOREIGN KEY (class_id) REFERENCES class(id)
-            );
-            CREATE TABLE enrollment (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                member_id INTEGER NOT NULL,
-                session_id INTEGER NOT NULL,
-                enrolled_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                status VARCHAR NOT NULL DEFAULT 'enrolled',
-                UNIQUE (member_id, session_id),
-                FOREIGN KEY (member_id)  REFERENCES user(user_id),
-                FOREIGN KEY (session_id) REFERENCES class_session(id)
-            );
-        ");
+        $schema = file_get_contents(__DIR__ . '/../database/schema.sql');
+        $this->db->exec($schema);
 
         // Seed one member and one class (needed for FK constraints)
         $this->db->exec("
@@ -227,5 +185,24 @@ class EnrollmentTest extends TestCase
         $this->enroll(1, $future);
 
         $this->assertSame(1, Enrollment::countUpcoming($this->db, 1));
+    }
+
+    public function testCountThisMonthIgnoresFutureMonthSessions(): void
+    {
+        $nextMonth = date('Y-m-d 10:00:00', strtotime('first day of next month'));
+        $sessionId = $this->insertSession($nextMonth);
+        $this->enroll(1, $sessionId);
+
+        $this->assertSame(0, Enrollment::countEnrolledThisMonth($this->db, 1));
+    }
+
+    // SQL uses >, so a session at exactly now is NOT counted as upcoming
+    public function testCountUpcomingExcludesSessionAtExactlyNow(): void
+    {
+        $now = date('Y-m-d H:i:s');
+        $sessionId = $this->insertSession($now);
+        $this->enroll(1, $sessionId);
+
+        $this->assertSame(0, Enrollment::countUpcoming($this->db, 1));
     }
 }

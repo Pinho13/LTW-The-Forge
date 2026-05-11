@@ -3,13 +3,15 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../utils/session.php');
 require_once(__DIR__ . '/../../database/connection.db.php');
 require_once(__DIR__ . '/../../database/Enrollment.class.php');
+require_once(__DIR__ . '/../../database/GymVisit.class.php');
 
 $session = new Session();
 $session->requireLogin('/src/pages/index.php?open=login');
 
 $db = getDatabaseConnection();
-$classesThisMonth = Enrollment::countEnrolledThisMonth($db, $session->getId());
+$classesThisMonth     = Enrollment::countEnrolledThisMonth($db, $session->getId());
 $upcomingReservations = Enrollment::countUpcoming($db, $session->getId());
+$weeklyStreak         = GymVisit::getWeeklyStreak($db, $session->getId());
 ?>
 <!DOCTYPE html>
     <html lang="en-US">
@@ -55,29 +57,11 @@ $upcomingReservations = Enrollment::countUpcoming($db, $session->getId());
                 <article class="stat-card">
                     <h2 class="stat-card__value">Weekly Streak</h2>
                     <ul class="streak">
-                        <li class="streak__item streak__item--active">
-                            <img src="../assets/icons/streak.svg" alt="Fire icon">
-                        </li>
-
-                        <li class="streak__item streak__item--active">
-                            <img src="../assets/icons/streak.svg" alt="Fire icon">
-                        </li>
-
-                        <li class="streak__item">
-                            <img src="../assets/icons/streak.svg" alt="Fire icon">
-                        </li>
-
-                        <li class="streak__item">
-                            <img src="../assets/icons/streak.svg" alt="Fire icon">
-                        </li>
-
-                        <li class="streak__item">
-                            <img src="../assets/icons/streak.svg" alt="Fire icon">
-                        </li>
-
-                        <li class="streak__item">
-                            <img src="../assets/icons/streak.svg" alt="Fire icon">
-                        </li>
+                        <?php for ($i = 1; $i <= 6; $i++): ?>
+                            <li class="streak__item <?= $i <= $weeklyStreak ? 'streak__item--active' : '' ?>">
+                                <img src="../assets/icons/streak.svg" alt="Fire icon">
+                            </li>
+                        <?php endfor; ?>
                     </ul>
                 </article>
             </section>

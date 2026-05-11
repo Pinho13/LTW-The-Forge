@@ -62,50 +62,132 @@ INSERT INTO class (name, type_id, description, duration_minutes, intensity, trai
 
 
 -- ============================================================
--- CLASS SESSIONS  (spread across 2026-04-21 to 2026-05-02)
+-- CLASS SESSIONS
+-- Today: 2026-05-11 (Monday)
 -- ============================================================
 INSERT INTO class_session (class_id, datetime, room, capacity) VALUES
-    (1, '2026-04-22 08:00:00', 'Room A', 15),  -- id 1
-    (1, '2026-04-29 08:00:00', 'Room A', 15),  -- id 2
+    -- === APRIL 2026 (all past) ===
+    (1, '2026-04-22 08:00:00', 'Room A', 15),  -- id 1  Morning Yoga  Tue 22 Apr
+    (2, '2026-04-23 18:00:00', 'Room B', 12),  -- id 2  HIIT Blast    Wed 23 Apr
+    (2, '2026-04-24 18:00:00', 'Room B',  1),  -- id 3  HIIT Blast    Thu 24 Apr  capacity=1 (full)
+    (3, '2026-04-25 10:00:00', 'Room C', 20),  -- id 4  Cardio Burn   Sat 25 Apr
+    (1, '2026-04-28 08:00:00', 'Room A', 15),  -- id 5  Morning Yoga  Tue 28 Apr
+    (2, '2026-04-29 18:00:00', 'Room B', 12),  -- id 6  HIIT Blast    Wed 29 Apr
+    (3, '2026-04-30 10:00:00', 'Room C', 20),  -- id 7  Cardio Burn   Thu 30 Apr
 
-    (2, '2026-04-23 18:00:00', 'Room B', 12),  -- id 3
-    (2, '2026-04-30 18:00:00', 'Room B', 12),  -- id 4
+    -- === MAY 2026 — PAST (before 2026-05-11) ===
+    (3, '2026-05-02 10:00:00', 'Room C', 20),  -- id 8  Cardio Burn   Fri  2 May
+    (1, '2026-05-05 08:00:00', 'Room A', 15),  -- id 9  Morning Yoga  Mon  5 May
+    (2, '2026-05-06 18:00:00', 'Room B', 12),  -- id 10 HIIT Blast    Tue  6 May
+    (3, '2026-05-07 10:00:00', 'Room C', 20),  -- id 11 Cardio Burn   Wed  7 May
+    (1, '2026-05-08 08:00:00', 'Room A', 15),  -- id 12 Morning Yoga  Thu  8 May
+    (2, '2026-05-09 18:00:00', 'Room B', 12),  -- id 13 HIIT Blast    Fri  9 May
+    (3, '2026-05-10 10:00:00', 'Room C', 20),  -- id 14 Cardio Burn   Sat 10 May
 
-    (3, '2026-04-25 10:00:00', 'Room C', 20),  -- id 5
-    (3, '2026-05-02 10:00:00', 'Room C', 20),  -- id 6
+    -- === MAY 2026 — FUTURE ===
+    (2, '2026-05-13 18:00:00', 'Room B', 12),  -- id 15 HIIT Blast    Wed 13 May
+    (3, '2026-05-15 10:00:00', 'Room C', 20),  -- id 16 Cardio Burn   Fri 15 May
+    (1, '2026-05-18 08:00:00', 'Room A', 15),  -- id 17 Morning Yoga  Mon 18 May
+    (2, '2026-05-20 18:00:00', 'Room B', 12),  -- id 18 HIIT Blast    Wed 20 May
+    (3, '2026-05-22 10:00:00', 'Room C', 20),  -- id 19 Cardio Burn   Fri 22 May
+    (1, '2026-05-25 08:00:00', 'Room A', 15),  -- id 20 Morning Yoga  Mon 25 May
+    (2, '2026-05-27 18:00:00', 'Room B', 12),  -- id 21 HIIT Blast    Wed 27 May
+    (3, '2026-05-29 10:00:00', 'Room C', 20),  -- id 22 Cardio Burn   Fri 29 May
 
-    -- capacity=1: normal@gmail.com fills it; member2@gmail.com is waitlisted
-    (2, '2026-04-24 18:00:00', 'Room B', 1),   -- id 7
-
-    -- May session for verifying monthly count
-    (1, '2026-05-15 08:00:00', 'Room A', 15);  -- id 8
+    -- === JUNE 2026 — FUTURE ===
+    (1, '2026-06-02 08:00:00', 'Room A', 15),  -- id 23 Morning Yoga  Tue  2 Jun
+    (2, '2026-06-04 18:00:00', 'Room B', 12);  -- id 24 HIIT Blast    Thu  4 Jun
 
 
 -- ============================================================
 -- ENROLLMENT
+-- normal@gmail.com (id 1):
+--   Classes this month (May): ids 8-14 (past) + 15, 17, 19 (future) = 10
+--   Upcoming (future enrolled):  15, 17, 19, 23                      =  4
 -- ============================================================
 INSERT INTO enrollment (member_id, session_id, status) VALUES
-    (1, 1, 'enrolled'),   -- normal enrolled in Morning Yoga (Wed 22 Apr)
-    (1, 3, 'enrolled'),   -- normal enrolled in HIIT Blast (Thu 23 Apr)
-    (1, 7, 'enrolled'),   -- normal fills the capacity-1 HIIT session (Thu 24 Apr)
-    (4, 7, 'waitlisted'), -- member2 is waitlisted — session is full
-    (1, 8, 'enrolled');   -- normal enrolled in May session (Fri 15 May) — for monthly count
-    (1, 8, 'enrolled');   -- normal enrolled in May session (Fri 15 May) — for monthly count
-    (2, 8, 'enrolled');   -- normal enrolled in May session (Fri 15 May) — for monthly count
+    -- normal — April history
+    (1,  1, 'enrolled'),   -- Morning Yoga  Tue 22 Apr
+    (1,  2, 'enrolled'),   -- HIIT Blast    Wed 23 Apr
+    (1,  3, 'enrolled'),   -- HIIT Blast    Thu 24 Apr  (fills capacity=1)
+    (4,  3, 'waitlisted'), -- member2 waitlisted — session full
+    (1,  4, 'enrolled'),   -- Cardio Burn   Sat 25 Apr
+    (1,  5, 'enrolled'),   -- Morning Yoga  Tue 28 Apr
+    (1,  6, 'enrolled'),   -- HIIT Blast    Wed 29 Apr
+    (1,  7, 'enrolled'),   -- Cardio Burn   Thu 30 Apr
+
+    -- normal — May past  (+7 classes this month)
+    (1,  8, 'enrolled'),   -- Cardio Burn   Fri  2 May
+    (1,  9, 'enrolled'),   -- Morning Yoga  Mon  5 May
+    (1, 10, 'enrolled'),   -- HIIT Blast    Tue  6 May
+    (1, 11, 'enrolled'),   -- Cardio Burn   Wed  7 May
+    (1, 12, 'enrolled'),   -- Morning Yoga  Thu  8 May
+    (1, 13, 'enrolled'),   -- HIIT Blast    Fri  9 May
+    (1, 14, 'enrolled'),   -- Cardio Burn   Sat 10 May
+
+    -- normal — May future  (+3 classes this month, +3 upcoming)
+    (1, 15, 'enrolled'),   -- HIIT Blast    Wed 13 May
+    (1, 17, 'enrolled'),   -- Morning Yoga  Mon 18 May
+    (1, 19, 'enrolled'),   -- Cardio Burn   Fri 22 May
+
+    -- normal — June future  (+1 upcoming, not this month)
+    (1, 23, 'enrolled'),   -- Morning Yoga  Tue  2 Jun
+
+    -- member2 — a few future sessions
+    (4, 16, 'enrolled'),   -- Cardio Burn   Fri 15 May
+    (4, 18, 'enrolled'),   -- HIIT Blast    Wed 20 May
+    (4, 20, 'enrolled'),   -- Morning Yoga  Mon 25 May
+    (4, 24, 'enrolled');   -- HIIT Blast    Thu  4 Jun
 
 
 -- ============================================================
--- REVIEW  (normal@gmail.com reviewed class 1 - Morning Yoga)
+-- REVIEWS
 -- ============================================================
 INSERT INTO review (class_id, member_id, rating, comment) VALUES
-    (1, 1, 5, 'Amazing session, felt great afterwards!');
+    (1, 1, 5, 'Amazing session, felt great afterwards!'),
+    (2, 1, 4, 'Intense but worth it. Really pushed my limits.'),
+    (3, 4, 3, 'Good session, but the room was a bit warm.');
+
+
+-- ============================================================
+-- GYM VISITS
+-- normal@gmail.com — 6 consecutive weeks → streak = 6 (all fires lit)
+-- member2@gmail.com — 3 consecutive weeks → streak = 3
+-- ============================================================
+INSERT INTO gym_visit (member_id, entered_at, left_at, status) VALUES
+    -- normal — week of 2026-04-05 (Sun)
+    (1, '2026-04-07 09:00:00', '2026-04-07 10:30:00', 'left'),
+
+    -- normal — week of 2026-04-12 (Sun)
+    (1, '2026-04-13 08:30:00', '2026-04-13 10:00:00', 'left'),
+    (1, '2026-04-16 18:00:00', '2026-04-16 19:15:00', 'left'),
+
+    -- normal — week of 2026-04-19 (Sun)
+    (1, '2026-04-21 09:00:00', '2026-04-21 10:30:00', 'left'),
+    (1, '2026-04-23 18:00:00', '2026-04-23 19:00:00', 'left'),
+
+    -- normal — week of 2026-04-26 (Sun)
+    (1, '2026-04-28 08:30:00', '2026-04-28 10:00:00', 'left'),
+    (1, '2026-04-30 18:00:00', '2026-04-30 19:30:00', 'left'),
+
+    -- normal — week of 2026-05-03 (Sun)
+    (1, '2026-05-05 09:00:00', '2026-05-05 10:30:00', 'left'),
+    (1, '2026-05-07 18:00:00', '2026-05-07 19:00:00', 'left'),
+
+    -- normal — week of 2026-05-10 (Sun) — currently in gym
+    (1, '2026-05-11 09:00:00', NULL, 'in_gym'),
+
+    -- member2 — 3 consecutive weeks (streak = 3)
+    (4, '2026-04-27 10:00:00', '2026-04-27 11:00:00', 'left'),  -- week of Apr 26
+    (4, '2026-05-04 10:00:00', '2026-05-04 11:00:00', 'left'),  -- week of May 3
+    (4, '2026-05-11 10:00:00', NULL,                  'in_gym'); -- week of May 10
 
 
 -- ============================================================
 -- EQUIPMENT
 -- ============================================================
 INSERT INTO equipment (name, type, description) VALUES
-    ('Treadmill',    'Cardio',    'Electric treadmill with incline settings.'),
+    ('Treadmill',    'Cardio',        'Electric treadmill with incline settings.'),
     ('Barbell Set',  'Weightlifting', '20 kg Olympic barbell with plate rack.');
 
 
@@ -120,15 +202,14 @@ INSERT INTO equipment_unit (equipment_id, identifier, status) VALUES
 
 -- ========================================================================================================================
 -- EXTRA FEATURES PLANNED / PARTIALLY INTEGRATED
--- Seeded now so the data model is ready for later development
 -- ========================================================================================================================
 
 
 -- ============================================================
--- EQUIPMENT RESERVATION  (normal@gmail.com reserves TRD-01)
+-- EQUIPMENT RESERVATION
 -- ============================================================
 INSERT INTO equipment_reservation (member_id, unit_id, start_datetime, end_datetime) VALUES
-    (1, 1, '2026-04-22 09:00:00', '2026-04-22 09:30:00');
+    (1, 1, '2026-05-12 09:00:00', '2026-05-12 09:30:00');
 
 
 -- ============================================================
@@ -140,36 +221,30 @@ INSERT INTO facility (name, description, max_occupancy) VALUES
 
 
 -- ============================================================
--- FACILITY RESERVATION  (normal@gmail.com reserves Jacuzzi)
+-- FACILITY RESERVATION
 -- ============================================================
 INSERT INTO facility_reservation (member_id, facility_id, start_datetime, end_datetime) VALUES
-    (1, 1, '2026-04-22 10:00:00', '2026-04-22 10:30:00');
+    (1, 1, '2026-05-13 10:00:00', '2026-05-13 10:30:00');
 
 
 -- ============================================================
--- GYM VISIT  (normal@gmail.com — completed visit)
--- ============================================================
-INSERT INTO gym_visit (member_id, entered_at, left_at, status) VALUES
-    (1, '2026-04-21 09:00:00', '2026-04-21 10:30:00', 'left');
-
-
--- ============================================================
--- PERSONAL TRAINING SESSION  (normal with trainer, next Tuesday)
+-- PERSONAL TRAINING SESSION
 -- ============================================================
 INSERT INTO personal_training_session (member_id, trainer_id, datetime, duration_minutes, status) VALUES
-    (1, 2, '2026-04-28 11:00:00', 60, 'confirmed');
+    (1, 2, '2026-05-19 11:00:00', 60, 'confirmed');
 
 
 -- ============================================================
 -- MEMBERSHIP PLANS
 -- ============================================================
 INSERT INTO membership_plan (name, price, description, max_classes_per_month) VALUES
-    ('Basic',   19.99, 'Access to gym floor and cardio equipment.',         NULL),
+    ('Basic',   19.99, 'Access to gym floor and cardio equipment.',          NULL),
     ('Premium', 39.99, 'Unlimited classes + equipment and facility access.', NULL);
 
 
 -- ============================================================
--- MEMBER SUBSCRIPTION  (normal@gmail.com on Premium, active)
+-- MEMBER SUBSCRIPTIONS
 -- ============================================================
 INSERT INTO member_subscription (member_id, plan_id, start_date, end_date, status) VALUES
-    (1, 2, '2026-04-01', '2026-05-01', 'active');
+    (1, 2, '2026-05-01', '2026-06-01', 'active'),
+    (4, 1, '2026-05-01', '2026-06-01', 'active');
