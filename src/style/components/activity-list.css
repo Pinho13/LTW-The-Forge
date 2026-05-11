@@ -29,6 +29,10 @@
     text-align: right;
 }
 
+.activity-list__empty {
+    color: var(--color-almost-white);
+}
+
 @media (max-width: 900px) {
     .activity-list__item {
         grid-template-columns: 1fr auto;

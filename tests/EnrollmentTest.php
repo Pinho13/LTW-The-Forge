@@ -205,4 +205,135 @@ class EnrollmentTest extends TestCase
 
         $this->assertSame(0, Enrollment::countUpcoming($this->db, 1));
     }
+
+    // --- findNextForMember ---
+
+    public function testFindNextReturnsNullWhenNoEnrollments(): void
+    {
+        $this->assertNull(Enrollment::findNextForMember($this->db, 1));
+    }
+
+    public function testFindNextReturnsNullWhenOnlyPastSessions(): void
+    {
+        $sessionId = $this->insertSession(date('Y-m-d H:i:s', strtotime('-1 day')));
+        $this->enroll(1, $sessionId);
+
+        $this->assertNull(Enrollment::findNextForMember($this->db, 1));
+    }
+
+    public function testFindNextReturnsSingleFutureSession(): void
+    {
+        $future = date('Y-m-d H:i:s', strtotime('+1 day'));
+        $sessionId = $this->insertSession($future);
+        $this->enroll(1, $sessionId);
+
+        $result = Enrollment::findNextForMember($this->db, 1);
+
+        $this->assertNotNull($result);
+        $this->assertSame('Morning Yoga', $result['class_name']);
+        $this->assertSame('Room A', $result['room']);
+        $this->assertSame($future, $result['datetime']);
+    }
+
+    public function testFindNextReturnsClosestWhenMultipleFutureSessions(): void
+    {
+        $closer  = date('Y-m-d H:i:s', strtotime('+1 day'));
+        $further = date('Y-m-d H:i:s', strtotime('+5 days'));
+
+        $s1 = $this->insertSession($further);
+        $s2 = $this->insertSession($closer);
+        $this->enroll(1, $s1);
+        $this->enroll(1, $s2);
+
+        $result = Enrollment::findNextForMember($this->db, 1);
+
+        $this->assertSame($closer, $result['datetime']);
+    }
+
+    // --- getRecentActivity ---
+
+    private function enrollWithStatus(int $memberId, int $sessionId, string $status): void
+    {
+        $stmt = $this->db->prepare(
+            "INSERT INTO enrollment (member_id, session_id, status) VALUES (?, ?, ?)"
+        );
+        $stmt->execute([$memberId, $sessionId, $status]);
+    }
+
+    public function testRecentActivityReturnsEmptyWhenNoEnrollments(): void
+    {
+        $this->assertSame([], Enrollment::getRecentActivity($this->db, 1));
+    }
+
+    public function testRecentActivityReturnsCompletedSession(): void
+    {
+        $sessionId = $this->insertSession(date('Y-m-d H:i:s', strtotime('-1 day')));
+        $this->enrollWithStatus(1, $sessionId, 'completed');
+
+        $result = Enrollment::getRecentActivity($this->db, 1);
+
+        $this->assertCount(1, $result);
+        $this->assertSame('completed', $result[0]['status']);
+    }
+
+    public function testRecentActivityReturnsMissedSession(): void
+    {
+        $sessionId = $this->insertSession(date('Y-m-d H:i:s', strtotime('-1 day')));
+        $this->enrollWithStatus(1, $sessionId, 'missed');
+
+        $result = Enrollment::getRecentActivity($this->db, 1);
+
+        $this->assertCount(1, $result);
+        $this->assertSame('missed', $result[0]['status']);
+    }
+
+    public function testRecentActivityIgnoresFutureSessions(): void
+    {
+        $sessionId = $this->insertSession(date('Y-m-d H:i:s', strtotime('+1 day')));
+        $this->enrollWithStatus(1, $sessionId, 'completed');
+
+        $this->assertSame([], Enrollment::getRecentActivity($this->db, 1));
+    }
+
+    public function testRecentActivityIgnoresEnrolledStatus(): void
+    {
+        $sessionId = $this->insertSession(date('Y-m-d H:i:s', strtotime('-1 day')));
+        $this->enroll(1, $sessionId, 'enrolled');
+
+        $this->assertSame([], Enrollment::getRecentActivity($this->db, 1));
+    }
+
+    public function testRecentActivityIgnoresSessionsOlderThanTwoWeeks(): void
+    {
+        $sessionId = $this->insertSession(date('Y-m-d H:i:s', strtotime('-15 days')));
+        $this->enrollWithStatus(1, $sessionId, 'completed');
+
+        $this->assertSame([], Enrollment::getRecentActivity($this->db, 1));
+    }
+
+    public function testRecentActivityLimitsToSevenMostRecent(): void
+    {
+        for ($i = 1; $i <= 9; $i++) {
+            $sessionId = $this->insertSession(date('Y-m-d H:i:s', strtotime("-{$i} day")));
+            $this->enrollWithStatus(1, $sessionId, 'completed');
+        }
+
+        $this->assertCount(7, Enrollment::getRecentActivity($this->db, 1));
+    }
+
+    public function testRecentActivityIsOrderedMostRecentFirst(): void
+    {
+        $older = date('Y-m-d H:i:s', strtotime('-3 days'));
+        $newer = date('Y-m-d H:i:s', strtotime('-1 day'));
+
+        $s1 = $this->insertSession($older);
+        $s2 = $this->insertSession($newer);
+        $this->enrollWithStatus(1, $s1, 'completed');
+        $this->enrollWithStatus(1, $s2, 'missed');
+
+        $result = Enrollment::getRecentActivity($this->db, 1);
+
+        $this->assertSame($newer, $result[0]['datetime']);
+        $this->assertSame($older, $result[1]['datetime']);
+    }
 }

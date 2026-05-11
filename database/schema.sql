@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS enrollment (
     session_id  INTEGER NOT NULL,
     enrolled_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     status      VARCHAR NOT NULL DEFAULT 'enrolled'
-                    CHECK (status IN ('enrolled', 'cancelled', 'waitlisted')),
+                    CHECK (status IN ('enrolled', 'cancelled', 'waitlisted', 'completed', 'missed')),
     UNIQUE (member_id, session_id),
     FOREIGN KEY (member_id)  REFERENCES user(user_id)     ON DELETE CASCADE,
     FOREIGN KEY (session_id) REFERENCES class_session(id) ON DELETE CASCADE

@@ -28,3 +28,7 @@
     align-items: center;
     gap: var(--space-xxs);
 }
+
+.class-preview__empty {
+    margin-block: var(--space-xs);
+}

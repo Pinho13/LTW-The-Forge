@@ -107,23 +107,23 @@ INSERT INTO class_session (class_id, datetime, room, capacity) VALUES
 -- ============================================================
 INSERT INTO enrollment (member_id, session_id, status) VALUES
     -- normal — April history
-    (1,  1, 'enrolled'),   -- Morning Yoga  Tue 22 Apr
-    (1,  2, 'enrolled'),   -- HIIT Blast    Wed 23 Apr
-    (1,  3, 'enrolled'),   -- HIIT Blast    Thu 24 Apr  (fills capacity=1)
+    (1,  1, 'completed'),  -- Morning Yoga  Tue 22 Apr
+    (1,  2, 'completed'),  -- HIIT Blast    Wed 23 Apr
+    (1,  3, 'completed'),  -- HIIT Blast    Thu 24 Apr  (fills capacity=1)
     (4,  3, 'waitlisted'), -- member2 waitlisted — session full
-    (1,  4, 'enrolled'),   -- Cardio Burn   Sat 25 Apr
-    (1,  5, 'enrolled'),   -- Morning Yoga  Tue 28 Apr
-    (1,  6, 'enrolled'),   -- HIIT Blast    Wed 29 Apr
-    (1,  7, 'enrolled'),   -- Cardio Burn   Thu 30 Apr
+    (1,  4, 'missed'),     -- Cardio Burn   Sat 25 Apr
+    (1,  5, 'completed'),  -- Morning Yoga  Tue 28 Apr
+    (1,  6, 'completed'),  -- HIIT Blast    Wed 29 Apr
+    (1,  7, 'missed'),     -- Cardio Burn   Thu 30 Apr
 
     -- normal — May past  (+7 classes this month)
-    (1,  8, 'enrolled'),   -- Cardio Burn   Fri  2 May
-    (1,  9, 'enrolled'),   -- Morning Yoga  Mon  5 May
-    (1, 10, 'enrolled'),   -- HIIT Blast    Tue  6 May
-    (1, 11, 'enrolled'),   -- Cardio Burn   Wed  7 May
-    (1, 12, 'enrolled'),   -- Morning Yoga  Thu  8 May
-    (1, 13, 'enrolled'),   -- HIIT Blast    Fri  9 May
-    (1, 14, 'enrolled'),   -- Cardio Burn   Sat 10 May
+    (1,  8, 'completed'),  -- Cardio Burn   Fri  2 May
+    (1,  9, 'completed'),  -- Morning Yoga  Mon  5 May
+    (1, 10, 'completed'),  -- HIIT Blast    Tue  6 May
+    (1, 11, 'missed'),     -- Cardio Burn   Wed  7 May
+    (1, 12, 'completed'),  -- Morning Yoga  Thu  8 May
+    (1, 13, 'completed'),  -- HIIT Blast    Fri  9 May
+    (1, 14, 'completed'),  -- Cardio Burn   Sat 10 May
 
     -- normal — May future  (+3 classes this month, +3 upcoming)
     (1, 15, 'enrolled'),   -- HIIT Blast    Wed 13 May
