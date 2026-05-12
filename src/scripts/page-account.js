@@ -69,6 +69,38 @@ pauseModal.querySelectorAll('.pause-option').forEach(btn => {
     });
 });
 
+// Profile picture upload
+const pfpBtn     = document.getElementById('pfp-btn');
+const pfpInput   = document.getElementById('pfp-input');
+const pfpForm    = document.getElementById('pfp-form');
+const pfpModal   = document.getElementById('pfp-modal');
+const pfpPreview = document.getElementById('pfp-preview');
+
+pfpBtn.addEventListener('click', () => pfpInput.click());
+
+pfpInput.addEventListener('change', () => {
+    const file = pfpInput.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        pfpPreview.src = e.target.result;
+        openModal(pfpModal);
+    };
+    reader.readAsDataURL(file);
+});
+
+document.getElementById('pfp-confirm-btn').addEventListener('click', () => pfpForm.submit());
+document.getElementById('pfp-cancel-btn').addEventListener('click', e => {
+    e.preventDefault();
+    closeModal(pfpModal);
+    pfpInput.value = '';
+});
+pfpModal.querySelector('.auth-modal__close').addEventListener('click', () => {
+    closeModal(pfpModal);
+    pfpInput.value = '';
+});
+if ('openOnLoad' in pfpModal.dataset) openModal(pfpModal);
+
 // Password toggles
 document.querySelectorAll('.form__toggle-password').forEach(button => {
     button.addEventListener('click', () => {

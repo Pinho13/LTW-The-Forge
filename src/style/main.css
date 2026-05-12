@@ -4,6 +4,7 @@
 @import url('./base.css');
 
 /* Layer 2: Component styles */
+@import url('./components/avatar.css');
 @import url('./components/buttons.css');
 @import url('./components/forms.css');
 @import url('./components/modals.css');

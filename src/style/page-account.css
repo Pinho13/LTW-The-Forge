@@ -8,21 +8,28 @@
     border-bottom: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.2);
 }
 
-.profile-hero__avatar {
-    width: var(--space-xxl);
-    height: var(--space-xxl);
+.profile-hero .user-avatar,
+.profile-hero .user-avatar-btn {
+    width: var(--space-hero);
+    height: var(--space-hero);
 }
 
-.profile-hero__avatar--initials {
-    background-color: var(--color-gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Big Shoulders", sans-serif;
-    font-size: var(--font-size-l);
-    font-weight: bold;
-    color: var(--color-black);
+.profile-hero .user-avatar--initials {
+    font-size: var(--font-size-xl);
 }
+
+.pfp-modal__preview {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+.pfp-modal__confirm {
+    width: 100%;
+    margin-top: var(--space-m);
+    font-size: var(--font-size-m);
+}
+
 
 .profile-hero__name {
     font-family: "Big Shoulders", sans-serif;
@@ -61,7 +68,7 @@
 .profile-section__title {
     font-family: "Big Shoulders", sans-serif;
     font-size: var(--font-size-l);
-    color: rgba(var(--color-grey-rgb), 0.6);
+    color: rgb(var(--color-grey-rgb));
     margin: 0;
 }
 
@@ -75,8 +82,8 @@
 }
 
 .profile-form__success {
-    color: #6fcf6f;
-    margin: var(--space-xs) 0 0;
+    color: var(--color-success);
+    margin-bottom: 0;
     font-size: var(--font-size-xs);
 }
 

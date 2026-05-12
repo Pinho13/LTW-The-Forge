@@ -15,6 +15,12 @@ $memberSince = date('M Y', strtotime($user->created_at));
 
 $heroInitials = $user->getInitials();
 
+$pfpPath  = __DIR__ . '/../../database/profile_pictures/' . $user->user_id . '.png';
+$pfpUrl   = file_exists($pfpPath)
+    ? '/database/profile_pictures/' . $user->user_id . '.png?v=' . filemtime($pfpPath)
+    : null;
+$uploadError = $session->popFormError('upload_pfp');
+
 $accountError    = $session->popFormError('update_account');
 $accountSuccess  = $session->popFormSuccess('update_account');
 $passwordError   = $session->popFormError('change_password');
@@ -59,15 +65,18 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
         </header>
 
         <section class="profile-hero">
-            <?php if ($user->profile_photo): ?>
-                <img src="<?= htmlspecialchars($user->profile_photo) ?>"
-                     alt="<?= htmlspecialchars($user->name) ?>"
-                     class="profile-hero__avatar">
-            <?php else: ?>
-                <div class="profile-hero__avatar profile-hero__avatar--initials" aria-hidden="true">
-                    <span><?= htmlspecialchars($heroInitials) ?></span>
-                </div>
-            <?php endif; ?>
+            <button type="button" class="user-avatar-btn" id="pfp-btn" title="Change profile picture">
+                <?php if ($pfpUrl): ?>
+                    <img src="<?= htmlspecialchars($pfpUrl) ?>"
+                         alt="<?= htmlspecialchars($user->name) ?>"
+                         class="user-avatar">
+                <?php else: ?>
+                    <div class="user-avatar user-avatar--initials" aria-hidden="true">
+                        <span><?= htmlspecialchars($heroInitials) ?></span>
+                    </div>
+                <?php endif; ?>
+                <div class="user-avatar__overlay" aria-hidden="true">&#128247;</div>
+            </button>
 
             <div class="profile-hero__info">
                 <h2 class="profile-hero__name"><?= htmlspecialchars(strtoupper($user->name)) ?></h2>
@@ -186,7 +195,24 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
         </section>
     </main>
 
+    <form id="pfp-form" method="post" enctype="multipart/form-data"
+          action="../actions/action_upload_profile_picture.php">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+        <input type="file" id="pfp-input" name="photo" accept="image/*" style="display:none">
+    </form>
+
     <div class="modal-backdrop" id="page-backdrop"></div>
+
+    <dialog id="pfp-modal" class="auth-modal" <?= $uploadError ? 'data-open-on-load' : '' ?>>
+        <button type="button" class="btn-ghost auth-modal__close">&times;</button>
+        <h2 class="auth-modal__title">Profile Picture</h2>
+        <img id="pfp-preview" src="" alt="Preview" class="pfp-modal__preview">
+        <?php if ($uploadError): ?>
+            <p class="auth-modal__error"><?= htmlspecialchars($uploadError) ?></p>
+        <?php endif; ?>
+        <button type="button" id="pfp-confirm-btn" class="btn-primary pfp-modal__confirm">Save Picture</button>
+        <p class="auth-modal__switch"><a href="#" id="pfp-cancel-btn">Cancel</a></p>
+    </dialog>
 
     <dialog id="delete-modal" class="auth-modal" <?= $deleteError ? 'data-open-on-load' : '' ?>>
         <button type="button" class="btn-ghost auth-modal__close">&times;</button>
