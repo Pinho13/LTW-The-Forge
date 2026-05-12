@@ -4,24 +4,6 @@ main {
     background-color: rgba(var(--color-brown-rgb), 0.03);
 }
 
-main > header {
-    border-bottom: solid;
-    border-color: rgba(var(--color-grey-rgb), 0.2);
-    border-bottom-width: var(--border-xs);
-    padding-block-start: var(--space-xs);
-    padding-block-end: var(--space-l);
-    padding-inline-start: var(--space-m);
-    max-height: var(--space-xl);
-}
-
-h1 {
-    display: inline-block;
-    border-bottom: solid rgba(var(--color-light-gold-rgb), 0.5);
-    border-bottom-width: var(--border-xs);
-    font-size: var(--font-size-xl);
-    margin: 3px;
-}
-
 section {
     margin: var(--space-l);
 }
