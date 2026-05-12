@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS user (
     email         VARCHAR NOT NULL UNIQUE,
     password_hash VARCHAR NOT NULL,
     profile_photo VARCHAR,
+    phone         VARCHAR,
     is_active     BOOLEAN NOT NULL DEFAULT 1 CHECK (is_active IN (0, 1)),
     role          VARCHAR NOT NULL CHECK (role IN ('member', 'trainer', 'admin')),
     created_at    DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -212,8 +213,9 @@ CREATE TABLE IF NOT EXISTS member_subscription (
     plan_id    INTEGER NOT NULL,
     start_date DATE NOT NULL,
     end_date   DATE NOT NULL,
-    status     VARCHAR NOT NULL DEFAULT 'active'
-                   CHECK (status IN ('active', 'expired', 'cancelled')),
+    status       VARCHAR NOT NULL DEFAULT 'active'
+                     CHECK (status IN ('active', 'expired', 'cancelled', 'frozen')),
+    frozen_until DATE,
     CHECK (end_date > start_date),
     FOREIGN KEY (member_id) REFERENCES user(user_id)       ON DELETE CASCADE,
     FOREIGN KEY (plan_id)   REFERENCES membership_plan(id) ON DELETE RESTRICT
