@@ -11,6 +11,8 @@ class User
         public readonly string $role,
         public readonly bool $is_active,
         public readonly string $created_at,
+        public readonly ?string $phone = null,
+        public readonly ?string $profile_photo = null,
     ) {}
 
     public static function findById(PDO $db, int $userId): ?self
@@ -101,6 +103,71 @@ class User
         return self::fromRow($row);
     }
 
+    public static function phoneHasAreaCode(string $phone): bool
+    {
+        return str_starts_with(ltrim($phone), '+');
+    }
+
+    public static function phoneHasValidLength(string $phone): bool
+    {
+        $digits = preg_replace('/\D/', '', $phone);
+        $len    = strlen($digits);
+        return $len >= 7 && $len <= 15;
+    }
+
+    public static function phonePassesPortugalRules(string $phone): bool
+    {
+        if (!str_starts_with(ltrim($phone), '+351')) return true;
+        $digits = preg_replace('/\D/', '', $phone);
+        return strlen(substr($digits, 3)) === 9;
+    }
+
+    public function getInitials(): string
+    {
+        $words = array_values(array_filter(explode(' ', $this->name)));
+        $initials = '';
+        foreach (array_slice($words, 0, 2) as $word) {
+            $initials .= mb_strtoupper(mb_substr($word, 0, 1));
+        }
+        return $initials;
+    }
+
+    public static function isValidPhone(string $phone): bool
+    {
+        return self::phoneHasAreaCode($phone)
+            && self::phoneHasValidLength($phone)
+            && self::phonePassesPortugalRules($phone);
+    }
+
+    public static function verifyCurrentPassword(PDO $db, int $userId, string $password): bool
+    {
+        $stmt = $db->prepare('SELECT password_hash FROM user WHERE user_id = :id');
+        $stmt->execute([':id' => $userId]);
+        $hash = $stmt->fetchColumn();
+        return $hash !== false && password_verify($password, $hash);
+    }
+
+    public static function updatePassword(PDO $db, int $userId, string $newPassword): void
+    {
+        $stmt = $db->prepare('UPDATE user SET password_hash = :hash WHERE user_id = :id');
+        $stmt->execute([':hash' => password_hash($newPassword, PASSWORD_BCRYPT), ':id' => $userId]);
+    }
+
+    public static function delete(PDO $db, int $userId): void
+    {
+        $stmt = $db->prepare('DELETE FROM user WHERE user_id = :id');
+        $stmt->execute([':id' => $userId]);
+    }
+
+    public static function update(PDO $db, int $userId, string $name, string $username, string $email, ?string $phone): void
+    {
+        $stmt = $db->prepare(
+            'UPDATE user SET name = :name, username = :username, email = :email, phone = :phone
+             WHERE user_id = :id'
+        );
+        $stmt->execute([':name' => $name, ':username' => $username, ':email' => $email, ':phone' => $phone, ':id' => $userId]);
+    }
+
     private static function fromRow(array $row): self
     {
         return new self(
@@ -111,6 +178,8 @@ class User
             (string) $row['role'],
             (bool) $row['is_active'],
             (string) $row['created_at'],
+            !empty($row['phone']) ? (string) $row['phone'] : null,
+            !empty($row['profile_photo']) ? (string) $row['profile_photo'] : null,
         );
     }
 }
