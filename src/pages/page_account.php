@@ -162,6 +162,14 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
 
             <div class="danger-zone__item">
                 <div class="danger-zone__info">
+                    <strong>Log Out</strong>
+                    <p>Logs out of account. Goes back to home page.</p>
+                </div>
+                <button type="button" class="btn-outline" id="logout-btn">Log Out</button>
+            </div>
+
+            <div class="danger-zone__item">
+                <div class="danger-zone__info">
                     <strong>Pause membership</strong>
                     <p>Freeze your subscription for up to 60 days.</p>
                 </div>
@@ -195,6 +203,17 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
         <?php endif; ?>
         <button type="button" id="pfp-confirm-btn" class="btn-primary pfp-modal__confirm">Save Picture</button>
         <p class="auth-modal__switch"><a href="#" id="pfp-cancel-btn">Cancel</a></p>
+    </dialog>
+
+    <dialog id="logout-modal" class="auth-modal">
+        <button type="button" class="btn-ghost auth-modal__close">&times;</button>
+        <h2 class="auth-modal__title">Log Out</h2>
+        <form method="post" action="../actions/action_logout.php" class="auth-modal__form">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+            <p class="account-modal__prompt">Are you sure you want to log out?</p>
+            <button type="submit" class="btn-primary">Yes, log out</button>
+        </form>
+        <p class="auth-modal__switch"><a href="#" id="logout-cancel-btn">Cancel</a></p>
     </dialog>
 
     <dialog id="delete-modal" class="auth-modal" <?= $deleteError ? 'data-open-on-load' : '' ?>>

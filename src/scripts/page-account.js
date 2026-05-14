@@ -45,6 +45,12 @@ backdrop.addEventListener('click', () => {
     document.querySelectorAll('dialog[open]').forEach(d => closeModal(d));
 });
 
+// Log out modal
+const logoutModal = document.getElementById('logout-modal');
+document.getElementById('logout-btn').addEventListener('click', () => openModal(logoutModal));
+logoutModal.querySelector('.auth-modal__close').addEventListener('click', () => closeModal(logoutModal));
+document.getElementById('logout-cancel-btn').addEventListener('click', e => { e.preventDefault(); closeModal(logoutModal); });
+
 // Delete account modal
 const deleteModal = document.getElementById('delete-modal');
 document.getElementById('delete-btn').addEventListener('click', () => openModal(deleteModal));

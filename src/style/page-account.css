@@ -177,6 +177,10 @@
     outline-color: var(--color-gold);
 }
 
+#logout-modal .btn-primary {
+    margin: var(--space-s) 0 0;
+}
+
 .account-modal__prompt {
     color: var(--color-grey);
     text-align: center;
