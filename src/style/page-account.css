@@ -73,7 +73,7 @@
 }
 
 .profile-section__title--danger {
-    color: rgba(var(--color-rust-rgb), 0.8);
+    color: rgba(var(--color-error-rgb), 0.8);
 }
 
 .profile-form__feedback {
