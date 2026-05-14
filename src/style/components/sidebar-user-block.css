@@ -13,17 +13,10 @@
     border-left-color: var(--color-light-gold);
 }
 
-.sidebar-user-block__avatar {
-    flex-shrink: 0;
+.sidebar-user-block .user-avatar {
     width: var(--font-size-xxl);
     height: var(--font-size-xxl);
-    border-radius: 50%;
-    background-color: var(--color-gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: var(--color-black);
+    font-size: var(--font-size-xs);
     letter-spacing: 0.05em;
 }
 

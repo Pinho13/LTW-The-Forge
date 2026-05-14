@@ -49,10 +49,13 @@ require_once(__DIR__ . '/../../utils/session.php');
     <main>
 <?php } ?>
 
-<?php function drawPasswordField(string $id, string $name, string $autocomplete = 'current-password') { ?>
+<?php function drawPasswordField(string $id, string $name, string $label, string $autocomplete = 'current-password') { ?>
   <div class="form__password-wrapper">
-    <input type="password" id="<?=$id?>" name="<?=$name?>" autocomplete="<?=$autocomplete?>">
-    <button type="button" class="form__toggle-password">&#128065;</button>
+    <label for="<?=$id?>"><?=$label?></label>
+    <div class="form__input-row">
+      <input type="password" id="<?=$id?>" name="<?=$name?>" autocomplete="<?=$autocomplete?>">
+      <button type="button" class="form__toggle-password">&#128065;</button>
+    </div>
   </div>
 <?php } ?>
 
@@ -85,14 +88,12 @@ require_once(__DIR__ . '/../../utils/session.php');
              autocomplete="email"
              value="<?= htmlspecialchars($formData['email'] ?? '') ?>">
 
-      <label for="<?=$isLogin ? 'password' : 'register-password'?>">PASSWORD</label>
-      <?php drawPasswordField($isLogin ? 'password' : 'register-password', 'password', $isLogin ? 'current-password' : 'new-password'); ?>
+      <?php drawPasswordField($isLogin ? 'password' : 'register-password', 'password', 'PASSWORD', $isLogin ? 'current-password' : 'new-password'); ?>
 
       <?php if ($isLogin) { ?>
         <a href="index.php" class="form__forgot">Forgot your password?</a>
       <?php } else { ?>
-        <label for="register-confirm-password">CONFIRM PASSWORD</label>
-        <?php drawPasswordField('register-confirm-password', 'confirm-password', 'new-password'); ?>
+        <?php drawPasswordField('register-confirm-password', 'confirm-password', 'CONFIRM PASSWORD', 'new-password'); ?>
       <?php } ?>
 
       <button type="submit" class="btn-primary"><?=$submit?></button>

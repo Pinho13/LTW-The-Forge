@@ -66,9 +66,6 @@
     padding-top: var(--space-s);
 }
 
-.auth-modal__form input {
-    margin-bottom: var(--space-xs);
-}
 
 .auth-modal__forgot {
     display: block;
