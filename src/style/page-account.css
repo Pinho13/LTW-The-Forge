@@ -76,15 +76,18 @@
     color: rgba(var(--color-rust-rgb), 0.8);
 }
 
-.profile-form__error {
+.profile-form__feedback {
     text-align: right;
     margin-bottom: 0;
+    font-size: var(--font-size-xs);
+}
+
+.profile-form__error {
+    color: var(--color-error);
 }
 
 .profile-form__success {
     color: var(--color-success);
-    margin-bottom: 0;
-    font-size: var(--font-size-xs);
 }
 
 
@@ -181,11 +184,6 @@
     margin: var(--space-s) 0 0;
 }
 
-.account-modal__prompt {
-    color: var(--color-grey);
-    text-align: center;
-    margin-bottom: var(--space-s);
-}
 
 
 .profile-section .btn-primary,

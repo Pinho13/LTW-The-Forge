@@ -1,15 +1,11 @@
 <?php
 declare(strict_types=1);
-require_once(__DIR__ . '/../../utils/session.php');
+require_once(__DIR__ . '/../../utils/page_bootstrap.php');
 require_once(__DIR__ . '/../templates/common.tpl.php');
-require_once(__DIR__ . '/../../database/connection.db.php');
 require_once(__DIR__ . '/../../database/User.class.php');
 require_once(__DIR__ . '/../../database/MemberSubscription.class.php');
 
-$session = new Session();
-$session->requireLogin('/src/pages/index.php?open=login');
-
-$db          = getDatabaseConnection();
+[$session, $db] = requireAuthenticatedPage();
 $user        = User::findById($db, $session->getId());
 $planName    = MemberSubscription::getActivePlanName($db, $session->getId()) ?? 'Member';
 $memberSince = date('M Y', strtotime($user->created_at));
@@ -47,17 +43,6 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
 </head>
 
 <body>
-    <input type="checkbox" id="side-menu-toggle">
-
-    <header class="mobile-top-bar">
-        <label for="side-menu-toggle" class="logo">
-            <img src="../assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo__img">
-            <span class="logo__text">THE FORGE</span>
-        </label>
-    </header>
-
-    <label for="side-menu-toggle" class="side-menu-backdrop"></label>
-
     <?php $activePage = 'profile'; include '../components/side-menu.php'; ?>
 
     <main>
@@ -133,9 +118,9 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
                 </button>
             </div>
             <?php if ($accountError): ?>
-                <p class="auth-modal__error profile-form__error"><?= htmlspecialchars($accountError) ?></p>
+                <p class="profile-form__feedback profile-form__error"><?= htmlspecialchars($accountError) ?></p>
             <?php elseif ($accountSuccess): ?>
-                <p class="profile-form__success profile-form__error"><?= htmlspecialchars($accountSuccess) ?></p>
+                <p class="profile-form__feedback profile-form__success"><?= htmlspecialchars($accountSuccess) ?></p>
             <?php endif; ?>
         </section>
 
@@ -150,9 +135,9 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
                 </div>
                 <button type="submit" class="btn-primary profile-form__submit">Update Password</button>
                 <?php if ($passwordError): ?>
-                    <p class="auth-modal__error profile-form__error"><?= htmlspecialchars($passwordError) ?></p>
+                    <p class="profile-form__feedback profile-form__error"><?= htmlspecialchars($passwordError) ?></p>
                 <?php elseif ($passwordSuccess): ?>
-                    <p class="profile-form__success profile-form__error"><?= htmlspecialchars($passwordSuccess) ?></p>
+                    <p class="profile-form__feedback profile-form__success"><?= htmlspecialchars($passwordSuccess) ?></p>
                 <?php endif; ?>
             </form>
         </section>
@@ -210,7 +195,7 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
         <h2 class="auth-modal__title">Log Out</h2>
         <form method="post" action="../actions/action_logout.php" class="auth-modal__form">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
-            <p class="account-modal__prompt">Are you sure you want to log out?</p>
+            <p class="auth-modal__prompt">Are you sure you want to log out?</p>
             <button type="submit" class="btn-primary">Yes, log out</button>
         </form>
         <p class="auth-modal__switch"><a href="#" id="logout-cancel-btn">Cancel</a></p>
@@ -221,7 +206,7 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
         <h2 class="auth-modal__title">Delete Account</h2>
         <form method="post" action="../actions/action_delete_account.php" class="auth-modal__form">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
-            <p class="account-modal__prompt">This is permanent and cannot be undone. Enter your password to confirm.</p>
+            <p class="auth-modal__prompt">This is permanent and cannot be undone. Enter your password to confirm.</p>
             <label for="delete-password">Password</label>
             <input type="password" id="delete-password" name="password" autocomplete="current-password">
             <?php if ($deleteError): ?>
@@ -238,7 +223,7 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
         <form method="post" action="../actions/action_pause_membership.php" class="auth-modal__form">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
             <input type="hidden" name="duration" id="pause-duration" value="">
-            <p class="account-modal__prompt">Select how long to freeze your subscription:</p>
+            <p class="auth-modal__prompt">Select how long to freeze your subscription:</p>
             <div class="pause-options">
                 <?php foreach (MemberSubscription::ALLOWED_PAUSE_DAYS as $days): ?>
                     <button type="button" class="pause-option" data-days="<?= $days ?>"><?= $days ?> Days</button>
