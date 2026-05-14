@@ -1,0 +1,74 @@
+.enrollment-list {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.enrollment {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-m);
+    align-items: center;
+    padding: var(--space-m);
+    background: rgba(var(--color-grey-rgb), 0.035);
+    border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.15);
+    border-left: var(--border-s) solid var(--color-gold);
+}
+
+.enrollment__intensity {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxs);
+    align-self: center;
+}
+
+.enrollment__name {
+    margin: 0;
+    font-family: "Big Shoulders", sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: var(--font-size-l);
+}
+
+.enrollment__meta {
+    margin: var(--space-xxs) 0 0;
+    color: var(--color-light-gold);
+    font-size: var(--font-size-s);
+}
+
+.enrollment__sub {
+    margin: var(--space-xxs) 0 0;
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+}
+
+.enrollment__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-xs);
+}
+
+.enrollment__actions form {
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .enrollment {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .enrollment__actions {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .enrollment__actions .btn-sm {
+        padding: var(--space-xs) var(--space-l);
+        font-size: var(--font-size-m);
+    }
+}

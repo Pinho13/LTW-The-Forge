@@ -1,0 +1,28 @@
+main {
+    background-color: rgba(var(--color-brown-rgb), 0.03);
+}
+
+section {
+    margin: var(--space-l);
+}
+
+#cancel-modal .btn-danger {
+    width: 100%;
+    font-size: var(--font-size-m);
+    font-weight: bold;
+    margin-top: var(--space-s);
+}
+
+#load-more-container {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-m) 0;
+}
+
+.empty {
+    color: var(--color-grey);
+    font-size: var(--font-size-s);
+    padding: var(--space-l);
+    text-align: center;
+    border: var(--border-1px) dashed rgba(var(--color-grey-rgb), 0.3);
+}
