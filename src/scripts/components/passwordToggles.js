@@ -1,5 +1,5 @@
 export function initPasswordToggles() {
-    document.querySelectorAll('.toggle-password').forEach((button) => {
+    document.querySelectorAll('.form__toggle-password').forEach((button) => {
         button.addEventListener('click', () => {
             const input = button.previousElementSibling;
 

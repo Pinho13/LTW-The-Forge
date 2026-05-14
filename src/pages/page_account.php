@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once(__DIR__ . '/../../utils/session.php');
+require_once(__DIR__ . '/../templates/common.tpl.php');
 require_once(__DIR__ . '/../../database/connection.db.php');
 require_once(__DIR__ . '/../../database/User.class.php');
 require_once(__DIR__ . '/../../database/MemberSubscription.class.php');
@@ -143,27 +144,9 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
             <form method="post" action="../actions/action_change_password.php">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
                 <div class="profile-form__password-grid">
-                    <div class="form__password-wrapper">
-                        <label for="current-password">Current Password</label>
-                        <div class="form__input-row">
-                            <input type="password" id="current-password" name="current_password" autocomplete="current-password">
-                            <button type="button" class="form__toggle-password">&#128065;</button>
-                        </div>
-                    </div>
-                    <div class="form__password-wrapper">
-                        <label for="new-password">New Password</label>
-                        <div class="form__input-row">
-                            <input type="password" id="new-password" name="new_password" autocomplete="new-password">
-                            <button type="button" class="form__toggle-password">&#128065;</button>
-                        </div>
-                    </div>
-                    <div class="form__password-wrapper">
-                        <label for="confirm-password">Confirm New</label>
-                        <div class="form__input-row">
-                            <input type="password" id="confirm-password" name="confirm_password" autocomplete="new-password">
-                            <button type="button" class="form__toggle-password">&#128065;</button>
-                        </div>
-                    </div>
+                    <?php drawPasswordField('current-password', 'current_password', 'Current Password'); ?>
+                    <?php drawPasswordField('new-password', 'new_password', 'New Password', 'new-password'); ?>
+                    <?php drawPasswordField('confirm-password', 'confirm_password', 'Confirm New', 'new-password'); ?>
                 </div>
                 <button type="submit" class="btn-primary profile-form__submit">Update Password</button>
                 <?php if ($passwordError): ?>
