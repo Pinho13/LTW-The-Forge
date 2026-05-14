@@ -1,0 +1,14 @@
+{
+    "name": "ltw12g01/the-forge",
+    "description": "The Forge gym management app",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Miguel Rocha",
+            "email": "miguelmirandarocha@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^13.1"
+    }
+}
