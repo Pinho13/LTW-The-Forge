@@ -32,3 +32,8 @@
     color: var(--color-rust);
     outline-color: var(--color-rust);
 }
+
+.btn-sm {
+    padding: var(--space-xs) var(--space-m);
+    font-size: var(--font-size-xs);
+}
