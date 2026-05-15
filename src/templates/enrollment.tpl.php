@@ -39,6 +39,21 @@ function drawEnrollmentItem(array $e, string $tab): void
                     data-cancel-name="<?= htmlspecialchars($e['class_name']) ?>">
                     Cancel
                 </button>
+            <?php elseif ($tab === 'past'): ?>
+                <?php
+                $hasReview = !empty($e['has_review']);
+                $existingRating = $hasReview ? (int)$e['existing_rating'] : 0;
+                $existingComment = $hasReview ? (string)$e['existing_comment'] : '';
+                ?>
+                <button type="button" class="btn-outline btn-sm"
+                    data-review-class-id="<?= (int)$e['class_id'] ?>"
+                    data-review-class-name="<?= htmlspecialchars($e['class_name']) ?>"
+                    data-review-trainer-name="<?= htmlspecialchars($e['trainer_name'] ?? '') ?>"
+                    data-review-has-review="<?= $hasReview ? '1' : '0' ?>"
+                    data-review-rating="<?= $existingRating ?>"
+                    data-review-comment="<?= htmlspecialchars($existingComment) ?>">
+                    <?= $hasReview ? 'Update review' : 'Leave review' ?>
+                </button>
             <?php endif; ?>
         </div>
     </li>

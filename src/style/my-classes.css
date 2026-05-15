@@ -6,11 +6,66 @@ section {
     margin: var(--space-l);
 }
 
-#cancel-modal .btn-danger {
+.modal-action-btn {
     width: 100%;
     font-size: var(--font-size-m);
     font-weight: bold;
     margin-top: var(--space-s);
+}
+
+#review-modal textarea {
+    width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 80px;
+    background-color: rgba(var(--color-dark-grey-rgb), 0.1);
+    border: var(--border-xs) solid var(--color-dark-grey);
+    color: var(--color-white);
+    padding: var(--space-s) var(--space-m);
+    font-family: inherit;
+}
+
+#review-trainer-name {
+    font-weight: bold;
+}
+
+.review-optional {
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+    font-weight: normal;
+}
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-xxs);
+    margin: var(--space-s) 0;
+}
+
+.star {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: var(--font-size-xl);
+    color: rgba(var(--color-grey-rgb), 0.4);
+    padding: 0;
+    line-height: 1;
+    transition: color 0.1s, transform 0.1s;
+}
+
+.star--active {
+    color: var(--color-gold);
+}
+
+.star--hover {
+    color: var(--color-gold);
+    transform: scale(1.15);
+}
+
+.star-rating--error .star {
+    color: var(--color-error);
+    opacity: 0.6;
 }
 
 #load-more-container {

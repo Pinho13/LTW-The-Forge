@@ -29,8 +29,8 @@ $rows = $tab === 'upcoming'
     ? Enrollment::getUpcomingForMember($db, $memberId, $offset)
     : Enrollment::getPastForMember($db, $memberId, $offset);
 
-$hasMore = count($rows) > 30;
-$rows = array_slice($rows, 0, 30);
+$hasMore = count($rows) > Enrollment::PAGE_SIZE;
+$rows = array_slice($rows, 0, Enrollment::PAGE_SIZE);
 
 ob_start();
 foreach ($rows as $row) drawEnrollmentItem($row, $tab);

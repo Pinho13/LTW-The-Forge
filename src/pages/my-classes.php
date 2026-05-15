@@ -11,12 +11,12 @@ $tab = $_GET['tab'] ?? 'upcoming';
 if (!in_array($tab, ['upcoming', 'past'], true)) $tab = 'upcoming';
 
 $upcomingRaw = Enrollment::getUpcomingForMember($db, $memberId, 0);
-$upcomingHasMore = count($upcomingRaw) > 30;
-$upcoming = array_slice($upcomingRaw, 0, 30);
+$upcomingHasMore = count($upcomingRaw) > Enrollment::PAGE_SIZE;
+$upcoming = array_slice($upcomingRaw, 0, Enrollment::PAGE_SIZE);
 
 $pastRaw = Enrollment::getPastForMember($db, $memberId, 0);
-$pastHasMore = count($pastRaw) > 30;
-$past = array_slice($pastRaw, 0, 30);
+$pastHasMore = count($pastRaw) > Enrollment::PAGE_SIZE;
+$past = array_slice($pastRaw, 0, Enrollment::PAGE_SIZE);
 
 $list = $tab === 'upcoming' ? $upcoming : $past;
 $hasMore = $tab === 'upcoming' ? $upcomingHasMore : $pastHasMore;
@@ -60,8 +60,8 @@ $hasMore = $tab === 'upcoming' ? $upcomingHasMore : $pastHasMore;
                     <?php foreach ($list as $e): drawEnrollmentItem($e, $tab); endforeach; ?>
                 </ul>
 
-                <div id="load-more-container" style="<?= !$hasMore ? 'display:none' : '' ?>">
-                    <button type="button" id="load-more-btn" class="btn-ghost" data-offset="30" data-tab="<?= $tab ?>">
+                <div id="load-more-container" <?= !$hasMore ? 'class="hidden"' : '' ?>>
+                    <button type="button" id="load-more-btn" class="btn-ghost" data-offset="<?= Enrollment::PAGE_SIZE ?>" data-tab="<?= $tab ?>">
                         Load more
                     </button>
                 </div>
@@ -79,9 +79,28 @@ $hasMore = $tab === 'upcoming' ? $upcomingHasMore : $pastHasMore;
         <form method="POST" action="../actions/action_cancel_enrollment.php" class="auth-modal__form">
             <input type="hidden" name="enrollment_id" id="cancel-enrollment-id">
             <p class="auth-modal__prompt">Cancel your spot in <strong id="cancel-class-name"></strong>?</p>
-            <button type="submit" class="btn-danger">Yes, cancel</button>
+            <button type="submit" class="btn-danger modal-action-btn">Yes, cancel</button>
         </form>
         <p class="auth-modal__switch"><a href="#" id="cancel-keep-btn">Keep my spot</a></p>
+    </dialog>
+
+    <dialog id="review-modal" class="auth-modal">
+        <button type="button" class="btn-ghost auth-modal__close">&times;</button>
+        <h2 class="auth-modal__title" id="review-modal-title">Leave a Review</h2>
+        <form method="POST" action="../actions/action_submit_review.php" class="auth-modal__form" id="review-form">
+            <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
+            <input type="hidden" name="class_id" id="review-class-id">
+            <p class="auth-modal__prompt">Rate <strong id="review-class-name"></strong> with <span id="review-trainer-name"></span></p>
+            <div class="star-rating" id="star-rating" role="group" aria-label="Rating">
+                <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <button type="button" class="star" data-value="<?= $i ?>" aria-label="<?= $i ?> star<?= $i > 1 ? 's' : '' ?>">&#9733;</button>
+                <?php endfor; ?>
+            </div>
+            <input type="hidden" name="rating" id="review-rating" value="0">
+            <label for="review-comment">Comment <span class="review-optional">(optional)</span></label>
+            <textarea id="review-comment" name="comment" rows="3" placeholder="Share your experience…" maxlength="500"></textarea>
+            <button type="submit" class="btn-primary modal-action-btn" id="review-submit-btn">Submit review</button>
+        </form>
     </dialog>
 
     <script src="../scripts/my-classes.js"></script>

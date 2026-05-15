@@ -1,4 +1,5 @@
 .enrollment-list {
+    list-style: none;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -7,7 +8,7 @@
 
 .enrollment {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr 7em;
     gap: var(--space-m);
     align-items: center;
     padding: var(--space-m);
@@ -46,12 +47,16 @@
 .enrollment__actions {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     gap: var(--space-xs);
 }
 
 .enrollment__actions form {
     margin: 0;
+}
+
+.enrollment__actions .btn-sm {
+    width: 100%;
 }
 
 @media (max-width: 640px) {

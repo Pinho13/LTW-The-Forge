@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 class Enrollment
 {
+    public const PAGE_SIZE = 30;
+
     public static function countEnrolledThisMonth(PDO $db, int $memberId): int
     {
         $stmt = $db->prepare(
@@ -80,9 +82,12 @@ class Enrollment
                AND enrollment.status IN ('enrolled', 'waitlisted')
                AND class_session.datetime > datetime('now', 'localtime')
              ORDER BY class_session.datetime ASC
-             LIMIT 31 OFFSET :offset"
+             LIMIT :limit OFFSET :offset"
         );
-        $stmt->execute([':member_id' => $memberId, ':offset' => $offset]);
+        $stmt->bindValue(':member_id', $memberId, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', self::PAGE_SIZE + 1, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll();
     }
 
@@ -91,23 +96,31 @@ class Enrollment
         $stmt = $db->prepare(
             "SELECT enrollment.id,
                 enrollment.status,
+                class.id AS class_id,
                 class.name AS class_name,
                 class.intensity,
                 class.duration_minutes,
                 class_session.datetime,
                 class_session.room,
-                user.name AS trainer_name
+                user.name AS trainer_name,
+                CASE WHEN review.id IS NOT NULL THEN 1 ELSE 0 END AS has_review,
+                review.rating AS existing_rating,
+                review.comment AS existing_comment
             FROM enrollment
             JOIN class_session ON class_session.id = enrollment.session_id
             JOIN class ON class.id = class_session.class_id
             LEFT JOIN user ON user.user_id = class.trainer_id
+            LEFT JOIN review ON review.class_id = class.id AND review.member_id = enrollment.member_id
             WHERE enrollment.member_id = :member_id
             AND class_session.datetime < datetime('now', 'localtime')
             AND enrollment.status NOT IN ('cancelled', 'waitlisted')
             ORDER BY class_session.datetime DESC
-            LIMIT 31 OFFSET :offset"
+            LIMIT :limit OFFSET :offset"
         );
-        $stmt->execute([':member_id' => $memberId, ':offset' => $offset]);
+        $stmt->bindValue(':member_id', $memberId, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', self::PAGE_SIZE + 1, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->fetchAll();
     }
 

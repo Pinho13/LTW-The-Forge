@@ -126,6 +126,10 @@ input {
     color: var(--color-white);
 }
 
+.hidden {
+    display: none;
+}
+
 @media (max-width: 640px) {
     html {
         font-size: 12px;
