@@ -112,7 +112,7 @@ if (loadMoreBtn) {
             loadMoreBtn.dataset.offset = offset + 30;
 
             if (!data.hasMore) {
-                document.getElementById('load-more-container').classList.add('hidden');
+                document.getElementById('load-more-container').style.display = 'none';
             }
         } catch {
             // leave button re-enabled so user can retry

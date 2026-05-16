@@ -2,8 +2,8 @@
 declare(strict_types=1);
 require_once(__DIR__ . '/../../utils/session.php');
 require_once(__DIR__ . '/../../database/connection.db.php');
-require_once(__DIR__ . '/../../database/User.class.php');
-require_once(__DIR__ . '/../../database/MemberSubscription.class.php');
+require_once(__DIR__ . '/../../database/models/User.class.php');
+require_once(__DIR__ . '/../../database/models/MemberSubscription.class.php');
 
 /**
  * Initialise session, enforce login and POST+CSRF, return [$session, $db].

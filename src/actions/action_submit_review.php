@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once(__DIR__ . '/action_bootstrap.php');
-require_once(__DIR__ . '/../../database/Review.class.php');
+require_once(__DIR__ . '/../../database/models/Review.class.php');
 
 [$session, $db] = requireAuthenticatedPost('/src/pages/my-classes.php?tab=past');
 

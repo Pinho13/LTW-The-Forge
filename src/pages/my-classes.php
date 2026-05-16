@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once(__DIR__ . '/../../utils/page_bootstrap.php');
-require_once(__DIR__ . '/../../database/Enrollment.class.php');
+require_once(__DIR__ . '/../../database/models/Enrollment.class.php');
 require_once(__DIR__ . '/../templates/enrollment.tpl.php');
 
 [$session, $db] = requireAuthenticatedPage();
@@ -60,11 +60,13 @@ $hasMore = $tab === 'upcoming' ? $upcomingHasMore : $pastHasMore;
                     <?php foreach ($list as $e): drawEnrollmentItem($e, $tab); endforeach; ?>
                 </ul>
 
-                <div id="load-more-container" <?= !$hasMore ? 'class="hidden"' : '' ?>>
+                <?php if ($hasMore): ?>
+                <div id="load-more-container">
                     <button type="button" id="load-more-btn" class="btn-ghost" data-offset="<?= Enrollment::PAGE_SIZE ?>" data-tab="<?= $tab ?>">
                         Load more
                     </button>
                 </div>
+                <?php endif; ?>
             <?php endif; ?>
         </section>
     </main>
