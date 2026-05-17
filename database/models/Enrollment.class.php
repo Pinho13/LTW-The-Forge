@@ -124,6 +124,49 @@ class Enrollment
         return $stmt->fetchAll();
     }
 
+    public static function getStaleForMember(PDO $db, int $memberId, string $now): array
+    {
+        $stmt = $db->prepare(
+            "SELECT enrollment.id,
+                    class.name AS class_name,
+                    class_session.datetime,
+                    user.name AS trainer_name
+                FROM enrollment
+                JOIN class_session ON class_session.id = enrollment.session_id
+                JOIN class ON class.id = class_session.class_id
+                LEFT JOIN user ON user.user_id = class.trainer_id
+                WHERE enrollment.member_id = :member_id
+                AND enrollment.status = 'enrolled'
+                AND class_session.datetime < :now
+                ORDER BY class_session.datetime ASC"
+        );
+        $stmt->bindValue(':member_id', $memberId, PDO::PARAM_INT);
+        $stmt->bindValue(':now', $now);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public static function updateStatus(PDO $db, int $enrollmentId, int $memberId, string $status, string $now): bool 
+    {
+        $stmt = $db->prepare(
+            "UPDATE enrollment SET status = :status
+                WHERE id = :enrollment_id
+                AND member_id = :member_id
+                AND status = 'enrolled'
+                AND EXISTS (
+                    SELECT 1 FROM class_session
+                    WHERE class_session.id = enrollment.session_id
+                        AND class_session.datetime < :now
+                )"
+        );
+        $stmt->bindValue(':status', $status);
+        $stmt->bindValue(':enrollment_id', $enrollmentId, PDO::PARAM_INT);
+        $stmt->bindValue(':member_id', $memberId, PDO::PARAM_INT);
+        $stmt->bindValue(':now', $now);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
+    }
+
     public static function cancelForMember(PDO $db, int $enrollmentId, int $memberId): bool
     {
         $stmt = $db->prepare(

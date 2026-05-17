@@ -62,6 +62,10 @@
     --space-xl:  2em;
     --space-xxl: 3em;
     --space-hero: 4em;
+
+    /* Component sizes */
+    --size-avatar:      2.5rem;
+    --size-sidebar-row: 3.75rem;
 }
 
 html {

@@ -18,6 +18,7 @@ const cancelClassName = document.getElementById('cancel-class-name');
 backdrop.addEventListener('click', () => {
     if (cancelModal.open) closeModal(cancelModal);
     if (reviewModal.open) closeModal(reviewModal);
+    if (staleModal.open) closeModal(staleModal);
 });
 
 cancelModal.querySelector('.auth-modal__close').addEventListener('click', () => closeModal(cancelModal));
@@ -92,6 +93,82 @@ reviewForm.addEventListener('submit', e => {
 reviewModal.querySelector('.star-rating').addEventListener('click', () => {
     reviewModal.querySelector('.star-rating').classList.remove('star-rating--error');
 });
+
+// Stale enrollment modal
+const staleModal = document.getElementById('stale-modal');
+const staleBanner = document.getElementById('stale-banner');
+let staleIndex = 0;
+
+function formatStaleDate(datetimeStr) {
+    const d = new Date(datetimeStr);
+    return d.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
+function populateStaleModal(index) {
+    const e = STALE_ENROLLMENTS[index];
+    document.getElementById('stale-class-name').textContent = e.class_name;
+    document.getElementById('stale-trainer-name').textContent = e.trainer_name || 'TBA';
+    document.getElementById('stale-class-date').textContent = formatStaleDate(e.datetime);
+    document.getElementById('stale-progress').textContent = `${index + 1} of ${STALE_ENROLLMENTS.length}`;
+    document.getElementById('stale-error').textContent = '';
+}
+
+async function resolveStale(status) {
+    const e = STALE_ENROLLMENTS[staleIndex];
+    const staleError = document.getElementById('stale-error');
+
+    const body = new URLSearchParams({ enrollment_id: e.id, status, csrf_token: CSRF_TOKEN });
+    try {
+        const res = await fetch('../actions/action_update_enrollment_status.php', { method: 'POST', body });
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+            staleError.textContent = data.error || 'Something went wrong.';
+            return;
+        }
+    } catch {
+        staleError.textContent = 'Network error. Please try again.';
+        return;
+    }
+
+    // Update status badge in DOM if the card is visible
+    const card = document.querySelector(`[data-enrollment-id="${e.id}"]`);
+    if (card) {
+        const badge = card.querySelector('.status');
+        if (badge) {
+            badge.className = `status status--${status}`;
+            badge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+        }
+    }
+
+    staleIndex++;
+    if (staleIndex < STALE_ENROLLMENTS.length) {
+        populateStaleModal(staleIndex);
+    } else {
+        closeModal(staleModal);
+        if (staleBanner) staleBanner.remove();
+    }
+}
+
+if (STALE_ENROLLMENTS.length > 0) {
+    staleModal.querySelector('.auth-modal__close').addEventListener('click', () => closeModal(staleModal));
+    document.getElementById('stale-later-btn').addEventListener('click', e => {
+        e.preventDefault();
+        closeModal(staleModal);
+    });
+    document.getElementById('stale-completed-btn').addEventListener('click', () => resolveStale('completed'));
+    document.getElementById('stale-missed-btn').addEventListener('click', () => resolveStale('missed'));
+
+    document.getElementById('stale-open-btn').addEventListener('click', () => {
+        staleIndex = 0;
+        populateStaleModal(0);
+        openModal(staleModal);
+    });
+
+    document.getElementById('stale-dismiss-btn').addEventListener('click', () => {
+        if (staleBanner) staleBanner.remove();
+    });
+}
 
 // Load more
 const loadMoreBtn = document.getElementById('load-more-btn');

@@ -20,3 +20,21 @@ function requireAuthenticatedPost(string $redirect): array
     }
     return [$session, getDatabaseConnection()];
 }
+
+function requireAuthenticatedJsonPost(): array
+{
+    header('Content-Type: application/json');
+    $session = new Session();
+    if (!$session->isLoggedIn()) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Unauthorized']);
+        exit;
+    }
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST'
+        || !$session->verifyCsrfToken($_POST['csrf_token'] ?? null)) {
+        http_response_code(403);
+        echo json_encode(['error' => 'Invalid request']);
+        exit;
+    }
+    return [$session, getDatabaseConnection()];
+}

@@ -1,3 +1,69 @@
+body:has(.stale-banner) {
+    grid-template-areas: "side-menu main" "side-menu stale" "footer footer";
+    grid-template-rows: 1fr auto auto;
+}
+
+.stale-banner {
+    grid-area: stale;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-xs);
+    min-height: var(--size-sidebar-row);
+    box-sizing: border-box;
+    border-top: var(--border-xs) solid var(--color-rust);
+    background: rgba(var(--color-rust-rgb), 0.08);
+}
+
+.stale-banner__text {
+    margin: 0;
+    font-size: var(--font-size-s);
+    color: var(--color-grey);
+}
+
+.stale-banner__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+
+}
+
+.stale-progress {
+    text-align: center;
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+    margin: 0;
+}
+
+.stale-date {
+    text-align: center;
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+    margin: 0 0 var(--space-m);
+}
+
+.stale-actions {
+    display: flex;
+    gap: var(--space-s);
+    justify-content: center;
+}
+
+.stale-actions .btn-sm {
+    flex: 1;
+}
+
+#stale-modal .auth-modal__switch {
+    margin: 0;
+    padding: 0;
+}
+
+.stale-error {
+    text-align: center;
+    color: var(--color-error);
+    font-size: var(--font-size-xs);
+    margin: 0;
+}
+
 main {
     background-color: rgba(var(--color-brown-rgb), 0.03);
 }
@@ -25,7 +91,11 @@ section {
     font-family: inherit;
 }
 
-#review-trainer-name {
+#review-trainer-name,
+#review-class-name,
+#cancel-class-name,
+#stale-trainer-name,
+#stale-class-name {
     font-weight: bold;
 }
 

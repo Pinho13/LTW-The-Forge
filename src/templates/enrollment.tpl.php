@@ -7,7 +7,7 @@ function drawEnrollmentItem(array $e, string $tab): void
     $end       = (clone $start)->modify('+' . (int)$e['duration_minutes'] . ' minutes');
     $timeLabel = $start->format('D j M · H:i') . ' – ' . $end->format('H:i');
     ?>
-    <li class="enrollment">
+    <li class="enrollment" data-enrollment-id="<?= (int)$e['id'] ?>">
         <div class="enrollment__intensity">
             <?php for ($i = 1; $i <= 5; $i++): ?>
                 <span class="intensity-dot <?= $i <= (int)$e['intensity'] ? 'filled' : '' ?>"></span>

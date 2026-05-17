@@ -20,6 +20,9 @@ $past = array_slice($pastRaw, 0, Enrollment::PAGE_SIZE);
 
 $list = $tab === 'upcoming' ? $upcoming : $past;
 $hasMore = $tab === 'upcoming' ? $upcomingHasMore : $pastHasMore;
+
+$now = date('Y-m-d H:i:s');
+$staleEnrollments = Enrollment::getStaleForMember($db, $memberId, $now);
 ?>
 <!DOCTYPE html>
 <html lang="en-US">
@@ -71,6 +74,20 @@ $hasMore = $tab === 'upcoming' ? $upcomingHasMore : $pastHasMore;
         </section>
     </main>
 
+    <?php if (!empty($staleEnrollments)): ?>
+    <div class="stale-banner" id="stale-banner">
+        <p class="stale-banner__text">
+            <?= count($staleEnrollments) === 1
+                ? '1 class is awaiting a status update.'
+                : count($staleEnrollments) . ' classes are awaiting a status update.' ?>
+        </p>
+        <div class="stale-banner__actions">
+            <button type="button" class="btn-outline btn-sm" id="stale-open-btn">Update now</button>
+            <button type="button" class="btn-ghost" id="stale-dismiss-btn">&times;</button>
+        </div>
+    </div>
+    <?php endif; ?>
+
     <?php include '../components/footer.php'; ?>
 
     <div class="modal-backdrop" id="page-backdrop"></div>
@@ -80,7 +97,7 @@ $hasMore = $tab === 'upcoming' ? $upcomingHasMore : $pastHasMore;
         <h2 class="auth-modal__title">Cancel Class</h2>
         <form method="POST" action="../actions/action_cancel_enrollment.php" class="auth-modal__form">
             <input type="hidden" name="enrollment_id" id="cancel-enrollment-id">
-            <p class="auth-modal__prompt">Cancel your spot in <strong id="cancel-class-name"></strong>?</p>
+            <p class="auth-modal__prompt">Cancel your spot in <span id="cancel-class-name"></span>?</p>
             <button type="submit" class="btn-danger modal-action-btn">Yes, cancel</button>
         </form>
         <p class="auth-modal__switch"><a href="#" id="cancel-keep-btn">Keep my spot</a></p>
@@ -92,7 +109,7 @@ $hasMore = $tab === 'upcoming' ? $upcomingHasMore : $pastHasMore;
         <form method="POST" action="../actions/action_submit_review.php" class="auth-modal__form" id="review-form">
             <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
             <input type="hidden" name="class_id" id="review-class-id">
-            <p class="auth-modal__prompt">Rate <strong id="review-class-name"></strong> with <span id="review-trainer-name"></span></p>
+            <p class="auth-modal__prompt">Rate <span id="review-class-name"></span> with <span id="review-trainer-name"></span></p>
             <div class="star-rating" id="star-rating" role="group" aria-label="Rating">
                 <?php for ($i = 1; $i <= 5; $i++): ?>
                     <button type="button" class="star" data-value="<?= $i ?>" aria-label="<?= $i ?> star<?= $i > 1 ? 's' : '' ?>">&#9733;</button>
@@ -105,6 +122,24 @@ $hasMore = $tab === 'upcoming' ? $upcomingHasMore : $pastHasMore;
         </form>
     </dialog>
 
+    <dialog id="stale-modal" class="auth-modal">
+        <button type="button" class="btn-ghost auth-modal__close">&times;</button>
+        <h2 class="auth-modal__title">Update Status</h2>
+        <p class="stale-progress" id="stale-progress"></p>
+        <p class="auth-modal__prompt"><span id="stale-class-name"></span> with <span id="stale-trainer-name"></span></p>
+        <p class="stale-date" id="stale-class-date"></p>
+        <div class="stale-actions">
+            <button type="button" class="btn-danger btn-sm" id="stale-missed-btn">Missed</button>
+            <button type="button" class="btn-primary btn-sm" id="stale-completed-btn">Completed</button>
+        </div>
+        <p class="stale-error" id="stale-error"></p>
+        <p class="auth-modal__switch"><a href="#" id="stale-later-btn">Later</a></p>
+    </dialog>
+
+    <script>
+        const STALE_ENROLLMENTS = <?= json_encode($staleEnrollments) ?>;
+        const CSRF_TOKEN = <?= json_encode($session->getCsrfToken()) ?>;
+    </script>
     <script src="../scripts/my-classes.js"></script>
 
 </body>
