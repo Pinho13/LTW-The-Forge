@@ -53,8 +53,8 @@ Styling for these pages can be found at src/style/
 Make sure you are in the root directory of the project.
 
 ```bash
-sqlite3 database/database.db ".read database/schema.sql"
-sqlite3 database/database.db ".read database/populate.sql"
+sqlite3 database/database.db ".read database/sql/schema.sql"
+sqlite3 database/database.db ".read database/sql/populate.sql"
 php -S localhost:9000
 ```
 

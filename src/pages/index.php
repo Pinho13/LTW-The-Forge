@@ -40,6 +40,12 @@
     </div>
   </section>
 
+  <section class="platform-overview">                                                                                                                       
+    <h2>&gt; system_overview</h2>                                                                                                                           
+    <p class="terminal-text" data-text="A complete gym management platform where members can explore classes, follow their progress, and manage their       
+  account, while trainers and administrators handle scheduling and operations."></p>
+  </section>     
+
   <section class="plans" id="plans">
     <h2 class="plans__title">MEMBERSHIP PLANS</h2>
 

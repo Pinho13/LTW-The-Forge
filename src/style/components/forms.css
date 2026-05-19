@@ -1,15 +1,21 @@
 .form__password-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__input-row {
     position: relative;
 }
 
-.form__password-wrapper input {
+.form__input-row input {
     padding-right: var(--space-xxl);
 }
 
 .form__toggle-password {
     position: absolute;
     right: 0.6em;
-    top: 25%;
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     outline: none;

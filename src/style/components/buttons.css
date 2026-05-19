@@ -20,3 +20,20 @@
 .btn-page {
     padding: var(--space-xs) var(--space-m);
 }
+
+.btn-outline {
+    background: transparent;
+    color: var(--color-white);
+    outline-color: var(--color-dark-grey);
+}
+
+.btn-danger {
+    background: transparent;
+    color: var(--color-error);
+    outline-color: var(--color-error);
+}
+
+.btn-sm {
+    padding: var(--space-xs) var(--space-m);
+    font-size: var(--font-size-xs);
+}

@@ -1,13 +1,7 @@
 <?php
 declare(strict_types=1);
 
-$sessionPath = __DIR__ . '/../../utils/session.php';
-$databasePath = __DIR__ . '/../../database/connection.db.php';
-$user_classPath = __DIR__ . '/../../database/User.class.php';
-
-require_once($sessionPath);
-require_once($databasePath);
-require_once($user_classPath);
+require_once(__DIR__ . '/action_bootstrap.php');
 
 $session = new Session();
 

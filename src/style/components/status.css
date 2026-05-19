@@ -9,3 +9,11 @@
 .status--missed {
     color: rgba(var(--color-missed-rgb), 0.85);
 }
+
+.status--enrolled {
+    color: var(--color-light-gold);
+}
+
+.status--waitlisted {
+    color: var(--color-light-gold);
+}

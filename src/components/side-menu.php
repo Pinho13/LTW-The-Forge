@@ -1,3 +1,14 @@
+<input type="checkbox" id="side-menu-toggle">
+
+<header class="mobile-top-bar">
+    <label for="side-menu-toggle" class="logo">
+        <img src="/src/assets/images/logo-no-bg.png" alt="The Forge Logo" class="logo__img">
+        <span class="logo__text">THE FORGE</span>
+    </label>
+</header>
+
+<label for="side-menu-toggle" class="side-menu-backdrop"></label>
+
 <nav class="side-menu">
     <?php include __DIR__ . '/logo.php'; ?>
 
@@ -9,4 +20,6 @@
         <a href="/src/pages/reservations.php"    <?= $activePage === 'reservations' ? 'class="active"' : '' ?>>RESERVATIONS</a>
         <a href="/src/pages/news.php"            <?= $activePage === 'news'         ? 'class="active"' : '' ?>>NEWS</a>
     </div>
+
+    <?php include __DIR__ . '/sidebar-user-block.php'; ?>
 </nav>

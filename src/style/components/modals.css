@@ -1,15 +1,30 @@
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 4;
+}
+
+.modal-backdrop--visible {
+    display: block;
+}
+
 .auth-modal {
-    position: relative;
+    animation: modal-in 0.2s ease;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+    margin: 0;
     width: min(32rem, calc(100% - 2 * var(--space-m)));
     padding: var(--space-xl) clamp(var(--space-m), 8vw, var(--space-xxl));
     border: none;
     border-top: var(--border-l) solid var(--color-gold);
     background-color: var(--color-golden-brown);
     color: var(--color-white);
-}
-
-.auth-modal::backdrop {
-    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 5;
 }
 
 .auth-modal__close {
@@ -52,9 +67,6 @@
     padding-top: var(--space-s);
 }
 
-.auth-modal__form input {
-    margin-bottom: var(--space-xs);
-}
 
 .auth-modal__forgot {
     display: block;
@@ -86,11 +98,22 @@
     text-decoration: underline;
 }
 
+.auth-modal__prompt {
+    color: var(--color-grey);
+    text-align: center;
+    margin-bottom: var(--space-s);
+}
+
 .auth-modal__error {
     margin-top: var(--space-xs);
-    color: #ff8080;
+    color: var(--color-error);
     font-size: var(--font-size-s);
     text-align: center;
+}
+
+@keyframes modal-in {
+    from { opacity: 0; transform: translate(-50%, -48%); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
 }
 
 @media (max-width: 640px) {

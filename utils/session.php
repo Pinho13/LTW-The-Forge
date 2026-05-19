@@ -79,6 +79,11 @@ class Session
         }
     }
 
+    public function setName(string $name): void
+    {
+        $_SESSION['user_name'] = $name;
+    }
+
     public function setUser(int $id, string $name, string $role): void
     {
         session_regenerate_id(true);
@@ -127,6 +132,18 @@ class Session
         return is_string($token)
             && isset($_SESSION['csrf_token'])
             && hash_equals($_SESSION['csrf_token'], $token);
+    }
+
+    public function setFormSuccess(string $form, string $msg): void
+    {
+        $_SESSION['form_success'][$form] = $msg;
+    }
+
+    public function popFormSuccess(string $form): ?string
+    {
+        $msg = $_SESSION['form_success'][$form] ?? null;
+        unset($_SESSION['form_success'][$form]);
+        return $msg;
     }
 
     public function setFormError(string $form, string $msg, array $data = []): void
