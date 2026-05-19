@@ -3,8 +3,10 @@
     align-items: center;
     gap: var(--space-s);
     padding: var(--space-xs);
+    min-height: var(--size-sidebar-row);
     border-top: var(--border-xs) solid var(--color-gold);
     text-decoration: none;
+    box-sizing: border-box;
 }
 
 .sidebar-user-block:hover,
@@ -14,10 +16,13 @@
 }
 
 .sidebar-user-block .user-avatar {
-    width: var(--font-size-xxl);
-    height: var(--font-size-xxl);
-    font-size: var(--font-size-xs);
+    width: var(--size-avatar);
+    height: var(--size-avatar);
     letter-spacing: 0.05em;
+}
+
+.sidebar-user-block .user-avatar--initials {
+    font-size: var(--font-size-xs);
 }
 
 .sidebar-user-block__info {

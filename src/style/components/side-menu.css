@@ -1,9 +1,9 @@
 .side-menu {
     background-color: var(--color-black);
     grid-area: side-menu;
-    min-height: 93vh;
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 .side-menu .logo {

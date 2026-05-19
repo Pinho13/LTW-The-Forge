@@ -29,6 +29,11 @@
 
 .btn-danger {
     background: transparent;
-    color: var(--color-rust);
-    outline-color: var(--color-rust);
+    color: var(--color-error);
+    outline-color: var(--color-error);
+}
+
+.btn-sm {
+    padding: var(--space-xs) var(--space-m);
+    font-size: var(--font-size-xs);
 }
