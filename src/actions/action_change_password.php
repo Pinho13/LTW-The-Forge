@@ -16,7 +16,14 @@ function failChangePassword(Session $session, string $msg): never {
 
 if ($current === '') failChangePassword($session, 'Current password is required.');
 if ($new !== $confirm)  failChangePassword($session, 'Passwords do not match.');
-if (strlen($new) < 8)  failChangePassword($session, 'New password must be at least 8 characters.');
+
+$pwErrors = [];
+if (strlen($new) < 8)                      $pwErrors[] = 'at least 8 characters';
+if (!preg_match('/[A-Z]/', $new))          $pwErrors[] = 'one uppercase letter';
+if (!preg_match('/[a-z]/', $new))          $pwErrors[] = 'one lowercase letter';
+if (!preg_match('/[0-9]/', $new))          $pwErrors[] = 'one number';
+if (!preg_match('/[^a-zA-Z0-9]/', $new))   $pwErrors[] = 'one special character';
+if ($pwErrors !== []) failChangePassword($session, 'Password must contain: ' . implode(', ', $pwErrors) . '.');
 
 if (!User::verifyCurrentPassword($db, $session->getId(), $current)) failChangePassword($session, 'Current password is incorrect.');
 if (User::verifyCurrentPassword($db, $session->getId(), $new))      failChangePassword($session, 'New password must differ from current password.');
