@@ -27,6 +27,35 @@ document.getElementById('cancel-keep-btn').addEventListener('click', e => {
     closeModal(cancelModal);
 });
 
+cancelModal.querySelector('form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const enrollmentId = cancelEnrollmentId.value;
+    const submitBtn    = cancelModal.querySelector('[type="submit"]');
+
+    submitBtn.disabled    = true;
+    submitBtn.textContent = 'Cancelling…';
+
+    try {
+        const body = new URLSearchParams({ enrollment_id: enrollmentId, csrf_token: CSRF_TOKEN });
+        const res  = await fetch('../actions/action_cancel_enrollment.php', { method: 'POST', body });
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+            submitBtn.disabled    = false;
+            submitBtn.textContent = 'Yes, cancel';
+            alert(data.error || 'Could not cancel enrollment.');
+            return;
+        }
+
+        closeModal(cancelModal);
+        document.querySelector(`[data-enrollment-id="${enrollmentId}"]`)?.remove();
+    } catch {
+        submitBtn.disabled    = false;
+        submitBtn.textContent = 'Yes, cancel';
+        alert('Network error. Please try again.');
+    }
+});
+
 document.addEventListener('click', e => {
     const btn = e.target.closest('[data-cancel-id]');
     if (!btn) return;
@@ -97,24 +126,40 @@ reviewModal.querySelector('.star-rating').addEventListener('click', () => {
 // Stale enrollment modal
 const staleModal = document.getElementById('stale-modal');
 const staleBanner = document.getElementById('stale-banner');
-let staleIndex = 0;
+const staleBannerText = staleBanner?.querySelector('.stale-banner__text');
+
+// Work on a mutable copy — splice entries as they're resolved
+const pendingStale = STALE_ENROLLMENTS ? [...STALE_ENROLLMENTS] : [];
 
 function formatStaleDate(datetimeStr) {
     const d = new Date(datetimeStr);
     return d.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
-function populateStaleModal(index) {
-    const e = STALE_ENROLLMENTS[index];
+function updateStaleBanner() {
+    if (!staleBanner) return;
+    if (pendingStale.length === 0) {
+        staleBanner.remove();
+        return;
+    }
+    if (staleBannerText) {
+        staleBannerText.textContent = pendingStale.length === 1
+            ? '1 class is awaiting a status update.'
+            : `${pendingStale.length} classes are awaiting a status update.`;
+    }
+}
+
+function populateStaleModal() {
+    const e = pendingStale[0];
     document.getElementById('stale-class-name').textContent = e.class_name;
     document.getElementById('stale-trainer-name').textContent = e.trainer_name || 'TBA';
     document.getElementById('stale-class-date').textContent = formatStaleDate(e.datetime);
-    document.getElementById('stale-progress').textContent = `${index + 1} of ${STALE_ENROLLMENTS.length}`;
+    document.getElementById('stale-progress').textContent = `1 of ${pendingStale.length}`;
     document.getElementById('stale-error').textContent = '';
 }
 
 async function resolveStale(status) {
-    const e = STALE_ENROLLMENTS[staleIndex];
+    const e = pendingStale[0];
     const staleError = document.getElementById('stale-error');
 
     const body = new URLSearchParams({ enrollment_id: e.id, status, csrf_token: CSRF_TOKEN });
@@ -131,7 +176,7 @@ async function resolveStale(status) {
         return;
     }
 
-    // Update status badge in DOM if the card is visible
+    // Update status badge in the DOM card if visible
     const card = document.querySelector(`[data-enrollment-id="${e.id}"]`);
     if (card) {
         const badge = card.querySelector('.status');
@@ -141,16 +186,18 @@ async function resolveStale(status) {
         }
     }
 
-    staleIndex++;
-    if (staleIndex < STALE_ENROLLMENTS.length) {
-        populateStaleModal(staleIndex);
+    // Remove resolved entry and update banner
+    pendingStale.splice(0, 1);
+    updateStaleBanner();
+
+    if (pendingStale.length > 0) {
+        populateStaleModal();
     } else {
         closeModal(staleModal);
-        if (staleBanner) staleBanner.remove();
     }
 }
 
-if (STALE_ENROLLMENTS.length > 0) {
+if (pendingStale.length > 0) {
     staleModal.querySelector('.auth-modal__close').addEventListener('click', () => closeModal(staleModal));
     document.getElementById('stale-later-btn').addEventListener('click', e => {
         e.preventDefault();
@@ -160,8 +207,7 @@ if (STALE_ENROLLMENTS.length > 0) {
     document.getElementById('stale-missed-btn').addEventListener('click', () => resolveStale('missed'));
 
     document.getElementById('stale-open-btn').addEventListener('click', () => {
-        staleIndex = 0;
-        populateStaleModal(0);
+        populateStaleModal();
         openModal(staleModal);
     });
 
@@ -199,3 +245,33 @@ if (loadMoreBtn) {
         }
     });
 }
+
+// Sort
+const sortBtns = document.querySelectorAll('.enrollment-sort__btn');
+const enrollmentList = document.getElementById('enrollment-list');
+
+function applySort(by) {
+    if (!enrollmentList) return;
+    const items = [...enrollmentList.querySelectorAll('.enrollment')];
+    items.sort((a, b) => {
+        if (by === 'type') {
+            const na = a.querySelector('.enrollment__name')?.textContent || '';
+            const nb = b.querySelector('.enrollment__name')?.textContent || '';
+            return na.localeCompare(nb);
+        }
+        if (by === 'intensity') {
+            const diff = parseInt(b.dataset.intensity, 10) - parseInt(a.dataset.intensity, 10);
+            return diff !== 0 ? diff : a.dataset.date.localeCompare(b.dataset.date);
+        }
+        return a.dataset.date.localeCompare(b.dataset.date);
+    });
+    items.forEach(item => enrollmentList.appendChild(item));
+}
+
+sortBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        sortBtns.forEach(b => b.classList.remove('enrollment-sort__btn--active'));
+        btn.classList.add('enrollment-sort__btn--active');
+        applySort(btn.dataset.sort);
+    });
+});
