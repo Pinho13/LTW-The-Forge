@@ -1,16 +1,19 @@
 .class-card {
-    min-height: max-content;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
-    background-color: rgba(var(--color-brown-rgb), 1);
-    border-left: var(--border-s) solid var(--color-gold);
+    background-color: rgba(var(--color-brown-rgb), 0.85);
+    border: 1px solid var(--color-gold);
+    margin: 1px;
     padding: var(--space-xxs) var(--space-xs);
     cursor: pointer;
     box-sizing: border-box;
     position: relative;
     z-index: 1;
+    user-select: none;
+    -webkit-user-select: none;
     font-size: var(--font-size-xxs);
     white-space: nowrap;
     overflow: hidden;
@@ -65,4 +68,116 @@
 
 .class-card--full footer > span {
     color: var(--color-rust);
+}
+
+.class-card--enrolled {
+    border-color: var(--color-success);
+    background-color: rgba(var(--color-success-rgb), 0.12);
+}
+
+.class-card--enrolled footer > .card-status {
+    color: var(--color-success);
+}
+
+.class-card--waitlisted {
+    border-color: var(--color-rust);
+    background-color: rgba(var(--color-rust-rgb), 0.1);
+}
+
+.class-card--waitlisted footer > .card-status--wait {
+    color: var(--color-rust);
+}
+
+/* ── Stack (multiple classes at same time slot) ── */
+.class-stack {
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    cursor: grab;
+    min-height: 0;
+    margin: 1px;
+}
+
+.class-stack:active {
+    cursor: grabbing;
+}
+
+.class-stack__card {
+    grid-row: 1;
+    grid-column: 1;
+    display: none;
+    margin: 0;
+    height: 100%;
+    min-height: 0;
+}
+
+.class-stack__card--active,
+.class-stack__card--exit-left,
+.class-stack__card--exit-right {
+    display: flex;
+}
+
+.class-stack__card--active {
+    pointer-events: auto;
+    animation: stack-slide-in 0.25s ease forwards;
+}
+
+.class-stack__card--exit-left {
+    pointer-events: none;
+    animation: stack-exit-left 0.25s ease forwards;
+}
+
+.class-stack__card--exit-right {
+    pointer-events: none;
+    animation: stack-exit-right 0.25s ease forwards;
+}
+
+@keyframes stack-slide-in {
+    from { opacity: 0; transform: translateX(var(--stack-enter-from, 100%)); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes stack-exit-left {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(-100%); }
+}
+
+@keyframes stack-exit-right {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(100%); }
+}
+
+.class-stack__dots {
+    grid-row: 1;
+    grid-column: 1;
+    align-self: end;
+    justify-self: center;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 5px;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+.class-stack__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(var(--color-almost-white-rgb), 0.25);
+    border: 1px solid rgba(var(--color-almost-white-rgb), 0.4);
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+}
+
+.class-stack__dot:hover {
+    background: rgba(var(--color-almost-white-rgb), 0.5);
+    transform: scale(1.3);
+}
+
+.class-stack__dot--active {
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+    transform: scale(1.2);
 }
