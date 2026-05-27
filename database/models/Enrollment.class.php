@@ -12,7 +12,7 @@ class Enrollment
              JOIN class_session ON class_session.id = enrollment.session_id
              WHERE enrollment.member_id = :member_id
                AND enrollment.status = 'enrolled'
-               AND strftime('%Y-%m', class_session.datetime) = strftime('%Y-%m', 'now')"
+               AND strftime('%Y-%m', class_session.datetime) = strftime('%Y-%m', 'now', 'localtime')"
         );
         $stmt->execute([':member_id' => $memberId]);
 
@@ -22,11 +22,9 @@ class Enrollment
     public static function countUpcoming(PDO $db, int $memberId): int
     {
         $stmt = $db->prepare(
-            "SELECT COUNT(*) FROM enrollment
-             JOIN class_session ON class_session.id = enrollment.session_id
-             WHERE enrollment.member_id = :member_id
-               AND enrollment.status = 'enrolled'
-               AND class_session.datetime > datetime('now')"
+            "SELECT COUNT(*) FROM equipment_reservation
+             WHERE member_id = :member_id
+               AND start_datetime > datetime('now', 'localtime')"
         );
         $stmt->execute([':member_id' => $memberId]);
 
@@ -68,6 +66,7 @@ class Enrollment
                     class_session.datetime,
                     class_session.room,
                     user.name AS trainer_name,
+                    class_type.name AS type_name,
                     CASE WHEN enrollment.status = 'waitlisted' THEN (
                         SELECT COUNT(*) + 1 FROM enrollment e2
                         WHERE e2.session_id = enrollment.session_id
@@ -78,6 +77,7 @@ class Enrollment
              JOIN class_session ON class_session.id = enrollment.session_id
              JOIN class ON class.id = class_session.class_id
              LEFT JOIN user ON user.user_id = class.trainer_id
+             LEFT JOIN class_type ON class_type.id = class.type_id
              WHERE enrollment.member_id = :member_id
                AND enrollment.status IN ('enrolled', 'waitlisted')
                AND class_session.datetime > datetime('now', 'localtime')
@@ -103,6 +103,7 @@ class Enrollment
                 class_session.datetime,
                 class_session.room,
                 user.name AS trainer_name,
+                class_type.name AS type_name,
                 CASE WHEN review.id IS NOT NULL THEN 1 ELSE 0 END AS has_review,
                 review.rating AS existing_rating,
                 review.comment AS existing_comment
@@ -110,6 +111,7 @@ class Enrollment
             JOIN class_session ON class_session.id = enrollment.session_id
             JOIN class ON class.id = class_session.class_id
             LEFT JOIN user ON user.user_id = class.trainer_id
+            LEFT JOIN class_type ON class_type.id = class.type_id
             LEFT JOIN review ON review.class_id = class.id AND review.member_id = enrollment.member_id
             WHERE enrollment.member_id = :member_id
             AND class_session.datetime < datetime('now', 'localtime')
@@ -177,6 +179,123 @@ class Enrollment
         );
         $stmt->execute([':id' => $enrollmentId, ':member_id' => $memberId]);
         return $stmt->rowCount() > 0;
+    }
+
+    public static function promoteWaitlist(PDO $db, int $cancelledEnrollmentId): void
+    {
+        $sessionId = $db->prepare(
+            "SELECT session_id FROM enrollment WHERE id = :id"
+        );
+        $sessionId->execute([':id' => $cancelledEnrollmentId]);
+        $sid = $sessionId->fetchColumn();
+        if (!$sid) return;
+
+        $capacity = $db->prepare(
+            "SELECT capacity FROM class_session WHERE id = :id"
+        );
+        $capacity->execute([':id' => $sid]);
+        $cap = (int) $capacity->fetchColumn();
+
+        $enrolled = $db->prepare(
+            "SELECT COUNT(*) FROM enrollment WHERE session_id = :sid AND status = 'enrolled'"
+        );
+        $enrolled->execute([':sid' => $sid]);
+        $count = (int) $enrolled->fetchColumn();
+
+        if ($count >= $cap) return;
+
+        $next = $db->prepare(
+            "SELECT id FROM enrollment
+             WHERE session_id = :sid AND status = 'waitlisted'
+             ORDER BY enrolled_at ASC LIMIT 1"
+        );
+        $next->execute([':sid' => $sid]);
+        $nextId = $next->fetchColumn();
+        if (!$nextId) return;
+
+        $promote = $db->prepare(
+            "UPDATE enrollment SET status = 'enrolled' WHERE id = :id"
+        );
+        $promote->execute([':id' => $nextId]);
+    }
+
+    public static function enroll(PDO $db, int $memberId, int $sessionId): string
+    {
+        $cap = $db->prepare("SELECT capacity FROM class_session WHERE id = :id");
+        $cap->execute([':id' => $sessionId]);
+        $capacity = (int) $cap->fetchColumn();
+
+        $enrolled = $db->prepare(
+            "SELECT COUNT(*) FROM enrollment WHERE session_id = :sid AND status = 'enrolled'"
+        );
+        $enrolled->execute([':sid' => $sessionId]);
+        $count = (int) $enrolled->fetchColumn();
+
+        $status = $count < $capacity ? 'enrolled' : 'waitlisted';
+
+        $stmt = $db->prepare(
+            "INSERT INTO enrollment (member_id, session_id, status)
+             VALUES (:member_id, :session_id, :status)
+             ON CONFLICT (member_id, session_id) DO UPDATE SET
+               status = CASE
+                 WHEN enrollment.status = 'cancelled' THEN excluded.status
+                 ELSE enrollment.status
+               END"
+        );
+        $stmt->execute([
+            ':member_id' => $memberId,
+            ':session_id' => $sessionId,
+            ':status' => $status,
+        ]);
+
+        return $status;
+    }
+
+    public static function getStatusForMember(PDO $db, int $memberId, int $sessionId): ?string
+    {
+        $stmt = $db->prepare(
+            "SELECT status FROM enrollment
+             WHERE member_id = :member_id AND session_id = :session_id
+               AND status NOT IN ('cancelled')"
+        );
+        $stmt->execute([':member_id' => $memberId, ':session_id' => $sessionId]);
+        $row = $stmt->fetchColumn();
+        return $row !== false ? (string) $row : null;
+    }
+
+    public static function getSessionsForWeek(PDO $db, int $memberId, string $weekStart, string $weekEnd): array
+    {
+        $stmt = $db->prepare(
+            "SELECT
+                cs.id AS session_id,
+                cs.datetime,
+                cs.room,
+                cs.capacity,
+                c.id AS class_id,
+                c.name AS class_name,
+                c.intensity,
+                c.duration_minutes,
+                ct.name AS type_name,
+                u.name AS trainer_name,
+                COUNT(CASE WHEN e.status = 'enrolled' THEN 1 END) AS enrolled_count,
+                MAX(CASE WHEN e.member_id = :member_id AND e.status NOT IN ('cancelled') THEN e.status END) AS member_status,
+                (SELECT ROUND(AVG(r.rating), 1) FROM review r WHERE r.class_id = c.id) AS avg_rating,
+                (SELECT COUNT(*) FROM review r WHERE r.class_id = c.id) AS review_count
+             FROM class_session cs
+             JOIN class c ON c.id = cs.class_id
+             LEFT JOIN class_type ct ON ct.id = c.type_id
+             LEFT JOIN user u ON u.user_id = c.trainer_id
+             LEFT JOIN enrollment e ON e.session_id = cs.id
+             WHERE cs.datetime >= :start AND cs.datetime < :end
+             GROUP BY cs.id
+             ORDER BY cs.datetime ASC"
+        );
+        $stmt->execute([
+            ':member_id' => $memberId,
+            ':start' => $weekStart,
+            ':end' => $weekEnd,
+        ]);
+        return $stmt->fetchAll();
     }
 
     public static function getRecentActivity(PDO $db, int $memberId): array

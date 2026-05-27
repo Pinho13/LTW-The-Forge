@@ -1,5 +1,6 @@
 -- Safe to re-run: clears all data and resets AUTOINCREMENT counters first
 PRAGMA foreign_keys = OFF;
+DELETE FROM announcement;
 DELETE FROM member_subscription;
 DELETE FROM personal_training_session;
 DELETE FROM gym_visit;
@@ -30,17 +31,31 @@ PRAGMA foreign_keys = ON;
 -- Passwords: NormalTest1! / TrainerTest1! / AdminTest1! / Member2Test1!
 -- ============================================================
 INSERT INTO user (name, username, email, password_hash, role) VALUES
-    ('Normal User',   'normaluser',  'normal@gmail.com',  '$2y$12$5WlMPEie.uE7qRwWQDSWzeYLrlXWtfbpPviuh5jwa5gRJ7MMoAYSi', 'member'),
-    ('Trainer User',  'traineruser', 'trainer@gmail.com', '$2y$12$EaWvzlwLi4d3nl7JSy8ZFuiKIDUgUQZoOayYtcvCyHgXi0JyAiMES', 'trainer'),
-    ('Admin User',    'adminuser',   'admin@gmail.com',   '$2y$12$M8bgiimX4JSAQ43Y7lcKSOi.3Vc7IqalZxWTPzWmhhhmshzW3HbHu', 'admin'),
-    ('Member Two',    'membertwo',   'member2@gmail.com', '$2y$12$TNGOaPId2WaZRqcgugHHaOqu9EErBKhiXoxTD7CXbl1NpHtyyk5RC', 'member');
+    ('Normal User',   'normaluser',   'normal@gmail.com',   '$2y$12$5WlMPEie.uE7qRwWQDSWzeYLrlXWtfbpPviuh5jwa5gRJ7MMoAYSi', 'member'),
+    ('Trainer User',  'traineruser',  'trainer@gmail.com',  '$2y$12$EaWvzlwLi4d3nl7JSy8ZFuiKIDUgUQZoOayYtcvCyHgXi0JyAiMES', 'trainer'),
+    ('Admin User',    'adminuser',    'admin@gmail.com',    '$2y$12$M8bgiimX4JSAQ43Y7lcKSOi.3Vc7IqalZxWTPzWmhhhmshzW3HbHu', 'admin'),
+    ('Member Two',    'membertwo',    'member2@gmail.com',  '$2y$12$TNGOaPId2WaZRqcgugHHaOqu9EErBKhiXoxTD7CXbl1NpHtyyk5RC', 'member'),
+    ('Marcus Steel',  'marcus.steel', 'marcus@theforge.com','placeholder', 'trainer'),
+    ('Elena Voss',    'elena.voss',   'elena@theforge.com', 'placeholder', 'trainer'),
+    ('Daniel Cruz',   'daniel.cruz',  'daniel@theforge.com','placeholder', 'trainer'),
+    ('Sofia Ramos',   'sofia.ramos',  'sofia@theforge.com', 'placeholder', 'trainer'),
+    ('Jake Morris',   'jake.morris',  'jake@member.com',   'placeholder', 'member'),
+    ('Priya Shah',    'priya.shah',   'priya@member.com',  'placeholder', 'member'),
+    ('Leo Fernandes', 'leo.fernandes','leo@member.com',    'placeholder', 'member'),
+    ('Mia Correia',   'mia.correia',  'mia@member.com',    'placeholder', 'member'),
+    ('Test Basic',    'test.basic',   'basic@test.com',    '$2y$12$FQ.O17XF.vsRLFle3DYH8e89S.E3zFsJZod00t3mWFyLBAM8hcO/a', 'member'),
+    ('Test Premium',  'test.premium', 'premium@test.com',  '$2y$12$NGENnzJodEY.YgVNAnWTS.mRS0vSLPClgozMxnD7d4RsiT6sh3kuG', 'member');
 
 
 -- ============================================================
--- TRAINER PROFILE  (user_id 2 = trainer@gmail.com)
+-- TRAINER PROFILES
 -- ============================================================
 INSERT INTO trainer_profile (user_id, bio, specializations, certifications) VALUES
-    (2, 'Certified fitness coach with 8 years of experience.', 'HIIT, Yoga, Cardio', 'ACE Personal Trainer, RYT-200');
+    (2, 'Certified fitness coach with 8 years of experience.', 'HIIT, Yoga, Cardio', 'ACE Personal Trainer, RYT-200'),
+    (5, 'Former competitive powerlifter turned strength coach. 10 years on the platform, 5 years coaching.', 'Powerlifting, Strength & Conditioning, Olympic Lifting', 'NSCA-CSCS, USA Powerlifting Coach'),
+    (6, 'Mobility specialist and yoga instructor passionate about injury prevention and functional movement.', 'Yoga, Mobility, Pilates, Flexibility', 'RYT-500, FMS Level 2, NASM-CPT'),
+    (7, 'Boxing and kickboxing coach with a background in competitive martial arts. High-intensity is the only intensity.', 'Boxing, Kickboxing, HIIT, Functional Fitness', 'ACE-CPT, USA Boxing Coach Level 2'),
+    (8, 'Nutrition-focused coach specialising in body recomposition and endurance training.', 'Endurance, Body Recomposition, Running, Cycling', 'ISSA-CPT, Precision Nutrition Level 1');
 
 
 -- ============================================================
@@ -49,16 +64,26 @@ INSERT INTO trainer_profile (user_id, bio, specializations, certifications) VALU
 INSERT INTO class_type (name) VALUES
     ('Yoga'),
     ('HIIT'),
-    ('Cardio');
+    ('Cardio'),
+    ('Strength'),
+    ('Boxing'),
+    ('Pilates'),
+    ('Cycling');
 
 
 -- ============================================================
--- CLASSES  (trainer_id references user_id 2)
+-- CLASSES
 -- ============================================================
 INSERT INTO class (name, type_id, description, duration_minutes, intensity, trainer_id) VALUES
-    ('Morning Yoga',  1, 'A calm morning flow to improve flexibility and mindfulness.', 60, 2, 2),
-    ('HIIT Blast',    2, 'High-intensity interval training to torch calories fast.',    45, 4, 2),
-    ('Cardio Burn',   3, 'Steady-state cardio session suitable for all fitness levels.', 30, 3, 2);
+    ('Morning Yoga',    1, 'A calm morning flow to improve flexibility and mindfulness.', 60, 2, 2),
+    ('HIIT Blast',      2, 'High-intensity interval training to torch calories fast.',    60, 4, 2),
+    ('Cardio Burn',     3, 'Steady-state cardio session suitable for all fitness levels.', 60, 3, 2),
+    ('Power Hour',      4, 'Heavy compound lifts for total body strength.',               60, 5, 5),
+    ('Fight Club',      5, 'Bag work, combos and conditioning drills.',                   60, 5, 7),
+    ('Core & Flex',     6, 'Pilates-based core stability and flexibility work.',          60, 2, 6),
+    ('Spin Session',    7, 'High-cadence indoor cycling to upbeat music.',                60, 4, 8),
+    ('Evening Yoga',    1, 'Restorative yoga to wind down the day.',                      60, 1, 6),
+    ('Kettlebell Burn', 4, 'Functional strength with kettlebells.',                       60, 4, 5);
 
 
 -- ============================================================
@@ -134,7 +159,31 @@ INSERT INTO class_session (class_id, datetime, room, capacity) VALUES
     (3, '2026-03-20 10:00:00', 'Room C', 15),  -- id 57
     (1, '2026-03-23 08:00:00', 'Room A', 15),  -- id 58
     (2, '2026-03-25 18:00:00', 'Room B', 15),  -- id 59
-    (3, '2026-03-27 10:00:00', 'Room C', 15);  -- id 60
+    (3, '2026-03-27 10:00:00', 'Room C', 15),  -- id 60
+
+    -- === NEW CLASSES — current week (26 May – 1 Jun 2026) ===
+    (4, '2026-05-26 08:00', 'Room B',    12),  -- id 61  Power Hour       Mon
+    (4, '2026-05-28 08:00', 'Room B',    12),  -- id 62  Power Hour       Wed
+    (4, '2026-05-30 08:00', 'Room B',    12),  -- id 63  Power Hour       Fri
+    (5, '2026-05-27 08:00', 'Room C',    10),  -- id 64  Fight Club       Tue
+    (5, '2026-05-29 08:00', 'Room C',    10),  -- id 65  Fight Club       Thu
+    (6, '2026-05-26 09:00', 'Studio A',  15),  -- id 66  Core & Flex      Mon
+    (6, '2026-05-28 09:00', 'Studio A',  15),  -- id 67  Core & Flex      Wed
+    (7, '2026-05-27 09:00', 'Spin Room', 20),  -- id 68  Spin Session     Tue
+    (7, '2026-05-29 09:00', 'Spin Room', 20),  -- id 69  Spin Session     Thu
+    (8, '2026-05-26 09:00', 'Studio A',  20),  -- id 70  Evening Yoga     Mon
+    (8, '2026-05-28 09:00', 'Studio A',  20),  -- id 71  Evening Yoga     Wed
+    (8, '2026-05-30 09:00', 'Studio A',  20),  -- id 72  Evening Yoga     Fri
+    (9, '2026-05-30 08:00', 'Room B',    12),  -- id 73  Kettlebell Burn  Sat
+
+    -- === NEXT WEEK (2–6 Jun 2026) ===
+    (4, '2026-06-02 08:00', 'Room B',    12),  -- id 74  Power Hour       Mon
+    (4, '2026-06-04 08:00', 'Room B',    12),  -- id 75  Power Hour       Wed
+    (5, '2026-06-02 08:00', 'Room C',    10),  -- id 76  Fight Club       Mon
+    (6, '2026-06-03 09:00', 'Studio A',  15),  -- id 77  Core & Flex      Tue
+    (7, '2026-06-02 09:00', 'Spin Room', 20),  -- id 78  Spin Session     Mon
+    (8, '2026-06-01 09:00', 'Studio A',  20),  -- id 79  Evening Yoga     Sun
+    (9, '2026-06-06 08:00', 'Room B',    12);  -- id 80  Kettlebell Burn  Sat
 
 
 -- ============================================================
@@ -176,6 +225,28 @@ INSERT INTO enrollment (member_id, session_id, status) VALUES
     (4, 18, 'enrolled'),   -- HIIT Blast    Wed 20 May
     (4, 20, 'enrolled'),   -- Morning Yoga  Mon 25 May
     (4, 24, 'enrolled'),   -- HIIT Blast    Thu  4 Jun
+
+    -- current week — new classes (ids 61-80)
+    -- user_ids: 1=Normal, 4=Member Two, 9=Jake, 10=Priya, 11=Leo, 12=Mia
+    (9,  61, 'enrolled'), (10, 61, 'enrolled'), (4,  61, 'enrolled'),
+    (12, 66, 'enrolled'), (10, 66, 'enrolled'), (1,  66, 'enrolled'),
+    (11, 70, 'enrolled'), (12, 70, 'enrolled'), (1,  70, 'enrolled'),
+    (9,  68, 'enrolled'), (11, 68, 'enrolled'), (4,  68, 'enrolled'), (10, 68, 'enrolled'),
+    (1,  21, 'enrolled'), (9,  21, 'enrolled'),
+    (11, 64, 'enrolled'), (4,  64, 'enrolled'),
+    (9,  62, 'enrolled'), (10, 62, 'enrolled'),
+    (12, 67, 'enrolled'), (1,  67, 'enrolled'),
+    (11, 71, 'enrolled'), (12, 71, 'enrolled'), (9,  71, 'enrolled'),
+    (10, 69, 'enrolled'), (4,  69, 'enrolled'), (1,  69, 'enrolled'),
+    (9,  22, 'enrolled'), (12, 22, 'enrolled'),
+    (11, 65, 'enrolled'), (9,  65, 'enrolled'),
+    (10, 63, 'enrolled'), (4,  63, 'enrolled'), (11, 63, 'enrolled'),
+    (9,  73, 'enrolled'), (1,  73, 'enrolled'), (12, 73, 'enrolled'), (10, 73, 'enrolled'),
+    (1,  72, 'enrolled'), (11, 72, 'enrolled'),
+    (9,  74, 'enrolled'), (10, 74, 'enrolled'),
+    (1,  78, 'enrolled'), (4,  76, 'enrolled'),
+    (12, 77, 'enrolled'), (11, 79, 'enrolled'),
+    (9,  80, 'enrolled'), (10, 80, 'enrolled'),
 
     -- normal — Jan–Mar 2026 history (ids 25–60)
     (1, 25, 'completed'),
@@ -253,27 +324,85 @@ INSERT INTO gym_visit (member_id, entered_at, left_at, status) VALUES
     -- normal — week of 2026-05-10 (Sun) — currently in gym
     (1, '2026-05-11 09:00:00', NULL, 'in_gym'),
 
-    -- member2 — 3 consecutive weeks (streak = 3)
+    -- member2 — 6 consecutive weeks (streak = 6)
     (4, '2026-04-27 10:00:00', '2026-04-27 11:00:00', 'left'),  -- week of Apr 26
     (4, '2026-05-04 10:00:00', '2026-05-04 11:00:00', 'left'),  -- week of May 3
-    (4, '2026-05-11 10:00:00', NULL,                  'in_gym'); -- week of May 10
+    (4, '2026-05-11 10:00:00', '2026-05-11 11:00:00', 'left'),  -- week of May 10
+    (4, '2026-05-18 10:00:00', '2026-05-18 11:00:00', 'left'),  -- week of May 17
+    (4, '2026-05-22 10:00:00', '2026-05-22 11:00:00', 'left'),  -- week of May 17 (extra)
+    (4, '2026-05-26 09:00:00', NULL,                  'in_gym'); -- week of May 24 (this week)
 
 
 -- ============================================================
 -- EQUIPMENT
+-- IDs map to SVG positions in equipment-map.php:
+--   1  = Treadmill          (top-left zone, left column row 1)
+--   2  = Cable Machine      (top-left zone, right of treadmills)
+--   3  = Lat Pulldown       (top-center row)
+--   4  = Stationary Bike    (center-left cluster)
+--   5  = Cable Crossover    (center)
+--   6  = Chest Press        (center-right row)
+--   7  = Smith Machine      (top-right zone)
+--   8  = Free Weight Rack   (top-left, far left column)
 -- ============================================================
 INSERT INTO equipment (name, type, description) VALUES
-    ('Treadmill',    'Cardio',        'Electric treadmill with incline settings.'),
-    ('Barbell Set',  'Weightlifting', '20 kg Olympic barbell with plate rack.');
+    ('Treadmill',       'Cardio',        'Electric treadmill with speed and incline settings.'),
+    ('Cable Machine',   'Strength',      'Dual-stack cable machine for upper/lower body exercises.'),
+    ('Lat Pulldown',    'Strength',      'Lat pulldown and seated row station.'),
+    ('Stationary Bike', 'Cardio',        'Upright exercise bike with adjustable resistance.'),
+    ('Chest Press',     'Strength',      'Plate-loaded chest press machine.'),
+    ('Free Weight Rack','Weightlifting', 'Dumbbell rack with full weight range 2–40 kg.');
 
 
 -- ============================================================
 -- EQUIPMENT UNITS
 -- ============================================================
-INSERT INTO equipment_unit (equipment_id, identifier, status) VALUES
-    (1, 'TRD-01', 'available'),
-    (1, 'TRD-02', 'maintenance'),
-    (2, 'BAR-01', 'available');
+INSERT INTO equipment_unit (equipment_id, identifier, status, map_x, map_y, map_w, map_h) VALUES
+    -- Treadmills (eq 1)
+    (1, 'TRD-01', 'available',   140,  47, 59, 27),
+    (1, 'TRD-02', 'available',   140,  79, 59, 27),
+    (1, 'TRD-03', 'maintenance', 140, 111, 59, 27),
+    (1, 'TRD-04', 'available',   140, 144, 59, 27),
+    (1, 'TRD-05', 'available',   140, 202, 59, 27),
+    (1, 'TRD-06', 'maintenance', 140, 234, 59, 27),
+    (1, 'TRD-07', 'available',   140, 266, 59, 27),
+
+    -- Cable Machines (eq 2)
+    (2, 'CAB-01', 'maintenance',  72,  46, 48, 29),
+    (2, 'CAB-02', 'available',    72,  78, 48, 29),
+    (2, 'CAB-03', 'available',    72, 110, 48, 29),
+    (2, 'CAB-04', 'available',    72, 143, 48, 29),
+    (2, 'CAB-05', 'available',    72, 201, 48, 29),
+    (2, 'CAB-06', 'available',    72, 233, 48, 29),
+    (2, 'CAB-07', 'available',    72, 265, 48, 29),
+
+    -- Lat Pulldown (eq 3)
+    (3, 'LAT-01', 'available',   226,  46, 51, 55),
+    (3, 'LAT-02', 'available',   287,  46, 52, 55),
+    (3, 'LAT-03', 'maintenance',   347,  46, 52, 55),
+    (3, 'LAT-04', 'available',   409,  46, 52, 55),
+    (3, 'LAT-05', 'available',   470,  46, 52, 55),
+
+    -- Stationary Bikes (eq 4)
+    (4, 'BIK-01', 'available',   231, 162, 30, 48),
+    (4, 'BIK-02', 'available',   268, 162, 31, 48),
+    (4, 'BIK-03', 'available',   305, 162, 31, 48),
+
+    -- Chest Press (eq 5)
+    (5, 'CPR-01', 'available',   356, 164, 37, 53),
+    (5, 'CPR-02', 'available',   397, 164, 36, 53),
+    (5, 'CPR-03', 'available',   437, 164, 37, 53),
+    (5, 'CPR-04', 'available',   478, 164, 36, 53),
+    (5, 'CPR-05', 'available',   518, 164, 37, 53),
+    (5, 'CPR-06', 'available',   559, 164, 36, 53),
+
+    -- Free Weight Rack (eq 6)
+    (6, 'FWR-01', 'available',    50, 212, 14, 66),
+    (6, 'FWR-02', 'available',    50,  74, 14, 66),
+    (6, 'FWR-03', 'available',    174, 28, 67, 14),
+    (6, 'FWR-04', 'available',    396,  28, 67, 14),
+    (6, 'FWR-05', 'maintenance',    444,  218, 66, 12),
+    (6, 'FWR-06', 'available',    245, 248, 66, 14);
 
 
 -- ========================================================================================================================
@@ -285,7 +414,90 @@ INSERT INTO equipment_unit (equipment_id, identifier, status) VALUES
 -- EQUIPMENT RESERVATION
 -- ============================================================
 INSERT INTO equipment_reservation (member_id, unit_id, start_datetime, end_datetime) VALUES
-    (1, 1, '2026-05-12 09:00:00', '2026-05-12 09:30:00');
+    (1, 1, '2026-05-12 09:00:00', '2026-05-12 09:30:00'),
+    (1, 6, '2026-05-14 10:00:00', '2026-05-14 11:00:00'),
+    -- Today's reservations for visual testing (all units)
+    (4,  1, '2026-05-26 08:00:00', '2026-05-26 08:50:00'),
+    (9,  1, '2026-05-26 10:20:00', '2026-05-26 11:10:00'),
+    (10, 1, '2026-05-26 13:00:00', '2026-05-26 14:20:00'),
+    (4,  2, '2026-05-26 09:10:00', '2026-05-26 10:00:00'),
+    (9,  2, '2026-05-26 12:30:00', '2026-05-26 13:10:00'),
+    (10, 2, '2026-05-26 15:00:00', '2026-05-26 16:10:00'),
+    (4,  3, '2026-05-26 08:40:00', '2026-05-26 09:30:00'),
+    (9,  3, '2026-05-26 11:00:00', '2026-05-26 12:00:00'),
+    (10, 3, '2026-05-26 14:10:00', '2026-05-26 15:20:00'),
+    (4,  4, '2026-05-26 09:00:00', '2026-05-26 09:50:00'),
+    (9,  4, '2026-05-26 12:00:00', '2026-05-26 13:00:00'),
+    (10, 4, '2026-05-26 16:00:00', '2026-05-26 16:50:00'),
+    (4,  5, '2026-05-26 08:20:00', '2026-05-26 09:10:00'),
+    (9,  5, '2026-05-26 11:30:00', '2026-05-26 12:20:00'),
+    (10, 5, '2026-05-26 14:40:00', '2026-05-26 15:30:00'),
+    (4,  6, '2026-05-26 09:30:00', '2026-05-26 10:20:00'),
+    (9,  6, '2026-05-26 13:10:00', '2026-05-26 14:00:00'),
+    (10, 6, '2026-05-26 15:50:00', '2026-05-26 16:40:00'),
+    (4,  7, '2026-05-26 08:10:00', '2026-05-26 09:00:00'),
+    (9,  7, '2026-05-26 11:20:00', '2026-05-26 12:10:00'),
+    (10, 7, '2026-05-26 14:00:00', '2026-05-26 15:10:00'),
+    (4,  8, '2026-05-26 09:40:00', '2026-05-26 10:30:00'),
+    (9,  8, '2026-05-26 12:50:00', '2026-05-26 13:40:00'),
+    (10, 8, '2026-05-26 16:10:00', '2026-05-26 17:00:00'),
+    (4,  9, '2026-05-26 08:30:00', '2026-05-26 09:20:00'),
+    (9,  9, '2026-05-26 11:10:00', '2026-05-26 12:00:00'),
+    (10, 9, '2026-05-26 14:30:00', '2026-05-26 15:20:00'),
+    (4,  10, '2026-05-26 09:50:00', '2026-05-26 10:40:00'),
+    (9,  10, '2026-05-26 13:20:00', '2026-05-26 14:10:00'),
+    (4,  11, '2026-05-26 08:50:00', '2026-05-26 09:40:00'),
+    (9,  11, '2026-05-26 12:10:00', '2026-05-26 13:00:00'),
+    (10, 11, '2026-05-26 15:20:00', '2026-05-26 16:10:00'),
+    (4,  12, '2026-05-26 09:20:00', '2026-05-26 10:10:00'),
+    (9,  12, '2026-05-26 13:40:00', '2026-05-26 14:30:00'),
+    (4,  13, '2026-05-26 08:00:00', '2026-05-26 09:00:00'),
+    (9,  13, '2026-05-26 11:40:00', '2026-05-26 12:30:00'),
+    (10, 13, '2026-05-26 15:10:00', '2026-05-26 16:00:00'),
+    (4,  14, '2026-05-26 10:00:00', '2026-05-26 10:50:00'),
+    (9,  14, '2026-05-26 13:30:00', '2026-05-26 14:20:00'),
+    (10, 14, '2026-05-26 17:00:00', '2026-05-26 17:50:00'),
+    (4,  14, '2026-05-26 19:00:00', '2026-05-26 19:40:00'),
+    (4,  15, '2026-05-26 08:20:00', '2026-05-26 09:10:00'),
+    (9,  15, '2026-05-26 12:20:00', '2026-05-26 13:10:00'),
+    (10, 15, '2026-05-26 16:20:00', '2026-05-26 17:10:00'),
+    (4,  16, '2026-05-26 09:00:00', '2026-05-26 09:50:00'),
+    (9,  16, '2026-05-26 13:50:00', '2026-05-26 14:40:00'),
+    (4,  18, '2026-05-26 08:10:00', '2026-05-26 09:00:00'),
+    (9,  18, '2026-05-26 11:50:00', '2026-05-26 12:40:00'),
+    (10, 18, '2026-05-26 15:40:00', '2026-05-26 16:30:00'),
+    (4,  19, '2026-05-26 09:30:00', '2026-05-26 10:20:00'),
+    (9,  19, '2026-05-26 13:00:00', '2026-05-26 13:50:00'),
+    (4,  20, '2026-05-26 10:10:00', '2026-05-26 11:00:00'),
+    (9,  20, '2026-05-26 14:20:00', '2026-05-26 15:10:00'),
+    (4,  21, '2026-05-26 08:40:00', '2026-05-26 09:30:00'),
+    (9,  21, '2026-05-26 12:00:00', '2026-05-26 12:50:00'),
+    (10, 21, '2026-05-26 15:30:00', '2026-05-26 16:20:00'),
+    (4,  22, '2026-05-26 09:10:00', '2026-05-26 10:00:00'),
+    (9,  22, '2026-05-26 13:10:00', '2026-05-26 14:00:00'),
+    (4,  23, '2026-05-26 08:00:00', '2026-05-26 08:50:00'),
+    (9,  23, '2026-05-26 11:30:00', '2026-05-26 12:20:00'),
+    (10, 23, '2026-05-26 14:50:00', '2026-05-26 15:40:00'),
+    (4,  24, '2026-05-26 10:20:00', '2026-05-26 11:10:00'),
+    (9,  24, '2026-05-26 13:40:00', '2026-05-26 14:30:00'),
+    (4,  25, '2026-05-26 09:00:00', '2026-05-26 09:50:00'),
+    (9,  25, '2026-05-26 12:30:00', '2026-05-26 13:20:00'),
+    (4,  26, '2026-05-26 08:30:00', '2026-05-26 09:20:00'),
+    (9,  26, '2026-05-26 14:00:00', '2026-05-26 14:50:00'),
+    (10, 26, '2026-05-26 16:30:00', '2026-05-26 17:20:00'),
+    (4,  27, '2026-05-26 09:40:00', '2026-05-26 10:30:00'),
+    (9,  27, '2026-05-26 13:20:00', '2026-05-26 14:10:00'),
+    (4,  28, '2026-05-26 08:10:00', '2026-05-26 09:00:00'),
+    (9,  28, '2026-05-26 11:50:00', '2026-05-26 12:40:00'),
+    (10, 28, '2026-05-26 15:00:00', '2026-05-26 15:50:00'),
+    (4,  29, '2026-05-26 10:00:00', '2026-05-26 10:50:00'),
+    (9,  29, '2026-05-26 14:10:00', '2026-05-26 15:00:00'),
+    (4,  30, '2026-05-26 08:50:00', '2026-05-26 09:40:00'),
+    (9,  30, '2026-05-26 12:10:00', '2026-05-26 13:00:00'),
+    (10, 30, '2026-05-26 15:20:00', '2026-05-26 16:10:00'),
+    (4,  31, '2026-05-26 09:20:00', '2026-05-26 10:10:00'),
+    (9,  31, '2026-05-26 13:50:00', '2026-05-26 14:40:00'),
+    (10, 31, '2026-05-26 16:40:00', '2026-05-26 17:30:00');
 
 
 -- ============================================================
@@ -321,6 +533,43 @@ INSERT INTO membership_plan (name, price, description, max_classes_per_month) VA
 -- ============================================================
 -- MEMBER SUBSCRIPTIONS
 -- ============================================================
+-- plan_id 1 = Basic, plan_id 2 = Premium
 INSERT INTO member_subscription (member_id, plan_id, start_date, end_date, status) VALUES
-    (1, 2, '2026-05-01', '2026-06-01', 'active'),
-    (4, 1, '2026-05-01', '2026-06-01', 'active');
+    (1,  2, '2026-05-01', '2027-05-01', 'active'),  -- Normal User   — Premium
+    (4,  1, '2026-05-01', '2027-05-01', 'active'),  -- Member Two    — Basic
+    (9,  2, '2026-05-01', '2027-05-01', 'active'),  -- Jake Morris   — Premium
+    (10, 2, '2026-05-01', '2027-05-01', 'active'),  -- Priya Shah    — Premium
+    (11, 1, '2026-05-01', '2027-05-01', 'active'),  -- Leo Fernandes — Basic
+    (12, 2, '2026-05-01', '2027-05-01', 'active'),  -- Mia Correia   — Premium
+    (13, 1, '2026-05-01', '2027-05-01', 'active'),  -- Test Basic    — Basic
+    (14, 2, '2026-05-01', '2027-05-01', 'active');  -- Test Premium  — Premium
+
+
+-- ============================================================
+-- ANNOUNCEMENTS  (author_id 3 = admin@gmail.com)
+-- ============================================================
+INSERT INTO announcement (title, body, author_id, pinned, type, read_time, created_at) VALUES
+    ('Welcome to The Forge!',
+     'We are excited to have you here. Browse our class schedule, book equipment, and connect with our trainers. Have a great workout!',
+     3, 1, 'Gym News', 2, '2026-05-01 09:00:00'),
+    ('New HIIT Classes Added',
+     'We have added extra HIIT Blast sessions every Tuesday and Thursday evening. Check the Classes page for the full schedule.',
+     3, 0, 'Event', 1, '2026-05-10 10:00:00'),
+    ('TRD-02 Under Maintenance',
+     'Treadmill TRD-02 is currently undergoing routine maintenance. We apologise for the inconvenience — TRD-01 and TRD-03 remain available.',
+     3, 0, 'Maintenance', 1, '2026-05-20 08:00:00'),
+    ('Open-Mat Weekend — Apr 27',
+     'Two days. Free for members. Bring a guest. No class structure, just open floor time to work on what you want. Both studios will be available from 8 AM to 6 PM.',
+     3, 0, 'Event', 1, '2026-04-22 09:00:00'),
+    ('Programming Update — Q2 Block',
+     'We are moving to a 4-week conjugate cycle for the strength track. Mobility track stays as is. Expect heavier accessory work and shorter met-cons on alternating days.',
+     3, 0, 'Coach Note', 4, '2026-04-19 10:00:00'),
+    ('Studio C Closed Fri 18 Apr',
+     'Floor refit. Mobility classes relocate to Studio A. Schedule unchanged — check the app for updated room assignments.',
+     3, 0, 'Maintenance', 1, '2026-04-15 08:00:00'),
+    ('Extended Hours Starting May 1',
+     'Floor opens 5:30 AM weekdays. Studios stay on the 6:00 AM kickoff. Evening close moves to 10 PM Monday through Thursday.',
+     3, 0, 'Gym News', 1, '2026-04-04 09:00:00'),
+    ('New Squat Racks Installed',
+     'Three new power racks added to Zone A. All have integrated weight storage and laser-cut j-hooks. Available now, no booking required.',
+     3, 0, 'Gym News', 2, '2026-03-28 11:00:00');
