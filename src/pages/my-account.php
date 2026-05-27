@@ -26,6 +26,7 @@ $recentActivity       = Enrollment::getRecentActivity($db, $session->getId());
     <?php $activePage = 'account'; include '../components/side-menu.php'; ?>
 
     <main>
+        <?php include '../components/flash-messages.php'; ?>
         <header>
             <h1>Welcome back, <?= htmlspecialchars($session->getName()) ?>!</h1>
         </header>
@@ -58,19 +59,10 @@ $recentActivity       = Enrollment::getRecentActivity($db, $session->getId());
             <?php if ($nextClass): ?>
                 <ul class="class-preview__details">
                     <li><?= htmlspecialchars($nextClass['class_name']) ?></li>
-                    <li>
-                        <img src="../assets/icons/separator.svg" alt="">
-                        <?= htmlspecialchars(date('l H:i', strtotime($nextClass['datetime']))) ?>
-                    </li>
-                    <li>
-                        <img src="../assets/icons/separator.svg" alt="">
-                        <?= htmlspecialchars($nextClass['room']) ?>
-                    </li>
+                    <li><?= htmlspecialchars(date('l H:i', strtotime($nextClass['datetime']))) ?></li>
+                    <li><?= htmlspecialchars($nextClass['room']) ?></li>
                     <?php if ($nextClass['trainer_name']): ?>
-                        <li>
-                            <img src="../assets/icons/separator.svg" alt="">
-                            Trainer: <?= htmlspecialchars($nextClass['trainer_name']) ?>
-                        </li>
+                        <li>Trainer: <?= htmlspecialchars($nextClass['trainer_name']) ?></li>
                     <?php endif; ?>
                 </ul>
             <?php else: ?>
