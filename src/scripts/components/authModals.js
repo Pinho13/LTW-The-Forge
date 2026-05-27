@@ -7,6 +7,9 @@ export function initAuthModals() {
     const loginBtn      = document.getElementById('login-btn');
     const openRegisterBtn = document.getElementById('open-register-btn');
     const openLoginBtn    = document.getElementById('open-login-btn');
+    const basicMembershipBtn = document.getElementById('basic-membership');
+    const premiumMembershipBtn = document.getElementById('premium-membership');
+
 
     function openModal(modal) {
         if (modal) {
@@ -47,6 +50,10 @@ export function initAuthModals() {
         closeModal(registerModal);
         openModal(loginModal);
     });
+
+    basicMembershipBtn?.addEventListener('click', () => openModal(registerModal));
+
+    premiumMembershipBtn?.addEventListener('click', () => openModal(registerModal));
 
     backdrop?.addEventListener('click', closeAll);
 

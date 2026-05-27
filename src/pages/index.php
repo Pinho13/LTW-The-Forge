@@ -174,7 +174,7 @@
           <li>Cardio machines</li>
           <li>Basic training support</li>
         </ul>
-        <a class="plan-card__cta" href="#"><button class="btn-page">Be Basic!</button></a>
+        <button class="btn-page" id="basic-membership">Be Basic!</button>
       </article>
 
       <article class="plan-card plan-card--featured hover-lift">
@@ -186,7 +186,7 @@
           <li>Unlimited classes</li>
           <li>Full facility access</li>
         </ul>
-        <a class="plan-card__cta" href="#"><button class="btn-page">Be Premium!</button></a>
+        <button class="btn-page" id="premium-membership">Be Premium!</button>
       </article>
     </div>
   </section>
