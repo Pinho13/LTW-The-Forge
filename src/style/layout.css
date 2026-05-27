@@ -10,6 +10,9 @@ body {
 main {
     grid-area: main;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(var(--color-brown-rgb), 0.03);
 }
 
 body > footer {
