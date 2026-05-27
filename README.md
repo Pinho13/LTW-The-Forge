@@ -22,15 +22,16 @@ Styling for these pages can be found at src/style/
 
 **All users:**
 - [x] Register a new account.
-- [~] Log in and out.
-- [ ] Edit their profile, including name, username, password, and profile photo.
+- [x] Log in and out.
+- [x] Edit their profile, including name, username, password, and profile photo.
 
 **Members:**
-- [~] Browse the schedule of available fitness classes, filtering by type, trainer, day, or time.
-- [ ] Enroll in and cancel enrollment from upcoming classes, subject to capacity limits.
-- [ ] View trainer profiles, including their specializations and the classes they teach.
-- [ ] Check the current availability of equipment in the main training area.
-- [ ] Leave ratings and reviews for classes they have attended.
+- [~] Browse the weekly schedule of fitness classes (calendar view; filters not implemented yet).
+- [x] Enroll in and cancel enrollment from upcoming classes, subject to capacity limits (waitlist supported).
+- [x] View trainer profiles, including their specializations and the classes they teach.
+- [x] Check the current availability of equipment in the main training area.
+- [x] Reserve equipment and manage upcoming reservations.
+- [x] Leave ratings and reviews for classes they have attended.
 
 **Trainers:**
 - [ ] Manage their public profile, including bio, specializations, and certifications.
@@ -41,11 +42,12 @@ Styling for these pages can be found at src/style/
 - [ ] Manage members and trainers (create, update, and deactivate accounts).
 - [ ] Manage the class catalog (create, edit, and remove classes) and assign trainers to them.
 - [ ] Manage equipment in the main training area (add, update availability status, and remove items).
+- [x] Create, pin, and delete announcements/news posts.
 - [ ] Elevate a user to admin status.
 - [ ] Oversee and ensure the smooth operation of the entire system.
 
 **Extra:**
-- [ ] Membership plans.
+- [~] Membership plans (basic/premium shown in UI; subscription changes not implemented).
 - [ ] Personal logging of material.
 
 ## Running
@@ -144,4 +146,3 @@ The project includes the following security practices:
 | Miguel Rocha | 202405484@up.pt |
 | Pedro Teixeira | 202404987@up.pt |
 | Rafael Silva | 202406334@up.pt |
-
