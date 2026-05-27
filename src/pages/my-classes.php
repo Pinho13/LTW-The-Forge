@@ -5,6 +5,12 @@ require_once(__DIR__ . '/../../database/models/Enrollment.class.php');
 require_once(__DIR__ . '/../templates/enrollment.tpl.php');
 
 [$session, $db] = requireAuthenticatedPage();
+
+if ($session->isMember() && !$session->isPremium()) {
+    header('Location: /src/pages/my-account.php');
+    exit;
+}
+
 $memberId = $session->getId();
 
 $tab = $_GET['tab'] ?? 'upcoming';
@@ -38,6 +44,7 @@ $staleEnrollments = Enrollment::getStaleForMember($db, $memberId, $now);
     <?php $activePage = 'my-classes'; include '../components/side-menu.php'; ?>
 
     <main>
+        <?php include '../components/flash-messages.php'; ?>
         <header>
             <h1>My Classes</h1>
         </header>
@@ -51,6 +58,15 @@ $staleEnrollments = Enrollment::getStaleForMember($db, $memberId, $now);
                     Past · <?= count($past) . ($pastHasMore ? '+' : '') ?>
                 </a>
             </div>
+
+            <?php if (!empty($list)): ?>
+            <div class="enrollment-sort" id="enrollment-sort">
+                <span class="enrollment-sort__label">Sort by:</span>
+                <button type="button" class="enrollment-sort__btn enrollment-sort__btn--active" data-sort="date">Date</button>
+                <button type="button" class="enrollment-sort__btn" data-sort="type">Type</button>
+                <button type="button" class="enrollment-sort__btn" data-sort="intensity">Intensity</button>
+            </div>
+            <?php endif; ?>
 
             <?php if (empty($list)): ?>
                 <p class="empty">
@@ -96,6 +112,7 @@ $staleEnrollments = Enrollment::getStaleForMember($db, $memberId, $now);
         <button type="button" class="btn-ghost auth-modal__close">&times;</button>
         <h2 class="auth-modal__title">Cancel Class</h2>
         <form method="POST" action="../actions/action_cancel_enrollment.php" class="auth-modal__form">
+            <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
             <input type="hidden" name="enrollment_id" id="cancel-enrollment-id">
             <p class="auth-modal__prompt">Cancel your spot in <span id="cancel-class-name"></span>?</p>
             <button type="submit" class="btn-danger modal-action-btn">Yes, cancel</button>

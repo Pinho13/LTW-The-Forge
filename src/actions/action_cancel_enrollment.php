@@ -1,25 +1,23 @@
 <?php
 declare(strict_types=1);
-require_once(__DIR__ . '/../../utils/session.php');
-require_once(__DIR__ . '/../../database/connection.db.php');
+require_once(__DIR__ . '/action_bootstrap.php');
 require_once(__DIR__ . '/../../database/models/Enrollment.class.php');
 
-$session = new Session();
-$session->requireLogin('/src/pages/index.php?open=login');
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /src/pages/my-classes.php');
-    exit;
-}
+[$session, $db] = requireAuthenticatedJsonPost();
 
 $enrollmentId = (int) ($_POST['enrollment_id'] ?? 0);
 if ($enrollmentId <= 0) {
-    header('Location: /src/pages/my-classes.php');
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid enrollment.']);
     exit;
 }
 
-$db = getDatabaseConnection();
-Enrollment::cancelForMember($db, $enrollmentId, $session->getId());
+$cancelled = Enrollment::cancelForMember($db, $enrollmentId, $session->getId());
+if (!$cancelled) {
+    http_response_code(404);
+    echo json_encode(['error' => 'Could not cancel enrollment.']);
+    exit;
+}
 
-header('Location: /src/pages/my-classes.php?tab=upcoming');
-exit;
+Enrollment::promoteWaitlist($db, $enrollmentId);
+echo json_encode(['success' => true]);

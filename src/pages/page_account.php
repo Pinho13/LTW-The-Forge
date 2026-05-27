@@ -46,6 +46,7 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
     <?php $activePage = 'profile'; include '../components/side-menu.php'; ?>
 
     <main>
+        <?php include '../components/flash-messages.php'; ?>
         <header>
             <h1>Profile</h1>
         </header>

@@ -118,8 +118,13 @@ CREATE TABLE IF NOT EXISTS equipment_unit (
     identifier   VARCHAR,
     status       VARCHAR NOT NULL DEFAULT 'available'
                      CHECK (status IN ('available', 'maintenance', 'retired')),
+    map_x        INTEGER,
+    map_y        INTEGER,
+    map_w        INTEGER,
+    map_h        INTEGER,
     FOREIGN KEY (equipment_id) REFERENCES equipment(id) ON DELETE RESTRICT
 );
+
 
 -- ============================================================
 -- EQUIPMENT RESERVATION
@@ -219,6 +224,21 @@ CREATE TABLE IF NOT EXISTS member_subscription (
     CHECK (end_date > start_date),
     FOREIGN KEY (member_id) REFERENCES user(user_id)       ON DELETE CASCADE,
     FOREIGN KEY (plan_id)   REFERENCES membership_plan(id) ON DELETE RESTRICT
+);
+
+-- ============================================================
+-- ANNOUNCEMENT
+-- ============================================================
+CREATE TABLE IF NOT EXISTS announcement (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    title      VARCHAR NOT NULL,
+    body       TEXT NOT NULL,
+    author_id  INTEGER NOT NULL,
+    pinned     BOOLEAN NOT NULL DEFAULT 0 CHECK (pinned IN (0, 1)),
+    type       VARCHAR NOT NULL DEFAULT 'Gym News',
+    read_time  INTEGER NOT NULL DEFAULT 1,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (author_id) REFERENCES user(user_id) ON DELETE RESTRICT
 );
 
 -- ============================================================

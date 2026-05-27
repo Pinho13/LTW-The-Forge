@@ -47,6 +47,17 @@ require_once(__DIR__ . '/../../utils/session.php');
     </header>
 
     <main>
+    <?php
+    $__flash = $session?->getMessages() ?? [];
+    if (!empty($__flash)): ?>
+    <div class="flash-messages" role="alert" aria-live="polite">
+        <?php foreach ($__flash as $__msg): ?>
+            <div class="flash-message flash-<?= htmlspecialchars($__msg['type']) ?>">
+                <?= htmlspecialchars($__msg['text']) ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
 <?php } ?>
 
 <?php function drawPasswordField(string $id, string $name, string $label, string $autocomplete = 'current-password') { ?>

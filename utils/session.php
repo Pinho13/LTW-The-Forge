@@ -84,13 +84,29 @@ class Session
         $_SESSION['user_name'] = $name;
     }
 
-    public function setUser(int $id, string $name, string $role): void
+    public function setUser(int $id, string $name, string $role, string $plan = ''): void
     {
         session_regenerate_id(true);
 
-        $_SESSION['user_id'] = $id;
+        $_SESSION['user_id']   = $id;
         $_SESSION['user_name'] = $name;
         $_SESSION['user_role'] = $role;
+        $_SESSION['user_plan'] = strtolower($plan);
+    }
+
+    public function getPlan(): string
+    {
+        return $_SESSION['user_plan'] ?? '';
+    }
+
+    public function isPremium(): bool
+    {
+        return $this->isMember() && $this->getPlan() === 'premium';
+    }
+
+    public function isBasic(): bool
+    {
+        return $this->isMember() && $this->getPlan() === 'basic';
     }
 
     public function logout(): void

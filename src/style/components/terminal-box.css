@@ -7,16 +7,37 @@
 }
 
 .platform-overview h2 {
+    margin-top: 0;
     margin-bottom: var(--space-m);
     color: var(--color-light-gold);
     font-size: var(--font-size-xl);
+    font-family: "Big Shoulders", sans-serif;
+    text-align: center;
 }
 
 .terminal-text {
-    min-height: 4.5em;
-    color: var(--color-grey);
+    min-height: 2em;
+    color: var(--color-almost-white);
+    font-size: var(--font-size-m);
     line-height: 1.7;
     letter-spacing: 0.01em;
+    margin-bottom: var(--space-l);
+    text-align: center;
+}
+
+.platform-overview__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    border-top: var(--border-1px) solid rgba(var(--color-gold-rgb), 0.2);
+    padding-top: var(--space-l);
+}
+
+.platform-overview__body p {
+    color: var(--color-almost-white);
+    line-height: 1.8;
+    font-size: var(--font-size-s);
+    margin: 0;
 }
 
 .terminal-text::after {
@@ -48,7 +69,7 @@
     }
 
     .terminal-text {
-        min-height: 6em;
+        min-height: 3em;
         font-size: var(--font-size-xs);
     }
 }

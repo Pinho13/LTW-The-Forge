@@ -41,8 +41,13 @@ if ($user === null) {
     redirectLoginError($session, $formData, 'Invalid email or password.');
 }
 
-$session->setUser($user->user_id, $user->name, $user->role);
-$session->addMessage('success', 'Login successful.');
+$plan = '';
+if ($user->role === 'member') {
+    require_once(__DIR__ . '/../../database/models/MemberSubscription.class.php');
+    $plan = MemberSubscription::getActivePlanName($db, $user->user_id) ?? '';
+}
+$session->setUser($user->user_id, $user->name, $user->role, $plan);
+$session->addMessage('toast', 'Login successful.');
 
 header('Location: /src/pages/my-account.php');
 exit;

@@ -1,4 +1,84 @@
+.calendar-nav .btn-ghost {
+    font-size: var(--font-size-s);
+    padding: var(--space-xs) var(--space-s);
+    text-decoration: none;
+}
+
+.class-modal {
+    padding-top: 0;
+    border-top: none;
+    overflow: visible;
+}
+
+.class-modal::before {
+    content: '';
+    display: block;
+    height: var(--border-l);
+    background: var(--color-gold);
+    margin-bottom: var(--space-m);
+    margin-left: calc(-1 * clamp(var(--space-m), 8vw, var(--space-xxl)));
+    margin-right: calc(-1 * clamp(var(--space-m), 8vw, var(--space-xxl)));
+}
+
+.class-modal .auth-modal__title {
+    margin-bottom: var(--space-s);
+}
+
+.class-modal__meta {
+    color: var(--color-grey);
+    font-size: var(--font-size-s);
+    margin: 0 0 var(--space-s);
+}
+
+.class-modal__info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    margin-bottom: var(--space-s);
+}
+
+.class-modal__type {
+    font-size: var(--font-size-xs);
+    color: var(--color-light-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.class-modal__spots {
+    font-size: var(--font-size-s);
+    color: var(--color-almost-white);
+    margin: 0 0 var(--space-s);
+}
+
+.modal-action-btn {
+    width: 100%;
+    margin-top: var(--space-s);
+}
+
+.modal-error {
+    color: var(--color-error);
+    font-size: var(--font-size-s);
+    margin: var(--space-xs) 0 0;
+}
+
 @media (max-width: 640px) {
+    .class-modal::before {
+        margin-left: calc(-1 * var(--space-m));
+        margin-right: calc(-1 * var(--space-m));
+    }
+
+    .class-modal .auth-modal__title {
+        font-size: var(--font-size-l);
+    }
+
+    .class-modal__meta {
+        font-size: var(--font-size-xs);
+    }
+
+    .modal-action-btn {
+        font-size: var(--font-size-s);
+    }
+
     .class-card {
         font-size: var(--font-size-xs);
     }
