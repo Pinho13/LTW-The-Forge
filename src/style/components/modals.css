@@ -39,14 +39,26 @@
     color: var(--color-almost-white);
     font-size: var(--font-size-display);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
 }
 
 .auth-modal__title::after {
     content: '';
-    display: block;
-    width: 40%;
-    margin: var(--space-xxs) auto 0;
     border-bottom: var(--border-thin) solid var(--color-gold);
+    width: 100%;
+}
+
+.class-modal .auth-modal__title {
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+}
+
+.class-modal .auth-modal__title::after {
+    width: 100%;
 }
 
 .auth-modal__subtitle {
@@ -111,6 +123,37 @@
     text-align: center;
 }
 
+.class-modal__rating {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-s);
+}
+
+.class-modal__stars {
+    display: flex;
+    gap: 2px;
+}
+
+.class-modal__star {
+    font-size: var(--font-size-m);
+    color: rgba(var(--color-grey-rgb), 0.4);
+}
+
+.class-modal__star.filled {
+    color: var(--color-gold);
+}
+
+.class-modal__rating-label {
+    font-size: var(--font-size-s);
+    color: var(--color-grey);
+}
+
+.class-modal__sep {
+    padding-inline: var(--space-xs);
+    opacity: 0.5;
+}
+
 @keyframes modal-in {
     from { opacity: 0; transform: translate(-50%, -48%); }
     to   { opacity: 1; transform: translate(-50%, -50%); }
@@ -118,17 +161,28 @@
 
 @media (max-width: 640px) {
     .auth-modal {
-        width: min(26rem, calc(100% - 2 * var(--space-m)));
-        padding-top: clamp(var(--space-s), 4vw, var(--space-xl));
-        padding-bottom: clamp(var(--space-s), 4vw, var(--space-xl));
+        width: calc(100% - 2 * var(--space-m));
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: none;
+        padding: var(--space-m) var(--space-m) var(--space-xl);
+        border-radius: 0;
     }
 
     .auth-modal__close {
-        display: none;
+        display: block;
+        top: var(--space-s);
+        right: var(--space-s);
     }
 
     .auth-modal__title {
-        font-size: var(--font-size-xxl);
+        font-size: var(--font-size-xl);
+    }
+
+    .auth-modal__title::after {
+        width: calc(100% - 10px);
     }
 
     .auth-modal__subtitle {
