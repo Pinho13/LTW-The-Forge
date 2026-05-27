@@ -17,6 +17,16 @@
     </section>
   </div>
 
+  <section class="platform-overview" id="overview">
+    <h2>WHAT IS THE FORGE</h2>
+    <p class="terminal-text" data-text="The Forge is more than a gym. It is a training ground built for those who show up. Discipline is the only membership that matters."></p>
+    <div class="platform-overview__body">
+      <p>We built The Forge around one idea: serious training deserves serious tools. From the moment you walk in, everything is designed to get out of your way and let you focus on the work.</p>
+      <p>Reserve a machine before you arrive. Book a class with one of our expert trainers. Track your streak, monitor your progress, and manage your membership from anywhere. No queues. No guesswork.</p>
+      <p>Whether you are here to lift heavy, move better, or simply show up consistently, The Forge gives you the structure to do it on your terms.</p>
+    </div>
+  </section>
+
   <section class="facilities" id="facilities">
     <div class="facilities__image facilities__image--left">
       <img src="../assets/images/main-page/left-image.png" alt="Gym Equipment">
@@ -39,12 +49,6 @@
       <img src="../assets/images/main-page/right-image.png" alt="People Training">
     </div>
   </section>
-
-  <section class="platform-overview">                                                                                                                       
-    <h2>&gt; system_overview</h2>                                                                                                                           
-    <p class="terminal-text" data-text="A complete gym management platform where members can explore classes, follow their progress, and manage their       
-  account, while trainers and administrators handle scheduling and operations."></p>
-  </section>     
 
   <section class="plans" id="plans">
     <h2 class="plans__title">MEMBERSHIP PLANS</h2>

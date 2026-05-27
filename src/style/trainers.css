@@ -1,0 +1,284 @@
+.back-link {
+    display: inline-block;
+    color: var(--color-grey);
+    text-decoration: none;
+    font-size: var(--font-size-s);
+    margin-bottom: var(--space-m);
+}
+.back-link:hover { color: var(--color-almost-white); }
+
+.trainer-hero__handle {
+    color: var(--color-grey);
+    margin: var(--space-xxs) 0 0;
+    font-size: var(--font-size-s);
+}
+
+/* ── Trainer profile layout ── */
+.trainer-profile-layout {
+    flex: 1;
+    min-height: 0;
+}
+
+.trainer-profile-content {
+    padding: var(--space-xl) var(--space-l) var(--space-xl) var(--space-xxl);
+    overflow-y: auto;
+    max-width: 720px;
+}
+
+.trainer-profile-identity {
+    display: flex;
+    align-items: center;
+    gap: var(--space-l);
+    margin-bottom: var(--space-xl);
+}
+
+.trainer-profile-identity h1 {
+    margin: 0 0 var(--space-xxs);
+}
+
+.trainer-profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid rgba(var(--color-gold-rgb), 0.5);
+}
+
+.trainer-profile-avatar--initials {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--color-gold-rgb), 0.1);
+    font-size: var(--font-size-l);
+    font-weight: 700;
+    color: var(--color-gold);
+    flex-shrink: 0;
+    border: 2px solid rgba(var(--color-gold-rgb), 0.5);
+}
+
+.trainer-section {
+    margin-bottom: var(--space-xl);
+}
+
+.trainer-section h2 {
+    font-size: var(--font-size-s);
+    color: var(--color-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-s);
+}
+
+.tag-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+.tag {
+    background: rgba(var(--color-gold-rgb), 0.15);
+    color: var(--color-light-gold);
+    border: var(--border-1px) solid rgba(var(--color-gold-rgb), 0.3);
+    padding: var(--space-xxs) var(--space-s);
+    font-size: var(--font-size-xs);
+    border-radius: 2px;
+}
+
+.tag--cert {
+    background: rgba(var(--color-grey-rgb), 0.1);
+    color: var(--color-almost-white);
+    border-color: rgba(var(--color-grey-rgb), 0.2);
+}
+
+.tag--sm {
+    font-size: var(--font-size-xxs);
+    padding: 1px var(--space-xs);
+}
+
+.trainer-class-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+}
+
+.trainer-class-item {
+    background: #0e0e0c;
+    border: 1px solid rgba(var(--color-gold-rgb), 0.25);
+    border-top: 3px solid var(--color-gold);
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.trainer-class-item:hover {
+    background: #161410;
+    border-color: rgba(var(--color-gold-rgb), 0.5);
+    border-top-color: var(--color-gold);
+}
+
+.trainer-class-item__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-s) var(--space-m);
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.trainer-class-item__info {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    flex-wrap: wrap;
+}
+
+.trainer-class-item__meta {
+    width: 100%;
+    margin: var(--space-xxs) 0 0;
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+}
+
+/* Trainer list (index) */
+.trainer-list {
+    list-style: none;
+    padding: 0 var(--space-l) var(--space-xl);
+    margin: var(--space-l) 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+}
+
+.trainer-card {
+    border: 2px solid var(--color-gold);
+}
+
+.trainer-card__link {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: 180px;
+    text-decoration: none;
+    color: var(--color-almost-white);
+}
+
+.trainer-card--reversed .trainer-card__link {
+    grid-template-columns: 1fr 200px;
+}
+
+.trainer-card--reversed .trainer-card__avatar-wrap {
+    order: 2;
+}
+
+.trainer-card--reversed .trainer-card__content {
+    order: 1;
+}
+
+.trainer-card__avatar-wrap {
+    overflow: hidden;
+}
+
+.trainer-card__avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85) grayscale(0.15);
+}
+
+.trainer-card__avatar--initials {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--color-gold-rgb), 0.1);
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    letter-spacing: 0.05em;
+}
+
+.trainer-card__content {
+    padding: var(--space-l);
+    background: #0e0e0c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-s);
+}
+
+.trainer-card__name {
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    color: var(--color-almost-white);
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.trainer-card__link:hover .trainer-card__name {
+    color: var(--color-gold);
+}
+
+.trainer-card__spec {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: var(--font-size-xxs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    font-weight: 600;
+    margin: 0;
+}
+
+.trainer-card__bio {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: var(--font-size-s);
+    color: rgba(var(--color-almost-white-rgb), 0.7);
+    line-height: 1.6;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.trainer-card__cta {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: var(--font-size-xxs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    font-weight: 600;
+    margin-top: var(--space-xs);
+}
+
+.empty-state {
+    color: var(--color-grey);
+    font-size: var(--font-size-s);
+    margin-top: var(--space-l);
+}
+
+@media (max-width: 700px) {
+    .trainer-card__link,
+    .trainer-card--reversed .trainer-card__link {
+        grid-template-columns: 1fr;
+        grid-template-rows: 200px auto;
+    }
+    .trainer-card--reversed .trainer-card__avatar-wrap,
+    .trainer-card--reversed .trainer-card__content {
+        order: unset;
+    }
+    .trainer-class-item { flex-direction: column; align-items: flex-start; gap: var(--space-xs); }
+
+    .trainer-profile-content {
+        padding: var(--space-l) var(--space-m) var(--space-xl);
+    }
+}

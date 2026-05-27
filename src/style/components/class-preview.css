@@ -29,6 +29,18 @@
     gap: var(--space-xxs);
 }
 
+.class-preview__details li + li::before {
+    content: '';
+    display: block;
+    width: 1em;
+    height: 1em;
+    background: url('/src/assets/icons/separator.svg') center / contain no-repeat;
+    flex-shrink: 0;
+    margin-left: 0;
+    margin-right: var(--space-xs);
+    align-self: center;
+}
+
 .class-preview__empty {
     margin-block: var(--space-xs);
 }

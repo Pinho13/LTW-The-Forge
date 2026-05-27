@@ -28,6 +28,7 @@
 @import url('./components/activity-list.css');
 @import url('./components/tabs.css');
 @import url('./components/enrollment-list.css');
+@import url('./components/sort-bar.css');
 
 /* Layer 3: Shared layout styles */
 /* layout.css is loaded only for logged-in pages */

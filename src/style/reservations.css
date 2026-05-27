@@ -1,0 +1,148 @@
+.reservations-body {
+    padding: var(--space-m) var(--space-m) var(--space-xl);
+}
+
+/* Section */
+.res-section {
+    margin-bottom: var(--space-xl);
+}
+
+.res-section__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-m);
+    padding-bottom: var(--space-xs);
+    border-bottom: var(--border-1px) solid rgba(var(--color-grey-rgb), 0.2);
+}
+
+.res-section__title {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+    font-family: "Big Shoulders", sans-serif;
+}
+
+.res-section__cta {
+    text-decoration: none;
+}
+
+/* List */
+.res-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.res-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    padding: var(--space-m) var(--space-s);
+    border-bottom: var(--border-1px) solid rgba(var(--color-grey-rgb), 0.15);
+    border-left: var(--border-s) solid var(--color-gold);
+    background: rgba(var(--color-brown-rgb), 0.25);
+    margin-bottom: var(--space-xs);
+}
+
+.res-item__icon {
+    color: var(--color-gold);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.res-item__info {
+    flex: 1;
+}
+
+.res-item__name {
+    display: block;
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-m);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-almost-white);
+    letter-spacing: 0.03em;
+    margin-bottom: var(--space-xxs);
+}
+
+.res-item__time {
+    color: var(--color-light-gold);
+    font-size: var(--font-size-s);
+    margin: 0 0 var(--space-xxs);
+}
+
+.res-item__sub {
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+    margin: 0;
+}
+
+.res-item__action {
+    flex-shrink: 0;
+}
+
+.res-item__action .btn-outline {
+    border: var(--border-1px) solid rgba(var(--color-almost-white-rgb), 0.4);
+    color: var(--color-almost-white);
+    padding: var(--space-xxs) var(--space-m);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: transparent;
+    font-family: "Big Shoulders", sans-serif;
+}
+
+.res-item__action .btn-outline:hover {
+    border-color: var(--color-almost-white);
+}
+
+.res-section__cta.btn-primary {
+    background: var(--color-gold);
+    color: var(--color-black);
+    border: var(--border-1px) solid var(--color-gold);
+    padding: var(--space-xxs) var(--space-m);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: "Big Shoulders", sans-serif;
+    font-weight: 700;
+}
+
+.res-empty {
+    color: var(--color-grey);
+    font-size: var(--font-size-s);
+    padding: var(--space-m) 0;
+}
+
+.res-empty a {
+    color: var(--color-light-gold);
+}
+
+/* Reserve modal extras */
+.reserve-avail {
+    font-size: var(--font-size-s);
+    color: var(--color-grey);
+    margin: 0 0 var(--space-s);
+}
+
+.reserve-hint {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+    margin: var(--space-xs) 0 var(--space-s);
+}
+
+@media (max-width: 640px) {
+    .res-item {
+        flex-wrap: wrap;
+    }
+    .res-item__action {
+        width: 100%;
+    }
+    .res-item__action button {
+        width: 100%;
+    }
+}

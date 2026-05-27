@@ -52,7 +52,9 @@
 .side-nav a.active::after {
     content: '›';
     font-size: var(--font-size-xl);
-    line-height: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
 }
 
 
