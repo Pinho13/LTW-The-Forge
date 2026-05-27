@@ -2,17 +2,18 @@
     display: flex;
     align-items: center;
     gap: var(--space-s);
-    padding: var(--space-xs);
+    padding: var(--space-xs) var(--space-l);
     min-height: var(--size-sidebar-row);
-    border-top: var(--border-xs) solid var(--color-gold);
     text-decoration: none;
     box-sizing: border-box;
+    position: relative;
+    margin: 0 1em;
+    border-top: var(--border-xs) solid var(--color-gold);
 }
 
 .sidebar-user-block:hover,
 .sidebar-user-block--active {
     background-color: rgba(var(--color-brown-rgb), 0.3);
-    border-left-color: var(--color-light-gold);
 }
 
 .sidebar-user-block .user-avatar {
@@ -47,4 +48,7 @@
 
 .sidebar-user-block__chevron {
     font-size: var(--font-size-xl);
+    line-height: 1;
+    display: flex;
+    align-items: center;
 }
