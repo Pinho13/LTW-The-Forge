@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: var(--space-l);
+    gap: 0;
     padding: var(--space-s);
     border-top: var(--border-s) solid var(--color-gold);
     color: var(--color-gold);
@@ -16,6 +16,8 @@
     width: 1em;
     height: 1em;
     flex: 0 0 auto;
+    margin-left: var(--space-l);
+    margin-right: var(--space-m);
 }
 
 .site-footer__symbol-layer {
