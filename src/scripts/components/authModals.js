@@ -9,7 +9,8 @@ export function initAuthModals() {
     const openLoginBtn    = document.getElementById('open-login-btn');
     const basicMembershipBtn = document.getElementById('basic-membership');
     const premiumMembershipBtn = document.getElementById('premium-membership');
-
+    const membershipOptions = document.querySelectorAll('.auth-modal__membership-option');
+    const membershipInput = document.getElementById('membership-input');
 
     function openModal(modal) {
         if (modal) {
@@ -56,6 +57,25 @@ export function initAuthModals() {
     premiumMembershipBtn?.addEventListener('click', () => openModal(registerModal));
 
     backdrop?.addEventListener('click', closeAll);
+
+    membershipOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const value = option.dataset.value;
+
+            if (membershipInput.value === value) return;
+
+            membershipInput.value = value;
+
+            membershipOptions.forEach(btn => {
+                if (btn.dataset.value === value) {
+                    btn.classList.remove('btn-outline');
+                } else {
+                    btn.classList.add('btn-outline');
+                }
+            });
+        });
+    });
+
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeAll();
