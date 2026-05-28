@@ -59,7 +59,8 @@ class User
         string $name,
         string $username,
         string $email,
-        string $password
+        string $password,
+        string $plan
     ): self {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
@@ -77,6 +78,33 @@ class User
         ]);
 
         $userId = (int) $db->lastInsertId();
+
+        $planStmt = $db->prepare(
+            'SELECT id FROM membership_plan WHERE name = ?'
+        );
+
+        $planStmt->execute([$plan]);
+
+        $planId = $planStmt->fetchColumn();
+
+        if (!$planId) {
+            throw new RuntimeException('Invalid plan.');
+        }
+
+        $startDate = date('Y-m-d');
+        $endDate = date('Y-m-d', strtotime('+1 year'));
+        $stmt = $db->prepare(
+            'INSERT INTO member_subscription (member_id, plan_id, start_date, end_date, status)
+             VALUES (?, ?, ?, ?, ?)'
+        );
+
+        $stmt->execute([
+            $userId,
+            $planId,
+            $startDate,
+            $endDate,
+            'active',
+        ]);
 
         return self::findById($db, $userId)
             ?? throw new RuntimeException('Failed to load newly created user.');

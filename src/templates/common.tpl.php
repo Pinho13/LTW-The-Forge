@@ -108,10 +108,10 @@ require_once(__DIR__ . '/../utils/session.php');
         <fieldset class="auth-modal__membership">
           <legend class="auth-modal__membership-legend">Choose a membership tier</legend>
 
-          <input type="hidden" name="membership" id="membership-input" value="basic">
+          <input type="hidden" name="membership" id="membership-input" value="Basic">
 
-          <button type="button" class="auth-modal__membership-option" data-value="basic">Basic</button>
-          <button type="button" class="auth-modal__membership-option btn-outline" data-value="premium">Premium</button>
+          <button type="button" class="auth-modal__membership-option" data-value="Basic">Basic</button>
+          <button type="button" class="auth-modal__membership-option btn-outline" data-value="Premium">Premium</button>
         </fieldset>
       <?php } ?>
 
