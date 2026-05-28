@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once(__DIR__ . '/../../utils/page_bootstrap.php');
+require_once(__DIR__ . '/../utils/page_bootstrap.php');
 require_once(__DIR__ . '/../../database/models/Equipment.class.php');
 
 header('Content-Type: application/json');
