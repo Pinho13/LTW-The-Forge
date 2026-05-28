@@ -123,6 +123,25 @@
     text-align: center;
 }
 
+.auth-modal__membership {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-s);
+    margin-top: var(--space-s);
+    border: var(--border-xs) var(--color-dark-grey) solid;
+}
+
+.auth-modal__membership-legend {
+    margin-bottom: var(--space-xs);
+    color: var(--color-grey);
+}
+
+.auth-modal__membership-option {
+    flex: 1 1 0;
+}
+
 .class-modal__rating {
     display: flex;
     align-items: center;
