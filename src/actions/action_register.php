@@ -45,6 +45,7 @@ $name = trim($_POST['name'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 $confirmPassword = $_POST['confirm-password'] ?? '';
+$plan = trim($_POST['membership'] ?? 'Basic');
 
 $formData = [
     'name' => $name,
@@ -98,6 +99,10 @@ if ($passwordErrors !== []) {
     );
 }
 
+if (!in_array($plan, ['Basic', 'Premium'], true)) {
+    redirectRegisterError($session, $formData, 'Please select a valid membership tier.');
+}
+
 $db = getDatabaseConnection();
 
 if (User::findByEmail($db, $email) !== null) {
@@ -106,9 +111,9 @@ if (User::findByEmail($db, $email) !== null) {
 
 $username = generateUniqueUsername($db, $email);
 
-$user = User::register($db, $name, $username, $email, $password);
+$user = User::register($db, $name, $username, $email, $password, $plan);
 
-$session->setUser($user->user_id, $user->name, $user->role);
+$session->setUser($user->user_id, $user->name, $user->role, $plan);
 $session->addMessage('success', 'Registration successful.');
 
 header('Location: /src/pages/my-account.php');

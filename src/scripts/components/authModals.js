@@ -53,10 +53,10 @@ export function initAuthModals() {
     });
 
     basicMembershipBtn?.addEventListener('click', () => {
-        membershipInput.value = 'basic';
+        membershipInput.value = 'Basic';
 
         membershipOptions.forEach(btn => {
-            if (btn.dataset.value === 'basic') {
+            if (btn.dataset.value === 'Basic') {
                 btn.classList.remove('btn-outline');
             } else {
                 btn.classList.add('btn-outline');
@@ -67,10 +67,10 @@ export function initAuthModals() {
     });
 
     premiumMembershipBtn?.addEventListener('click', () => {
-        membershipInput.value = 'premium';
+        membershipInput.value = 'Premium';
 
         membershipOptions.forEach(btn => {
-            if (btn.dataset.value === 'premium') {
+            if (btn.dataset.value === 'Premium') {
                 btn.classList.remove('btn-outline');
             } else {
                 btn.classList.add('btn-outline');
