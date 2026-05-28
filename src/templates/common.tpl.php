@@ -105,6 +105,12 @@ require_once(__DIR__ . '/../../utils/session.php');
         <a href="index.php" class="form__forgot">Forgot your password?</a>
       <?php } else { ?>
         <?php drawPasswordField('register-confirm-password', 'confirm-password', 'CONFIRM PASSWORD', 'new-password'); ?>
+        <fieldset class="auth-modal__membership">
+          <legend class="auth-modal__membership-legend">Choose a membership tier</legend>
+
+          <button type="button" class="auth-modal__membership-option btn-secondary">Basic</button>
+          <button type="button" class="auth-modal__membership-option btn-outline">Premium</button>
+        </fieldset>
       <?php } ?>
 
       <button type="submit" class="btn-primary"><?=$submit?></button>
