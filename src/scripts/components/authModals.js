@@ -52,9 +52,32 @@ export function initAuthModals() {
         openModal(loginModal);
     });
 
-    basicMembershipBtn?.addEventListener('click', () => openModal(registerModal));
+    basicMembershipBtn?.addEventListener('click', () => {
+        membershipInput.value = 'basic';
 
-    premiumMembershipBtn?.addEventListener('click', () => openModal(registerModal));
+        membershipOptions.forEach(btn => {
+            if (btn.dataset.value === 'basic') {
+                btn.classList.remove('btn-outline');
+            } else {
+                btn.classList.add('btn-outline');
+            }
+        });
+
+        openModal(registerModal)
+    });
+
+    premiumMembershipBtn?.addEventListener('click', () => {
+        membershipInput.value = 'premium';
+
+        membershipOptions.forEach(btn => {
+            if (btn.dataset.value === 'premium') {
+                btn.classList.remove('btn-outline');
+            } else {
+                btn.classList.add('btn-outline');
+            }
+        });
+        openModal(registerModal)
+    });
 
     backdrop?.addEventListener('click', closeAll);
 
