@@ -17,3 +17,15 @@
 .status--waitlisted {
     color: var(--color-light-gold);
 }
+
+.status--active {
+    color: var(--color-success);
+}
+
+.status--banned {
+    color: var(--color-error);
+}
+
+.status--frozen {
+    color: var(--color-grey);
+}
