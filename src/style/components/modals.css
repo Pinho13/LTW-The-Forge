@@ -79,6 +79,86 @@
     padding-top: var(--space-s);
 }
 
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    cursor: pointer;
+    padding-top: 0;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.file-upload__btn {
+    flex-shrink: 0;
+    padding: var(--space-xs) var(--space-m);
+    border: var(--border-xs) solid var(--color-dark-grey);
+    background-color: rgba(var(--color-dark-grey-rgb), 0.2);
+    color: var(--color-almost-white);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+}
+
+.file-upload:hover .file-upload__btn {
+    border-color: rgba(var(--color-gold-rgb), 0.5);
+    color: var(--color-gold);
+}
+
+.file-upload__name {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.auth-modal__form input[type="checkbox"] {
+    display: inline;
+    width: auto;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    accent-color: var(--color-gold);
+}
+
+.auth-modal__form .checkbox-label {
+    padding-top: 0;
+}
+
+.auth-modal__form select,
+.auth-modal__form textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: var(--space-s) var(--space-m);
+    border: var(--border-xs) solid var(--color-dark-grey);
+    background-color: rgba(var(--color-dark-grey-rgb), 0.1);
+    color: var(--color-white);
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.auth-modal__form select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.auth-modal__form select option {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+.auth-modal__form textarea {
+    resize: vertical;
+}
+
 
 .auth-modal__forgot {
     display: block;
