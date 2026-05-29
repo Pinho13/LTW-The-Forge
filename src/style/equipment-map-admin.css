@@ -1,0 +1,277 @@
+/* ── Header: position buttons without disturbing title layout ── */
+main > header {
+    position: relative;
+}
+
+.equip-header-actions {
+    position: absolute;
+    right: var(--space-l);
+    bottom: var(--space-s);
+    display: flex;
+    gap: var(--space-s);
+}
+
+/* Status edit mode — make all nodes clickable */
+body.status-edit-mode .equip-node,
+body.status-edit-mode .equip-node .equip-tint {
+    cursor: pointer !important;
+    pointer-events: all !important;
+}
+
+body.status-edit-mode .equip-node--readonly .equip-tint {
+    opacity: 0.4 !important;
+}
+
+.equip-admin-btn {
+    color: var(--color-almost-white);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    outline: 1px solid rgba(var(--color-almost-white-rgb), 0.3);
+    padding: var(--space-xs) var(--space-m);
+}
+
+.equip-admin-btn:hover {
+    outline-color: var(--color-almost-white);
+}
+
+/* ── Status modal ── */
+.equip-status-modal {
+    width: min(32rem, calc(100% - 2 * var(--space-m)));
+}
+
+.equip-status-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-top: var(--space-m);
+}
+
+.equip-status-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    padding: var(--space-xs) 0;
+    border-bottom: 1px solid rgba(var(--color-grey-rgb), 0.15);
+}
+
+.equip-status-row__name {
+    flex: 1;
+    font-size: var(--font-size-s);
+    color: var(--color-almost-white);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.equip-status-row__id {
+    font-size: var(--font-size-xxs);
+    color: var(--color-grey);
+}
+
+.equip-status-row__status--available {
+    font-size: var(--font-size-xs);
+    color: var(--color-success);
+    font-family: "Big Shoulders", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.equip-status-row__status--maintenance {
+    font-size: var(--font-size-xs);
+    color: var(--color-gold);
+    font-family: "Big Shoulders", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+/* ── Edit mode SVG cursor ── */
+.svg--edit-mode {
+    cursor: default;
+}
+
+/* ── No text selection while in edit mode ── */
+.edit-mode-active,
+.edit-mode-active * {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* ── Draggable / placed nodes in edit mode ── */
+.equip-node--edit {
+    cursor: grab;
+}
+.equip-node--edit:active {
+    cursor: grabbing;
+}
+.equip-node--edit .equip-tint {
+    opacity: 0.08;
+}
+.equip-node--edit:hover .equip-tint {
+    opacity: 0.20;
+}
+
+/* ── Selection overlay ── */
+.sel-border {
+    fill: none;
+    stroke: var(--color-gold, #c9a227);
+    stroke-width: 1.5px;
+    stroke-dasharray: 5 3;
+    pointer-events: none;
+}
+
+.sel-handle {
+    fill: var(--color-surface, #1c1a13);
+    stroke: var(--color-gold, #c9a227);
+    stroke-width: 1.5px;
+    cursor: nwse-resize;
+}
+.sel-handle--ne,
+.sel-handle--sw {
+    cursor: nesw-resize;
+}
+.sel-handle--rot {
+    cursor: grab;
+    fill: var(--color-gold, #c9a227);
+    stroke: none;
+}
+
+.svg--rotating,
+.svg--rotating * {
+    cursor: grabbing !important;
+}
+
+.sel-rot-stem {
+    stroke: rgba(201,162,39,0.5);
+    stroke-width: 1px;
+    stroke-dasharray: 3 2;
+    pointer-events: none;
+}
+
+.sel-rot-icon {
+    fill: none;
+    stroke: var(--color-surface, #1c1a13);
+    stroke-width: 1.2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+}
+
+/* ── Toolbar ── */
+.edit-toolbar[hidden],
+.picker-panel[hidden] {
+    display: none !important;
+}
+
+.edit-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+    padding: var(--space-xs) var(--space-m);
+    background: rgba(var(--color-gold-rgb), 0.06);
+    border-top: var(--border-1px) solid rgba(var(--color-gold-rgb), 0.15);
+    flex-shrink: 0;
+}
+
+.edit-toolbar__left {
+    display: flex;
+    align-items: center;
+}
+
+.edit-toolbar__label {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+    letter-spacing: 0.04em;
+    line-height: 1;
+}
+
+.edit-toolbar__right {
+    display: flex;
+    gap: var(--space-s);
+    flex-shrink: 0;
+}
+
+.edit-save-btn {
+    color: var(--color-gold);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    outline: 1px solid rgba(var(--color-gold-rgb), 0.5);
+    padding: var(--space-xs) var(--space-m);
+    line-height: 1;
+    box-sizing: border-box;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.edit-save-btn:hover {
+    outline-color: var(--color-gold);
+}
+
+
+/* ── Picker panel ── */
+.picker-panel {
+    padding: var(--space-s) var(--space-m);
+    border-top: var(--border-1px) solid rgba(var(--color-grey-rgb), 0.15);
+    flex-shrink: 0;
+}
+
+.picker-panel__title {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-grey);
+    margin: 0 0 var(--space-xs);
+}
+
+.picker-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+}
+
+.picker-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 72px;
+    padding: var(--space-xs);
+    border: var(--border-1px) solid rgba(var(--color-grey-rgb), 0.2);
+    border-radius: 4px;
+    background: rgba(var(--color-grey-rgb), 0.04);
+    cursor: grab;
+    user-select: none;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.picker-item:hover {
+    border-color: rgba(var(--color-gold-rgb), 0.4);
+    background: rgba(var(--color-gold-rgb), 0.06);
+}
+
+.picker-item:active {
+    cursor: grabbing;
+}
+
+.picker-item__img {
+    width: 52px;
+    height: 40px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.picker-item__name {
+    font-size: 9px;
+    text-align: center;
+    color: var(--color-grey);
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+}
+

@@ -24,46 +24,59 @@
     width: 100%;
     height: 100%;
     display: block;
+    overflow: visible;
 }
 
 /* Equipment nodes */
 .equip-node {
     outline: none;
+    cursor: default;
 }
 
-/* Tint: resting — subtle wash so image lines stay readable */
+/* Equipment photo — never intercepts pointer events */
+.equip-img {
+    pointer-events: none;
+}
+
+/* Status overlay rect sits on top of the image */
 .equip-tint {
     transition: opacity 0.18s;
     stroke: none;
 }
 
-/* Clickable resting: light wash */
+/* Available resting: barely-visible green wash */
 .equip-node--clickable .equip-tint {
-    opacity: 0.20;
+    opacity: 0.15;
+    cursor: pointer;
 }
 
-/* Hover / focus: bold fill + coloured border */
+/* Hover / focus: stronger tint + border */
 .equip-node--clickable:hover .equip-tint,
 .equip-node--clickable:focus .equip-tint {
-    opacity: 0.50;
+    opacity: 0.40;
     stroke-width: 1.5px;
 }
 
-/* Currently reserved (red): still clickable, slightly dimmed */
+/* Busy (reserved): red wash, still interactive */
 .equip-node--clickable.equip-node--busy .equip-tint {
-    opacity: 0.30;
+    opacity: 0.25;
 }
 .equip-node--clickable.equip-node--busy:hover .equip-tint,
 .equip-node--clickable.equip-node--busy:focus .equip-tint {
-    opacity: 0.55;
+    opacity: 0.50;
 }
 
-/* Maintenance: not clickable */
+/* Maintenance: striped overlay, not clickable */
 .equip-node--maintenance {
     cursor: not-allowed;
 }
 .equip-node--maintenance .equip-tint {
-    opacity: 0.85;
+    opacity: 0.75;
+}
+
+/* Read-only (trainer / admin view): no tint */
+.equip-node--readonly .equip-tint {
+    opacity: 0.10;
 }
 
 /* Badge text */
@@ -140,9 +153,14 @@
     grid-template-columns: 3rem 1fr;
     height: 280px;
     overflow-y: auto;
+    scrollbar-width: none;
     border: var(--border-1px) solid rgba(var(--color-grey-rgb), 0.2);
     margin-bottom: var(--space-xs);
     user-select: none;
+}
+
+.reserve-cal::-webkit-scrollbar {
+    display: none;
 }
 
 .reserve-cal__gutter {

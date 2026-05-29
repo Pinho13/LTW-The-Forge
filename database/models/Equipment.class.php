@@ -3,6 +3,13 @@ declare(strict_types=1);
 
 class Equipment
 {
+    public static function getCatalog(PDO $db): array
+    {
+        $stmt = $db->prepare("SELECT id, name, type, description, photo, default_w, default_h FROM equipment ORDER BY name ASC");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
     public static function getAllWithUnits(PDO $db): array
     {
         $stmt = $db->prepare(
@@ -28,8 +35,8 @@ class Equipment
     {
         $stmt = $db->prepare(
             "SELECT eu.id, eu.equipment_id, eu.identifier, eu.status,
-                    eu.map_x, eu.map_y, eu.map_w, eu.map_h,
-                    e.name AS equipment_name,
+                    eu.map_x, eu.map_y, eu.map_w, eu.map_h, eu.rotation,
+                    e.name AS equipment_name, e.photo,
                     CASE WHEN eu.status != 'available' THEN 0
                          WHEN EXISTS (
                              SELECT 1 FROM equipment_reservation er
@@ -86,6 +93,12 @@ class Equipment
              VALUES (:mid, :uid, :start, :end)"
         );
         $stmt->execute([':mid' => $memberId, ':uid' => $unitId, ':start' => $start, ':end' => $end]);
+    }
+
+    public static function setUnitStatus(PDO $db, int $unitId, string $status): void
+    {
+        $stmt = $db->prepare("UPDATE equipment_unit SET status = :status WHERE id = :id");
+        $stmt->execute([':status' => $status, ':id' => $unitId]);
     }
 
     public static function cancelReservation(PDO $db, int $reservationId, int $memberId): bool

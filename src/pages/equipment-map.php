@@ -5,7 +5,9 @@ require_once(__DIR__ . '/../../database/models/Equipment.class.php');
 
 [$session, $db] = requireAuthenticatedPage();
 
-$units = Equipment::getAllUnitsWithStatus($db);
+$units    = Equipment::getAllUnitsWithStatus($db);
+$catalog  = Equipment::getCatalog($db);
+$isAdmin  = $session->isAdmin();
 
 $unitMap = [];
 foreach ($units as $u) {
@@ -14,8 +16,14 @@ foreach ($units as $u) {
         'equipment_id'   => (int)$u['equipment_id'],
         'identifier'     => $u['identifier'],
         'equipment_name' => $u['equipment_name'],
+        'photo'          => $u['photo'] ?? '',
         'status'         => $u['status'],
         'is_available'   => (bool)$u['is_available'],
+        'rotation'       => (int)($u['rotation'] ?? 0),
+        'map_x'          => $u['map_x'] !== null ? (int)$u['map_x'] : null,
+        'map_y'          => $u['map_y'] !== null ? (int)$u['map_y'] : null,
+        'map_w'          => $u['map_w'] !== null ? (int)$u['map_w'] : null,
+        'map_h'          => $u['map_h'] !== null ? (int)$u['map_h'] : null,
     ];
 }
 ?>
@@ -28,6 +36,9 @@ foreach ($units as $u) {
     <link rel="stylesheet" href="../style/main.css">
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/equipment-map.css">
+    <?php if ($isAdmin): ?>
+    <link rel="stylesheet" href="../style/equipment-map-admin.css">
+    <?php endif; ?>
 </head>
 
 <body>
@@ -38,7 +49,32 @@ foreach ($units as $u) {
 
         <header>
             <h1>Equipment</h1>
+            <?php if ($isAdmin): ?>
+            <div class="equip-header-actions">
+                <button type="button" id="edit-layout-btn" class="btn-ghost equip-admin-btn">Edit Layout</button>
+                <button type="button" id="edit-status-btn" class="btn-ghost equip-admin-btn">Edit Status</button>
+            </div>
+            <?php endif; ?>
         </header>
+
+        <?php if ($isAdmin): ?>
+        <div class="edit-toolbar" id="edit-toolbar" hidden>
+            <div class="edit-toolbar__left">
+                <span class="edit-toolbar__label">Drag equipment onto the map. Click a placed unit to rotate or remove it.</span>
+            </div>
+            <div class="edit-toolbar__right">
+                <button type="button" id="edit-save-btn" class="edit-save-btn">Save Layout</button>
+            </div>
+        </div>
+        <div class="edit-toolbar" id="status-toolbar" hidden>
+            <div class="edit-toolbar__left">
+                <span class="edit-toolbar__label">Click a unit on the map to toggle between available and maintenance.</span>
+            </div>
+            <div class="edit-toolbar__right">
+                <button type="button" id="status-done-btn" class="edit-save-btn">Save Status</button>
+            </div>
+        </div>
+        <?php endif; ?>
 
         <div class="map-body">
             <div class="map-wrap">
@@ -62,26 +98,79 @@ foreach ($units as $u) {
                         $maintenance = $u['status'] === 'maintenance';
                         $available   = (bool)$u['is_available'];
                         $clickable   = $session->isMember() && !$maintenance;
-                        $hex         = $available ? '#4e9055' : '#C85050';
-                        $fill        = $maintenance ? 'url(#maintenance-pattern)' : $hex;
                         $label       = htmlspecialchars($u['equipment_name'] . ' ' . $u['identifier']);
+                        $rotation    = (int)($u['rotation'] ?? 0);
+                        $mx          = (int)$u['map_x'];
+                        $my          = (int)$u['map_y'];
+                        $mw          = (int)$u['map_w'];
+                        $mh          = (int)$u['map_h'];
+                        $cx          = $mx + $mw / 2;
+                        $cy          = $my + $mh / 2;
+                        $imgTransform = $rotation !== 0 ? "rotate($rotation $cx $cy)" : '';
+                        // Axis-aligned bounding box for the hit rect
+                        $swap        = $rotation === 90 || $rotation === 270;
+                        $bbW         = $swap ? $mh : $mw;
+                        $bbH         = $swap ? $mw : $mh;
+                        $bbX         = $cx - $bbW / 2;
+                        $bbY         = $cy - $bbH / 2;
+                        $photoSrc    = '/database/assets/equipment/' . htmlspecialchars($u['photo'] ?? '');
                     ?>
                     <g class="equip-node <?= $clickable ? 'equip-node--clickable' : 'equip-node--readonly' ?><?= $maintenance ? ' equip-node--maintenance' : '' ?><?= ($clickable && !$available) ? ' equip-node--busy' : '' ?>"
                        data-unit-id="<?= $u['id'] ?>"
                        role="<?= $clickable ? 'button' : 'img' ?>"
                        aria-label="<?= $label ?>"
                        tabindex="<?= $clickable ? '0' : '-1' ?>">
-                        <rect x="<?= $u['map_x'] ?>" y="<?= $u['map_y'] ?>"
-                              width="<?= $u['map_w'] ?>" height="<?= $u['map_h'] ?>"
-                              rx="2" fill="<?= $fill ?>" stroke="<?= $maintenance ? '#c9a227' : $hex ?>" class="equip-tint"/>
+                        <?php if ($u['photo']): ?>
+                        <g <?= $imgTransform ? "transform=\"$imgTransform\"" : '' ?>>
+                            <image href="<?= $photoSrc ?>"
+                                   x="<?= $mx ?>" y="<?= $my ?>"
+                                   width="<?= $mw ?>" height="<?= $mh ?>"
+                                   preserveAspectRatio="xMidYMid meet"
+                                   class="equip-img"/>
+                        </g>
+                        <?php endif; ?>
+                        <rect x="<?= $bbX ?>" y="<?= $bbY ?>"
+                              width="<?= $bbW ?>" height="<?= $bbH ?>"
+                              rx="2" class="equip-tint"
+                              <?php if ($maintenance): ?>
+                              fill="url(#maintenance-pattern)" stroke="#c9a227"
+                              <?php elseif (!$available): ?>
+                              fill="#C85050" stroke="#C85050"
+                              <?php else: ?>
+                              fill="#4e9055" stroke="#4e9055"
+                              <?php endif; ?>
+                        />
                     </g>
                     <?php endforeach; ?>
 
                 </svg>
             </div>
 
-            <p class="map-hint">Click on a highlighted machine to reserve it.</p>
+            <p class="map-hint" id="map-hint">Click on a highlighted machine to reserve it.</p>
         </div>
+
+        <?php if ($isAdmin): ?>
+        <div class="picker-panel" id="picker-panel" hidden>
+            <p class="picker-panel__title">Add Equipment</p>
+            <div class="picker-grid" id="picker-grid">
+                <?php foreach ($catalog as $eq): ?>
+                <div class="picker-item"
+                     draggable="true"
+                     data-eq-id="<?= (int)$eq['id'] ?>"
+                     data-eq-name="<?= htmlspecialchars($eq['name']) ?>"
+                     data-eq-photo="<?= htmlspecialchars($eq['photo'] ?? '') ?>"
+                     data-eq-w="<?= (int)$eq['default_w'] ?>"
+                     data-eq-h="<?= (int)$eq['default_h'] ?>">
+                    <?php if ($eq['photo']): ?>
+                    <img src="/database/assets/equipment/<?= htmlspecialchars($eq['photo']) ?>"
+                         alt="<?= htmlspecialchars($eq['name']) ?>" class="picker-item__img">
+                    <?php endif; ?>
+                    <span class="picker-item__name"><?= htmlspecialchars($eq['name']) ?></span>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php endif; ?>
     </main>
 
     <?php include '../components/footer.php'; ?>
@@ -120,9 +209,15 @@ foreach ($units as $u) {
 
     <?php endif; ?>
 
+
     <script>
-        const UNIT_MAP = <?= json_encode($unitMap) ?>;
+        const UNIT_MAP   = <?= json_encode($unitMap) ?>;
+        const IS_ADMIN   = <?= $isAdmin ? 'true' : 'false' ?>;
+        const CSRF_TOKEN = <?= json_encode($session->getCsrfToken()) ?>;
     </script>
     <script src="../scripts/equipment-map.js"></script>
+    <?php if ($isAdmin): ?>
+    <script src="../scripts/equipment-map-admin.js"></script>
+    <?php endif; ?>
 </body>
 </html>
