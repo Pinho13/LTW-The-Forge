@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 class AdminUser
 {
-    public static function getAll(PDO $db, string $role = '', string $search = '', string $status = 'active', int $excludeId = 0, string $joined = ''): array
+    public static function getAll(PDO $db, string $role = '', string $search = '', string $status = 'active', int $excludeId = 0, string $joined = '', string $subscription = ''): array
     {
         $where = [];
         $params = [];
@@ -38,14 +38,21 @@ class AdminUser
         } elseif ($joined === 'year') {
             $where[] = "u.created_at >= datetime('now', 'start of year', 'localtime')";
         }
+        if ($subscription === 'expired') {
+            $where[] = "u.user_id IN (SELECT member_id FROM member_subscription WHERE status='active' AND end_date < date('now'))";
+        }
 
         $sql = "SELECT u.user_id, u.name, u.username, u.email, u.phone, u.role,
                        u.is_active, u.created_at,
-                       tp.bio, tp.specializations, tp.certifications,
-                       mp.name AS plan_name, ms.status AS sub_status
+                       tp.bio, tp.specializations, tp.certifications, tp.is_featured AS trainer_featured,
+                       mp.name AS plan_name, ms.status AS sub_status, ms.end_date AS sub_end_date
                 FROM user u
                 LEFT JOIN trainer_profile tp ON tp.user_id = u.user_id
-                LEFT JOIN member_subscription ms ON ms.member_id = u.user_id AND ms.status IN ('active', 'frozen')
+                LEFT JOIN member_subscription ms ON ms.id = (
+                    SELECT id FROM member_subscription
+                    WHERE member_id = u.user_id AND status IN ('active', 'frozen')
+                    ORDER BY end_date DESC LIMIT 1
+                )
                 LEFT JOIN membership_plan mp ON mp.id = ms.plan_id"
              . (count($where) ? ' WHERE ' . implode(' AND ', $where) : '')
              . " ORDER BY u.role ASC, u.name ASC";

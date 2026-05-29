@@ -5,6 +5,11 @@ require_once(__DIR__ . '/../../database/models/Enrollment.class.php');
 require_once(__DIR__ . '/../../database/models/GymVisit.class.php');
 
 [$session, $db] = requireAuthenticatedPage();
+
+if ($session->isAdmin()) {
+    header('Location: /src/pages/admin-dashboard.php');
+    exit;
+}
 $classesThisMonth     = Enrollment::countEnrolledThisMonth($db, $session->getId());
 $upcomingReservations = Enrollment::countUpcoming($db, $session->getId());
 $weeklyStreak         = GymVisit::getWeeklyStreak($db, $session->getId());

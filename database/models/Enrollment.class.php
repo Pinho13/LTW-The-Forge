@@ -280,7 +280,9 @@ class Enrollment
                 ct.name AS type_name,
                 u.user_id AS trainer_id,
                 u.name AS trainer_name,
-                COUNT(CASE WHEN e.status = 'enrolled' THEN 1 END) AS enrolled_count,
+                c.is_featured,
+                COUNT(CASE WHEN e.status = 'enrolled'   THEN 1 END) AS enrolled_count,
+                COUNT(CASE WHEN e.status = 'waitlisted' THEN 1 END) AS waitlisted_count,
                 (SELECT ROUND(AVG(r.rating), 1) FROM review r WHERE r.class_id = c.id) AS avg_rating,
                 (SELECT COUNT(*) FROM review r WHERE r.class_id = c.id) AS review_count
              FROM class_session cs
