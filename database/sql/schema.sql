@@ -106,7 +106,10 @@ CREATE TABLE IF NOT EXISTS equipment (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     name        VARCHAR NOT NULL,
     type        VARCHAR,
-    description TEXT
+    description TEXT,
+    photo       VARCHAR,
+    default_w   INTEGER NOT NULL DEFAULT 55,
+    default_h   INTEGER NOT NULL DEFAULT 40
 );
 
 -- ============================================================
@@ -122,6 +125,7 @@ CREATE TABLE IF NOT EXISTS equipment_unit (
     map_y        INTEGER,
     map_w        INTEGER,
     map_h        INTEGER,
+    rotation     INTEGER NOT NULL DEFAULT 0 CHECK (rotation IN (0, 90, 180, 270)),
     FOREIGN KEY (equipment_id) REFERENCES equipment(id) ON DELETE RESTRICT
 );
 
@@ -138,6 +142,14 @@ CREATE TABLE IF NOT EXISTS equipment_reservation (
     CHECK (end_datetime > start_datetime),
     FOREIGN KEY (member_id) REFERENCES user(user_id)      ON DELETE CASCADE,
     FOREIGN KEY (unit_id)   REFERENCES equipment_unit(id) ON DELETE RESTRICT
+);
+
+-- ============================================================
+-- CLASS ROOMS
+-- ============================================================
+CREATE TABLE IF NOT EXISTS class_room (
+    id   INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR NOT NULL UNIQUE
 );
 
 -- ============================================================
@@ -237,6 +249,7 @@ CREATE TABLE IF NOT EXISTS announcement (
     pinned     BOOLEAN NOT NULL DEFAULT 0 CHECK (pinned IN (0, 1)),
     type       VARCHAR NOT NULL DEFAULT 'Gym News',
     read_time  INTEGER NOT NULL DEFAULT 1,
+    image      VARCHAR,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (author_id) REFERENCES user(user_id) ON DELETE RESTRICT
 );

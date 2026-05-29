@@ -1,6 +1,8 @@
 const backdrop   = document.getElementById('page-backdrop');
 const classModal = document.getElementById('class-modal');
 
+if (classModal) {
+
 function openModal() {
     classModal.show();
     backdrop.classList.add('modal-backdrop--visible');
@@ -136,6 +138,8 @@ function showModalError(msg) {
     err.textContent = msg;
 }
 
+} // end member-only block (stack nav shared below)
+
 // ── Stack navigation ──────────────────────────────────────────
 function stackGoTo(stack, nextIdx, direction) {
     const cards  = stack.querySelectorAll('.class-stack__card');
@@ -210,9 +214,11 @@ document.querySelectorAll('.class-stack').forEach(stack => {
     stack._wasDragged = () => { const v = dragged; dragged = false; return v; };
 });
 
+if (classModal) {
 document.addEventListener('click', e => {
     const card = e.target.closest('.class-card');
     if (!card || e.target.closest('button') || e.target.closest('.class-stack__dot')) return;
+    if (card.classList.contains('class-card--admin')) return;
 
     // Don't open modal if the user just dragged the stack
     const stack = card.closest('.class-stack');
@@ -282,3 +288,5 @@ document.addEventListener('click', e => {
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     card.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 })();
+
+} // end classModal block
