@@ -32,6 +32,9 @@ class MemberSubscription
              WHERE ms.member_id = :id AND ms.status = :status
              ORDER BY ms.start_date DESC LIMIT 1'
         );
+        $stmt->execute([':id' => $memberId, ':status' => 'frozen']);
+        $result = $stmt->fetchColumn();
+        if ($result !== false) return (string) $result;
         $stmt->execute([':id' => $memberId, ':status' => 'active']);
         $result = $stmt->fetchColumn();
         return $result !== false ? (string) $result : null;

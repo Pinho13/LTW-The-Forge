@@ -38,7 +38,7 @@ $_menu_role = $session->getRole() ?? 'member';
             <a href="/src/pages/my-account.php"   <?= $activePage === 'account'        ? 'class="active"' : '' ?>>MY ACCOUNT</a>
             <a href="/src/pages/admin-users.php"  <?= $activePage === 'admin-users'    ? 'class="active"' : '' ?>>USERS</a>
             <a href="/src/pages/admin-classes.php"<?= $activePage === 'admin-classes'  ? 'class="active"' : '' ?>>CLASSES</a>
-            <a href="/src/pages/admin-equipment.php" <?= $activePage === 'admin-equipment' ? 'class="active"' : '' ?>>EQUIPMENT</a>
+            <a href="/src/pages/equipment-map.php" <?= $activePage === 'equipment' ? 'class="active"' : '' ?>>EQUIPMENT</a>
             <a href="/src/pages/news.php"         <?= $activePage === 'news'           ? 'class="active"' : '' ?>>NEWS</a>
         <?php endif; ?>
     </div>
