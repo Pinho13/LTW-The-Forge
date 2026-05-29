@@ -23,6 +23,11 @@
     padding: var(--space-xl) var(--space-l) var(--space-xl) var(--space-xxl);
     overflow-y: auto;
     max-width: 720px;
+    scrollbar-width: none;
+}
+
+.trainer-profile-content::-webkit-scrollbar {
+    display: none;
 }
 
 .trainer-profile-identity {

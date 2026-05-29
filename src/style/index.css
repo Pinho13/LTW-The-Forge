@@ -4,6 +4,11 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 main {

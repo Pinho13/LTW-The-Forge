@@ -1,6 +1,11 @@
 .calendar {
     padding: var(--space-m);
     overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.calendar::-webkit-scrollbar {
+    display: none;
 }
 
 .calendar-nav {
