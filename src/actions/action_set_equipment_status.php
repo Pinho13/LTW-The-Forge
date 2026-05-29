@@ -2,6 +2,7 @@
 declare(strict_types=1);
 require_once(__DIR__ . '/action_bootstrap.php');
 require_once(__DIR__ . '/../../database/models/Equipment.class.php');
+require_once(__DIR__ . '/../../database/models/AdminLog.class.php');
 
 [$session, $db] = requireAuthenticatedJsonPost();
 
@@ -21,4 +22,8 @@ if ($unitId <= 0 || !in_array($status, ['available', 'maintenance'], true)) {
 }
 
 Equipment::setUnitStatus($db, $unitId, $status);
+$label = $db->prepare("SELECT COALESCE(eu.identifier, e.name) FROM equipment_unit eu JOIN equipment e ON e.id=eu.equipment_id WHERE eu.id=:id");
+$label->execute([':id' => $unitId]);
+$unitLabel = $label->fetchColumn() ?: "unit $unitId";
+AdminLog::write($db, $session->getId(), 'UPDATE', "Marked $unitLabel $status");
 echo json_encode(['success' => true, 'status' => $status]);

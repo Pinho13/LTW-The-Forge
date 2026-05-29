@@ -2,6 +2,7 @@
 declare(strict_types=1);
 require_once(__DIR__ . '/action_bootstrap.php');
 require_once(__DIR__ . '/../../database/models/ClassCatalog.class.php');
+require_once(__DIR__ . '/../../database/models/AdminLog.class.php');
 
 [$session, $db] = requireAuthenticatedJsonPost();
 if (!$session->isAdmin()) { http_response_code(403); echo json_encode(['success'=>false,'error'=>'Forbidden']); exit; }
@@ -20,4 +21,5 @@ if ($name === '' || $typeId <= 0 || $duration < 1 || $intensity < 1 || $intensit
 }
 
 $newId = ClassCatalog::createClass($db, $name, $typeId, $description, $duration, $intensity, $trainerId);
+AdminLog::write($db, $session->getId(), 'CREATE', "Created class \"$name\"");
 echo json_encode(['success' => true, 'class_id' => $newId]);

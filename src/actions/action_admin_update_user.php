@@ -3,6 +3,7 @@ declare(strict_types=1);
 require_once(__DIR__ . '/../../utils/page_bootstrap.php');
 require_once(__DIR__ . '/../../database/models/AdminUser.class.php');
 require_once(__DIR__ . '/../../database/models/TrainerProfile.class.php');
+require_once(__DIR__ . '/../../database/models/AdminLog.class.php');
 
 [$session, $db] = requireAuthenticatedPage();
 
@@ -70,6 +71,7 @@ switch ($action) {
             TrainerProfile::upsert($db, $targetId, $bio, $spec, $cert);
         }
 
+        AdminLog::write($db, $session->getId(), 'UPDATE', "Updated details for {$user['name']}");
         $session->addMessage('success', 'User details updated.');
         break;
 
@@ -88,21 +90,43 @@ switch ($action) {
             TrainerProfile::upsert($db, $targetId, '', '', '');
         }
 
+        AdminLog::write($db, $session->getId(), 'ELEVATE', "Changed {$user['name']} role from $oldRole to $newRole");
         $session->addMessage('success', 'Role changed to ' . $newRole . '.');
         break;
 
     case 'ban':
         AdminUser::setActive($db, $targetId, false);
+        AdminLog::write($db, $session->getId(), 'UPDATE', "Banned {$user['name']}");
         $session->addMessage('success', htmlspecialchars($user['name']) . ' has been banned.');
         break;
 
     case 'unban':
         AdminUser::setActive($db, $targetId, true);
+        AdminLog::write($db, $session->getId(), 'UPDATE', "Reactivated {$user['name']}");
         $session->addMessage('success', htmlspecialchars($user['name']) . ' has been reactivated.');
+        break;
+
+    case 'update_subscription':
+        $endDate = trim($_POST['end_date'] ?? '');
+        if (!$endDate || !strtotime($endDate)) {
+            $session->addMessage('error', 'Invalid date.');
+            break;
+        }
+        $db->prepare(
+            "UPDATE member_subscription SET end_date = :end_date
+             WHERE id = (
+                 SELECT id FROM member_subscription
+                 WHERE member_id = :id AND status IN ('active', 'frozen')
+                 ORDER BY end_date DESC LIMIT 1
+             )"
+        )->execute([':end_date' => $endDate, ':id' => $targetId]);
+        AdminLog::write($db, $session->getId(), 'UPDATE', "Updated subscription end date for {$user['name']} to $endDate");
+        $session->addMessage('success', 'Subscription end date updated.');
         break;
 
     case 'delete':
         AdminUser::delete($db, $targetId);
+        AdminLog::write($db, $session->getId(), 'DELETE', "Deleted user {$user['name']}");
         $session->addMessage('success', 'User permanently deleted.');
         header('Location: /src/pages/admin-users.php');
         exit;
