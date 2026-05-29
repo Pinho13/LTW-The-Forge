@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-require_once(__DIR__ . '/../../utils/session.php');
+require_once(__DIR__ . '/../utils/session.php');
 ?>
 
 <?php function drawHeader(array $extraCss = [], ?Session $session = null) {
@@ -105,6 +105,14 @@ require_once(__DIR__ . '/../../utils/session.php');
         <a href="index.php" class="form__forgot">Forgot your password?</a>
       <?php } else { ?>
         <?php drawPasswordField('register-confirm-password', 'confirm-password', 'CONFIRM PASSWORD', 'new-password'); ?>
+        <fieldset class="auth-modal__membership">
+          <legend class="auth-modal__membership-legend">Choose a membership tier</legend>
+
+          <input type="hidden" name="membership" id="membership-input" value="Basic">
+
+          <button type="button" class="auth-modal__membership-option" data-value="Basic">Basic</button>
+          <button type="button" class="auth-modal__membership-option btn-outline" data-value="Premium">Premium</button>
+        </fieldset>
       <?php } ?>
 
       <button type="submit" class="btn-primary"><?=$submit?></button>

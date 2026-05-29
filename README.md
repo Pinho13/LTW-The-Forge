@@ -95,7 +95,7 @@ Stores client-side JavaScript for interactivity and dynamic behavior.
 - **database/**  
 Includes database-related files such as schema definitions and population scripts.
 
-- **utils/**  
+- **src/utils/**  
 Provides helper functions and utilities used across different parts of the project.
 
 - **docs/**  

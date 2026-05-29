@@ -1,6 +1,6 @@
 <?php
   declare(strict_types = 1);
-  require_once(__DIR__ . '/../../utils/session.php');
+  require_once(__DIR__ . '/../utils/session.php');
   require_once(__DIR__ . '/../templates/common.tpl.php');
 
   $session = new Session();
@@ -63,7 +63,7 @@
           <li>Cardio machines</li>
           <li>Basic training support</li>
         </ul>
-        <a class="plan-card__cta" href="#"><button class="btn-page">Be Basic!</button></a>
+        <button class="btn-page" id="basic-membership">Be Basic!</button>
       </article>
 
       <article class="plan-card plan-card--featured">
@@ -75,7 +75,7 @@
           <li>Unlimited classes</li>
           <li>Full facility access</li>
         </ul>
-        <a class="plan-card__cta" href="#"><button class="btn-page">Be Premium!</button></a>
+        <button class="btn-page" id="premium-membership">Be Premium!</button>
       </article>
     </div>
   </section>
