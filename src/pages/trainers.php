@@ -62,6 +62,18 @@ if ($trainerId !== null) {
                     </div>
                 </div>
 
+                <?php if ($session->isAdmin()): ?>
+                <form method="POST" action="/src/actions/action_toggle_featured.php" class="trainer-feature-form" data-feature-toggle>
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+                    <input type="hidden" name="type" value="trainer">
+                    <input type="hidden" name="id" value="<?= (int)$trainer['user_id'] ?>">
+                    <input type="hidden" name="return" value="/src/pages/trainers.php?id=<?= (int)$trainer['user_id'] ?>">
+                    <button type="submit" class="btn-ghost trainer-feature-btn">
+                        <?= $trainer['is_featured'] ? '★ Remove from Homepage' : '☆ Feature on Homepage' ?>
+                    </button>
+                </form>
+                <?php endif; ?>
+
                 <section class="trainer-section">
                     <h2>About</h2>
                     <p><?= htmlspecialchars($trainer['bio'] ?? 'No bio provided.') ?></p>
@@ -153,17 +165,31 @@ if ($trainerId !== null) {
                             <?php endif; ?>
                         </div>
                         <div class="trainer-card__content">
-                            <h2 class="trainer-card__name"><?= htmlspecialchars($t['name']) ?></h2>
-                            <?php if (!empty($t['specializations'])): ?>
-                                <p class="trainer-card__spec"><?= htmlspecialchars($t['specializations']) ?></p>
-                            <?php endif; ?>
-                            <?php if (!empty($t['bio'])): ?>
-                                <p class="trainer-card__bio"><?= htmlspecialchars(mb_strimwidth($t['bio'], 0, 140, '…')) ?></p>
-                            <?php endif; ?>
+                            <div class="trainer-card__body">
+                                <h2 class="trainer-card__name"><?= htmlspecialchars($t['name']) ?></h2>
+                                <?php if (!empty($t['specializations'])): ?>
+                                    <p class="trainer-card__spec"><?= htmlspecialchars($t['specializations']) ?></p>
+                                <?php endif; ?>
+                                <?php if (!empty($t['bio'])): ?>
+                                    <p class="trainer-card__bio"><?= htmlspecialchars(mb_strimwidth($t['bio'], 0, 140, '…')) ?></p>
+                                <?php endif; ?>
+                            </div>
                             <span class="trainer-card__cta">View Profile &rarr;</span>
                         </div>
                     </a>
+                    <?php if ($session->isAdmin()): ?>
+                    <form method="POST" action="/src/actions/action_toggle_featured.php" class="trainer-card__feature-form" data-feature-toggle>
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+                        <input type="hidden" name="type" value="trainer">
+                        <input type="hidden" name="id" value="<?= (int)$t['user_id'] ?>">
+                        <input type="hidden" name="return" value="/src/pages/trainers.php">
+                        <button type="submit" class="trainer-card__feature-btn <?= $t['is_featured'] ? 'trainer-card__feature-btn--active' : '' ?>">
+                            <?= $t['is_featured'] ? '★ Featured' : '☆ Feature' ?>
+                        </button>
+                    </form>
+                    <?php endif; ?>
                 </li>
+
                 <?php endforeach; ?>
             </ul>
         <?php endif; ?>
@@ -172,5 +198,9 @@ if ($trainerId !== null) {
     </main>
 
     <?php include '../components/footer.php'; ?>
+    <script type="module">
+        import { initFeatureSwap } from '../scripts/feature-swap.js';
+        initFeatureSwap();
+    </script>
 </body>
 </html>

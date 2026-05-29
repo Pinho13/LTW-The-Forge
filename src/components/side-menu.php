@@ -35,11 +35,13 @@ $_menu_role = $session->getRole() ?? 'member';
             <a href="/src/pages/news.php"              <?= $activePage === 'news'             ? 'class="active"' : '' ?>>NEWS</a>
 
         <?php elseif ($_menu_role === 'admin'): ?>
-            <a href="/src/pages/my-account.php"   <?= $activePage === 'account'        ? 'class="active"' : '' ?>>MY ACCOUNT</a>
-            <a href="/src/pages/admin-users.php"  <?= $activePage === 'admin-users'    ? 'class="active"' : '' ?>>USERS</a>
-            <a href="/src/pages/admin-classes.php"<?= $activePage === 'admin-classes'  ? 'class="active"' : '' ?>>CLASSES</a>
-            <a href="/src/pages/equipment-map.php" <?= $activePage === 'equipment' ? 'class="active"' : '' ?>>EQUIPMENT</a>
-            <a href="/src/pages/news.php"         <?= $activePage === 'news'           ? 'class="active"' : '' ?>>NEWS</a>
+            <a href="/src/pages/admin-dashboard.php"  <?= $activePage === 'account'          ? 'class="active"' : '' ?>>DASHBOARD</a>
+            <a href="/src/pages/admin-users.php"      <?= $activePage === 'admin-users'      ? 'class="active"' : '' ?>>USERS</a>
+            <a href="/src/pages/trainers.php"         <?= $activePage === 'trainers'         ? 'class="active"' : '' ?>>TRAINERS</a>
+            <a href="/src/pages/admin-classes.php"    <?= $activePage === 'admin-classes'    ? 'class="active"' : '' ?>>CLASSES</a>
+            <a href="/src/pages/admin-analytics.php"  <?= $activePage === 'admin-analytics'  ? 'class="active"' : '' ?>>ANALYTICS</a>
+            <a href="/src/pages/equipment-map.php"    <?= $activePage === 'equipment'        ? 'class="active"' : '' ?>>EQUIPMENT</a>
+            <a href="/src/pages/news.php"             <?= $activePage === 'news'             ? 'class="active"' : '' ?>>NEWS</a>
         <?php endif; ?>
     </div>
 
