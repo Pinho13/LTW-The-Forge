@@ -11,16 +11,18 @@ if (!$session->isAdmin()) {
     exit;
 }
 
-$filterRole   = $_GET['role']   ?? '';
-$filterSearch = trim($_GET['q'] ?? '');
-$filterStatus = $_GET['status'] ?? 'all';
-$filterJoined = $_GET['joined'] ?? '';
+$filterRole         = $_GET['role']         ?? '';
+$filterSearch       = trim($_GET['q']       ?? '');
+$filterStatus       = $_GET['status']       ?? 'all';
+$filterJoined       = $_GET['joined']       ?? '';
+$filterSubscription = $_GET['subscription'] ?? '';
 
-if (!in_array($filterRole,   ['', 'member', 'trainer', 'admin']))      $filterRole = '';
-if (!in_array($filterStatus, ['active', 'banned', 'frozen', 'all']))   $filterStatus = 'active';
-if (!in_array($filterJoined, ['', 'week', 'month', 'year']))           $filterJoined = '';
+if (!in_array($filterRole,         ['', 'member', 'trainer', 'admin']))      $filterRole = '';
+if (!in_array($filterStatus,       ['active', 'banned', 'frozen', 'all']))   $filterStatus = 'active';
+if (!in_array($filterJoined,       ['', 'week', 'month', 'year']))           $filterJoined = '';
+if (!in_array($filterSubscription, ['', 'expired']))                         $filterSubscription = '';
 
-$users = AdminUser::getAll($db, $filterRole, $filterSearch, $filterStatus, $session->getId(), $filterJoined);
+$users = AdminUser::getAll($db, $filterRole, $filterSearch, $filterStatus, $session->getId(), $filterJoined, $filterSubscription);
 
 $csrf = $session->getCsrfToken();
 ?>
@@ -43,9 +45,22 @@ $csrf = $session->getCsrfToken();
 
         <header>
             <h1>Users</h1>
+            <div class="users-header-actions">
+                <button type="button" class="users-header-btn" id="users-export-btn">Export</button>
+            </div>
         </header>
 
+        <?php if ($filterSubscription === 'expired'): ?>
+        <div class="filter-banner">
+            <span>Showing members with expired subscriptions still marked active.</span>
+            <a href="/src/pages/admin-users.php" class="filter-banner__clear">Clear filter</a>
+        </div>
+        <?php endif; ?>
+
         <form class="user-filters" method="GET" action="" id="user-filters-form">
+            <?php if ($filterSubscription !== ''): ?>
+            <input type="hidden" name="subscription" value="<?= htmlspecialchars($filterSubscription) ?>">
+            <?php endif; ?>
             <input type="text" name="q" placeholder="Search name, username, email…"
                    value="<?= htmlspecialchars($filterSearch) ?>" class="user-filters__search"
                    id="search-input" oninput="liveSearch(this.value)" autocomplete="off">
@@ -92,6 +107,7 @@ $csrf = $session->getCsrfToken();
                         <th>Email</th>
                         <th>Role</th>
                         <th>Plan</th>
+                        <th>Expires</th>
                         <th>Status</th>
                         <th style="text-align:right">Joined</th>
                     </tr>
@@ -124,6 +140,8 @@ $csrf = $session->getCsrfToken();
                                     data-bio="<?= htmlspecialchars($u['bio'] ?? '', ENT_QUOTES) ?>"
                                     data-specializations="<?= htmlspecialchars($u['specializations'] ?? '', ENT_QUOTES) ?>"
                                     data-certifications="<?= htmlspecialchars($u['certifications'] ?? '', ENT_QUOTES) ?>"
+                                    data-sub-end-date="<?= htmlspecialchars($u['sub_end_date'] ?? '', ENT_QUOTES) ?>"
+                                    data-trainer-featured="<?= (int)($u['trainer_featured'] ?? 0) ?>"
                                     data-is-self="<?= $isSelf ? '1' : '0' ?>">
                                 Edit
                             </button>
@@ -145,6 +163,17 @@ $csrf = $session->getCsrfToken();
                         </td>
                         <td class="user-row__plan">
                             <?= $u['plan_name'] ? htmlspecialchars($u['plan_name']) : '<span class="user-row__no-plan">—</span>' ?>
+                        </td>
+                        <td class="user-row__expiry">
+                            <?php if ($u['sub_end_date']):
+                                $isExpired = $u['sub_end_date'] < date('Y-m-d');
+                            ?>
+                                <span <?= $isExpired ? 'class="user-row__expiry--expired"' : '' ?>>
+                                    <?= date('j M Y', strtotime($u['sub_end_date'])) ?>
+                                </span>
+                            <?php else: ?>
+                                <span class="user-row__no-plan">—</span>
+                            <?php endif; ?>
                         </td>
                         <td>
                             <?php if ($isBanned): ?>
@@ -208,6 +237,32 @@ $csrf = $session->getCsrfToken();
 
                 <button type="submit" class="btn-primary user-modal__submit">Save Changes</button>
             </form>
+
+            <div id="trainer-feature-section" hidden>
+                <hr class="user-modal__section-divider">
+                <form method="POST" action="../actions/action_toggle_featured.php" data-feature-toggle>
+                    <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
+                    <input type="hidden" name="type" value="trainer">
+                    <input type="hidden" name="id" id="feature-trainer-id">
+                    <input type="hidden" name="return" value="/src/pages/admin-users.php">
+                    <button type="submit" class="btn-ghost user-modal__submit" id="feature-trainer-btn"></button>
+                </form>
+            </div>
+
+            <div id="subscription-section" hidden>
+                <div class="user-modal__section-divider"></div>
+                <form method="POST" action="../actions/action_admin_update_user.php" class="auth-modal__form">
+                    <input type="hidden" name="csrf_token" value="<?= $csrf ?>">
+                    <input type="hidden" name="action" value="update_subscription">
+                    <input type="hidden" name="user_id" id="sub-user-id">
+                    <input type="hidden" name="ref" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
+
+                    <label for="edit-sub-end-date">Subscription End Date</label>
+                    <input type="date" id="edit-sub-end-date" name="end_date">
+
+                    <button type="submit" class="btn-primary user-modal__submit">Update Subscription</button>
+                </form>
+            </div>
         </div>
 
         <!-- Role Tab -->
@@ -302,13 +357,29 @@ $csrf = $session->getCsrfToken();
         document.getElementById('edit-phone').value    = u.phone;
 
         const trainerFields = document.getElementById('trainer-fields');
+        const trainerFeatureSection = document.getElementById('trainer-feature-section');
         if (u.role === 'trainer') {
             trainerFields.removeAttribute('hidden');
             document.getElementById('edit-bio').value  = u.bio;
             document.getElementById('edit-spec').value = u.spec;
             document.getElementById('edit-cert').value = u.cert;
+            trainerFeatureSection.removeAttribute('hidden');
+            document.getElementById('feature-trainer-id').value = u.id;
+            document.getElementById('feature-trainer-btn').textContent = u.trainerFeatured
+                ? '★ Remove from Homepage'
+                : '☆ Feature on Homepage';
         } else {
             trainerFields.setAttribute('hidden', '');
+            trainerFeatureSection.setAttribute('hidden', '');
+        }
+
+        const subSection = document.getElementById('subscription-section');
+        if (u.subEndDate) {
+            subSection.removeAttribute('hidden');
+            document.getElementById('sub-user-id').value       = u.id;
+            document.getElementById('edit-sub-end-date').value = u.subEndDate;
+        } else {
+            subSection.setAttribute('hidden', '');
         }
 
         document.getElementById('role-user-id').value     = u.id;
@@ -361,9 +432,11 @@ $csrf = $session->getCsrfToken();
                 role:   btn.dataset.role,
                 active: btn.dataset.active,
                 bio:    btn.dataset.bio,
-                spec:   btn.dataset.specializations,
-                cert:   btn.dataset.certifications,
-                isSelf: btn.dataset.isSelf === '1',
+                spec:            btn.dataset.specializations,
+                cert:            btn.dataset.certifications,
+                subEndDate:      btn.dataset.subEndDate,
+                trainerFeatured: btn.dataset.trainerFeatured === '1',
+                isSelf:          btn.dataset.isSelf === '1',
             }));
         });
     }
@@ -416,6 +489,25 @@ $csrf = $session->getCsrfToken();
     document.getElementById('delete-confirm-btn').addEventListener('click', () => {
         document.getElementById('delete-form').submit();
     });
+    </script>
+
+    <script>
+    document.getElementById('users-export-btn').addEventListener('click', () => {
+        const now = new Date();
+        const ts  = now.toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const iframe = document.createElement('iframe');
+        iframe.style.cssText = 'position:fixed;width:0;height:0;border:0;visibility:hidden';
+        iframe.src = '/src/pages/admin-users-export.php?ts=' + encodeURIComponent(ts);
+        document.body.appendChild(iframe);
+        iframe.onload = () => {
+            iframe.contentWindow.print();
+            iframe.contentWindow.addEventListener('afterprint', () => iframe.remove());
+        };
+    });
+    </script>
+    <script type="module">
+        import { initFeatureSwap } from '../scripts/feature-swap.js';
+        initFeatureSwap();
     </script>
 </body>
 </html>

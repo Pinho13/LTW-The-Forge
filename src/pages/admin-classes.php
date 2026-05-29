@@ -11,7 +11,9 @@ if (!$session->isAdmin()) {
     exit;
 }
 
-$weekOffset = (int)($_GET['week'] ?? 0);
+$weekOffset    = (int)($_GET['week']   ?? 0);
+$activeFilter  = $_GET['filter'] ?? '';
+if (!in_array($activeFilter, ['', 'no_trainer', 'at_capacity', 'waitlisted', 'empty'])) $activeFilter = '';
 $today      = new DateTimeImmutable('today');
 $monday     = $today->modify('Monday this week')->modify("{$weekOffset} weeks");
 $sunday     = $monday->modify('+6 days');
@@ -75,11 +77,26 @@ $nextWeek  = $weekOffset + 1;
             </div>
         </header>
 
+        <?php
+        $filterLabels = [
+            'no_trainer'  => 'Showing sessions this week without an assigned trainer.',
+            'at_capacity' => 'Showing sessions at full capacity.',
+            'waitlisted'  => 'Showing sessions with members on the waitlist.',
+            'empty'       => 'Showing upcoming sessions with no enrolments.',
+        ];
+        if ($activeFilter !== ''):
+        ?>
+        <div class="filter-banner">
+            <span><?= htmlspecialchars($filterLabels[$activeFilter]) ?></span>
+            <a href="/src/pages/admin-classes.php" class="filter-banner__clear">Clear filter</a>
+        </div>
+        <?php endif; ?>
+
         <section class="calendar">
             <nav class="calendar-nav" aria-label="Week navigation">
-                <a href="?week=<?= $prevWeek ?>" class="btn-ghost">&#8592; Prev</a>
+                <a href="?week=<?= $prevWeek ?><?= $activeFilter !== '' ? '&filter=' . urlencode($activeFilter) : '' ?>" class="btn-ghost">&#8592; Prev</a>
                 <h2><?= $monday->format('M j') ?> &ndash; <?= $sunday->format('M j, Y') ?></h2>
-                <a href="?week=<?= $nextWeek ?>" class="btn-ghost">Next &#8594;</a>
+                <a href="?week=<?= $nextWeek ?><?= $activeFilter !== '' ? '&filter=' . urlencode($activeFilter) : '' ?>" class="btn-ghost">Next &#8594;</a>
             </nav>
 
             <div class="calendar-grid">
@@ -117,9 +134,11 @@ $nextWeek  = $weekOffset + 1;
                         $start     = new DateTimeImmutable($s['datetime']);
                         $end       = $start->modify('+' . $s['duration_minutes'] . ' minutes');
                         $timeLabel = $start->format('H:i') . ' – ' . $end->format('H:i');
-                        $spotsLeft = max(0, (int)$s['capacity'] - (int)$s['enrolled_count']);
+                        $enrolled  = (int)$s['enrolled_count'];
+                        $capacity  = (int)$s['capacity'];
+                        $isFull    = $enrolled >= $capacity;
                     ?>
-                    <article class="class-card class-card--admin"
+                    <article class="class-card class-card--admin<?= $isFull ? ' class-card--full' : '' ?><?= $s['is_featured'] ? ' class-card--featured' : '' ?>"
                              style="grid-row: <?= $row ?> / span <?= $span ?>"
                              data-session-id="<?= (int)$s['session_id'] ?>"
                              data-class-id="<?= (int)$s['class_id'] ?>"
@@ -132,11 +151,13 @@ $nextWeek  = $weekOffset + 1;
                              data-intensity="<?= (int)$s['intensity'] ?>"
                              data-capacity="<?= (int)$s['capacity'] ?>"
                              data-enrolled="<?= (int)$s['enrolled_count'] ?>"
+                             data-waitlisted="<?= (int)$s['waitlisted_count'] ?>"
                              data-type-id="<?= (int)$s['type_id'] ?>"
                              data-type="<?= htmlspecialchars($s['type_name'] ?? '') ?>"
-                             data-description="<?= htmlspecialchars($s['description'] ?? '', ENT_QUOTES) ?>">
+                             data-description="<?= htmlspecialchars($s['description'] ?? '', ENT_QUOTES) ?>"
+                             data-is-featured="<?= (int)$s['is_featured'] ?>">
                         <header>
-                            <h3><?= htmlspecialchars($s['class_name']) ?></h3>
+                            <h3><?= htmlspecialchars($s['class_name']) ?><?= $s['is_featured'] ? ' <span class="class-card__star">★</span>' : '' ?></h3>
                             <p><?= htmlspecialchars($timeLabel) ?></p>
                         </header>
                         <footer>
@@ -145,7 +166,7 @@ $nextWeek  = $weekOffset + 1;
                                     <span class="intensity-dot <?= $i <= (int)$s['intensity'] ? 'filled' : '' ?>"></span>
                                 <?php endfor; ?>
                             </div>
-                            <span><?= $spotsLeft ?>/<?= (int)$s['capacity'] ?></span>
+                            <span><?= $enrolled ?>/<?= $capacity ?></span>
                         </footer>
                     </article>
 
@@ -155,9 +176,12 @@ $nextWeek  = $weekOffset + 1;
                             $start     = new DateTimeImmutable($s['datetime']);
                             $end       = $start->modify('+' . $s['duration_minutes'] . ' minutes');
                             $timeLabel = $start->format('H:i') . ' – ' . $end->format('H:i');
-                            $spotsLeft = max(0, (int)$s['capacity'] - (int)$s['enrolled_count']);
-                            $cardClass = 'class-card class-card--admin class-stack__card' . ($si === 0 ? ' class-stack__card--active' : '');
+                            $enrolled  = (int)$s['enrolled_count'];
+                            $capacity  = (int)$s['capacity'];
+                            $isFull    = $enrolled >= $capacity;
+                            $cardClass = 'class-card class-card--admin class-stack__card' . ($isFull ? ' class-card--full' : '') . ($si === 0 ? ' class-stack__card--active' : '');
                         ?>
+                        <?php $cardClass .= $s['is_featured'] ? ' class-card--featured' : ''; ?>
                         <article class="<?= $cardClass ?>"
                                  data-session-id="<?= (int)$s['session_id'] ?>"
                                  data-class-id="<?= (int)$s['class_id'] ?>"
@@ -170,11 +194,13 @@ $nextWeek  = $weekOffset + 1;
                                  data-intensity="<?= (int)$s['intensity'] ?>"
                                  data-capacity="<?= (int)$s['capacity'] ?>"
                                  data-enrolled="<?= (int)$s['enrolled_count'] ?>"
+                                 data-waitlisted="<?= (int)$s['waitlisted_count'] ?>"
                                  data-type-id="<?= (int)$s['type_id'] ?>"
                                  data-type="<?= htmlspecialchars($s['type_name'] ?? '') ?>"
-                                 data-description="<?= htmlspecialchars($s['description'] ?? '', ENT_QUOTES) ?>">
+                                 data-description="<?= htmlspecialchars($s['description'] ?? '', ENT_QUOTES) ?>"
+                                 data-is-featured="<?= (int)$s['is_featured'] ?>">
                             <header>
-                                <h3><?= htmlspecialchars($s['class_name']) ?></h3>
+                                <h3><?= htmlspecialchars($s['class_name']) ?><?= $s['is_featured'] ? ' <span class="class-card__star">★</span>' : '' ?></h3>
                                 <p><?= htmlspecialchars($timeLabel) ?></p>
                             </header>
                             <footer>
@@ -183,7 +209,7 @@ $nextWeek  = $weekOffset + 1;
                                         <span class="intensity-dot <?= $i <= (int)$s['intensity'] ? 'filled' : '' ?>"></span>
                                     <?php endfor; ?>
                                 </div>
-                                <span><?= $spotsLeft ?>/<?= (int)$s['capacity'] ?></span>
+                                <span><?= $enrolled ?>/<?= $capacity ?></span>
                             </footer>
                         </article>
                         <?php endforeach; ?>
@@ -220,24 +246,28 @@ $nextWeek  = $weekOffset + 1;
             <form id="form-session" class="auth-modal__form">
                 <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
                 <input type="hidden" name="session_id" id="edit-session-id">
-                <label>Date &amp; Time</label>
-                <div class="datetime-split">
-                    <input type="date" id="edit-date" required>
-                    <select id="edit-hour">
-                        <?php for ($h = 8; $h <= 22; $h++): ?>
-                        <option value="<?= $h ?>"><?= sprintf('%02d:00', $h) ?></option>
-                        <?php endfor; ?>
-                    </select>
+                <div class="admin-modal-fields">
+                    <label>Date &amp; Time</label>
+                    <div class="datetime-split">
+                        <input type="date" id="edit-date" required>
+                        <select id="edit-hour">
+                            <?php for ($h = 8; $h <= 22; $h++): ?>
+                            <option value="<?= $h ?>"><?= sprintf('%02d:00', $h) ?></option>
+                            <?php endfor; ?>
+                        </select>
+                    </div>
+                    <label for="edit-room">Room</label>
+                    <select id="edit-room" name="room" required></select>
+                    <label for="edit-capacity">Capacity</label>
+                    <input type="number" id="edit-capacity" name="capacity" min="1" required>
+                    <p class="admin-modal-enrolled" id="edit-enrolled-info"></p>
+                    <p class="auth-modal__error" id="session-error"></p>
                 </div>
-                <label for="edit-room">Room</label>
-                <select id="edit-room" name="room" required></select>
-                <label for="edit-capacity">Capacity</label>
-                <input type="number" id="edit-capacity" name="capacity" min="1" required>
-                <p class="admin-modal-enrolled" id="edit-enrolled-info"></p>
-                <p class="auth-modal__error" id="session-error"></p>
-                <div class="admin-modal-actions">
-                    <button type="submit" class="btn-primary modal-action-btn" id="save-session-btn">Save Session</button>
-                    <button type="button" class="btn-danger modal-action-btn" id="delete-session-btn">Delete Session</button>
+                <div class="admin-modal-footer">
+                    <div class="admin-modal-actions">
+                        <button type="submit" class="btn-primary modal-action-btn" id="save-session-btn">Save Session</button>
+                        <button type="button" class="btn-danger modal-action-btn" id="delete-session-btn">Delete Session</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -247,32 +277,43 @@ $nextWeek  = $weekOffset + 1;
             <form id="form-class" class="auth-modal__form">
                 <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
                 <input type="hidden" name="class_id" id="edit-class-id">
-                <label for="edit-class-name">Name</label>
-                <input type="text" id="edit-class-name" name="name" required maxlength="150">
-                <label for="edit-class-type">Type</label>
-                <select id="edit-class-type" name="type_id">
-                    <?php foreach ($types as $t): ?>
-                    <option value="<?= (int)$t['id'] ?>"><?= htmlspecialchars($t['name']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <label for="edit-class-trainer">Trainer</label>
-                <select id="edit-class-trainer" name="trainer_id">
-                    <option value="">— None —</option>
-                    <?php foreach ($trainers as $tr): ?>
-                    <option value="<?= (int)$tr['id'] ?>"><?= htmlspecialchars($tr['name']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <label for="edit-class-duration">Duration (minutes)</label>
-                <input type="number" id="edit-class-duration" name="duration_minutes" min="1" required>
-                <label for="edit-class-intensity">Intensity (1–5)</label>
-                <input type="number" id="edit-class-intensity" name="intensity" min="1" max="5" required>
-                <label for="edit-class-description">Description</label>
-                <textarea id="edit-class-description" name="description" rows="3" maxlength="1000"></textarea>
-                <p class="auth-modal__error" id="class-error"></p>
-                <div class="admin-modal-actions">
-                    <button type="submit" class="btn-primary modal-action-btn" id="save-class-btn">Save Class</button>
-                    <button type="button" class="btn-danger modal-action-btn" id="delete-class-btn">Delete Class</button>
+                <div class="admin-modal-fields">
+                    <label for="edit-class-name">Name</label>
+                    <input type="text" id="edit-class-name" name="name" required maxlength="150">
+                    <label for="edit-class-type">Type</label>
+                    <select id="edit-class-type" name="type_id">
+                        <?php foreach ($types as $t): ?>
+                        <option value="<?= (int)$t['id'] ?>"><?= htmlspecialchars($t['name']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <label for="edit-class-trainer">Trainer</label>
+                    <select id="edit-class-trainer" name="trainer_id">
+                        <option value="">— None —</option>
+                        <?php foreach ($trainers as $tr): ?>
+                        <option value="<?= (int)$tr['id'] ?>"><?= htmlspecialchars($tr['name']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <label for="edit-class-duration">Duration (minutes)</label>
+                    <input type="number" id="edit-class-duration" name="duration_minutes" min="1" required>
+                    <label for="edit-class-intensity">Intensity (1–5)</label>
+                    <input type="number" id="edit-class-intensity" name="intensity" min="1" max="5" required>
+                    <label for="edit-class-description">Description</label>
+                    <textarea id="edit-class-description" name="description" rows="3" maxlength="1000"></textarea>
+                    <p class="auth-modal__error" id="class-error"></p>
                 </div>
+                <div class="admin-modal-footer">
+                    <div class="admin-modal-actions">
+                        <button type="submit" class="btn-primary modal-action-btn" id="save-class-btn">Save Class</button>
+                        <button type="button" class="btn-danger modal-action-btn" id="delete-class-btn">Delete Class</button>
+                    </div>
+                </div>
+            </form>
+            <form method="POST" action="../actions/action_toggle_featured.php" style="padding: 0 0 var(--space-m)" data-feature-toggle>
+                <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
+                <input type="hidden" name="type" value="class">
+                <input type="hidden" name="id" id="feature-class-id">
+                <input type="hidden" name="return" value="/src/pages/admin-classes.php?week=<?= $weekOffset ?>">
+                <button type="submit" class="btn-ghost modal-action-btn" id="feature-class-btn" style="width:100%"></button>
             </form>
         </div>
     </dialog>
@@ -349,10 +390,15 @@ $nextWeek  = $weekOffset + 1;
     </dialog>
 
     <script>
-        const CSRF_TOKEN = <?= json_encode($session->getCsrfToken()) ?>;
-        const CLASS_LIST = <?= json_encode(array_values($classes)) ?>;
+        const CSRF_TOKEN    = <?= json_encode($session->getCsrfToken()) ?>;
+        const CLASS_LIST    = <?= json_encode(array_values($classes)) ?>;
+        const ACTIVE_FILTER = <?= json_encode($activeFilter) ?>;
     </script>
     <script src="../scripts/classes.js"></script>
     <script src="../scripts/admin-classes.js"></script>
+    <script type="module">
+        import { initFeatureSwap } from '../scripts/feature-swap.js';
+        initFeatureSwap();
+    </script>
 </body>
 </html>
