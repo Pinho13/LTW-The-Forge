@@ -1,0 +1,269 @@
+/* ── Stat cards ── */
+.dash-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-m);
+    padding: var(--space-m) var(--space-l);
+}
+
+.dash-stat {
+    border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.15);
+    border-top: 2px solid var(--color-gold);
+    padding: var(--space-s) var(--space-m);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxs);
+}
+
+.dash-stat__label {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-grey);
+    margin: 0;
+}
+
+.dash-stat__value {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    color: var(--color-almost-white);
+    line-height: 1;
+    margin: var(--space-xs) 0 var(--space-xxs);
+}
+
+.dash-stat__denom {
+    font-size: 0.5em;
+    color: var(--color-grey);
+    margin-left: 0.15em;
+}
+
+.dash-stat__sub {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+    margin: 0;
+}
+
+.dash-stat__sub--green  { color: var(--color-success); }
+.dash-stat__sub--orange { color: var(--color-rust); }
+
+/* ── Lower panels ── */
+.dash-panels {
+    padding: 0 var(--space-l);
+}
+
+/* ── Shared panel ── */
+.dash-panel {
+    border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.15);
+    padding: var(--space-m) var(--space-l);
+}
+
+.dash-panel--activity {
+    margin: var(--space-m) var(--space-l);
+}
+
+.dash-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-m);
+    padding-bottom: var(--space-s);
+    border-bottom: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.15);
+}
+
+.dash-panel__title {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-s);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-gold);
+    margin: 0;
+}
+
+.dash-panel__action {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+    border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.3);
+    padding: var(--space-xxs) var(--space-s);
+    text-decoration: none;
+    background: none;
+    outline: none;
+}
+
+.dash-panel__action:hover {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+}
+
+.dash-panel__action--alert {
+    color: var(--color-error);
+    border-color: rgba(var(--color-error-rgb), 0.4);
+}
+
+.dash-panel__action--alert:hover {
+    color: var(--color-error);
+    border-color: var(--color-error);
+}
+
+
+.dash-empty {
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+    padding: var(--space-m) 0;
+}
+
+/* ── Needs attention list ── */
+.attention-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.attention-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-m);
+    padding: var(--space-m) 0;
+    border-left: 2px solid var(--color-gold);
+    padding-left: var(--space-m);
+}
+
+.attention-item + .attention-item {
+    border-top: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.1);
+}
+
+.attention-item--green  { border-left-color: var(--color-success); }
+.attention-item--gold   { border-left-color: var(--color-gold); }
+.attention-item--red    { border-left-color: var(--color-error); }
+.attention-item--hidden { display: none; }
+
+.attention-item__icon {
+    font-size: var(--font-size-m);
+    color: var(--color-gold);
+    width: 1.2rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.attention-item--green .attention-item__icon { color: var(--color-success); }
+.attention-item--red   .attention-item__icon { color: var(--color-error); }
+
+.attention-item__body {
+    flex: 1;
+    min-width: 0;
+}
+
+.attention-item__title {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-almost-white);
+    margin: 0 0 var(--space-xxs);
+}
+
+.attention-item__detail {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.attention-item__btn {
+    flex-shrink: 0;
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gold);
+    border: var(--border-xs) solid var(--color-gold);
+    padding: var(--space-xxs) var(--space-s);
+    text-decoration: none;
+    background: rgba(var(--color-gold-rgb), 0.05);
+}
+
+.attention-item__btn:hover {
+    background: rgba(var(--color-gold-rgb), 0.15);
+}
+
+
+/* ── Activity table ── */
+.activity-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-xs);
+}
+
+.activity-row {
+    border-bottom: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.1);
+}
+
+.activity-row:last-child { border-bottom: none; }
+
+.activity-row td {
+    padding: var(--space-s) var(--space-m);
+    vertical-align: middle;
+}
+
+.activity-row__time {
+    color: var(--color-grey);
+    white-space: nowrap;
+    font-family: "Courier New", monospace;
+    width: 10rem;
+}
+
+.activity-row__type { width: 6rem; }
+
+.activity-row__desc {
+    color: var(--color-almost-white);
+    flex: 1;
+}
+
+.activity-row__admin {
+    color: var(--color-grey);
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* ── Activity badge ── */
+.activity-badge {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px var(--space-xs);
+    border: var(--border-xs) solid currentColor;
+    display: inline-block;
+}
+
+.activity-badge--create  { color: var(--color-success); }
+.activity-badge--update  { color: var(--color-gold); }
+.activity-badge--delete  { color: var(--color-error); }
+.activity-badge--login   { color: var(--color-grey); }
+.activity-badge--elevate { color: var(--color-light-gold); }
+.activity-badge--assign  { color: var(--color-gold); }
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+    .dash-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .dash-stats {
+        grid-template-columns: 1fr 1fr;
+        padding: var(--space-m);
+    }
+    .dash-panels,
+    .dash-panel--activity {
+        margin: 0;
+        padding: var(--space-m);
+    }
+    .activity-row__admin { display: none; }
+}
