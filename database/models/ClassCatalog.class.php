@@ -6,12 +6,40 @@ class ClassCatalog
     public static function getAllClasses(PDO $db): array
     {
         return $db->query(
-            "SELECT c.id, c.name, c.type_id, c.description, c.duration_minutes, c.intensity, c.trainer_id,
+            "SELECT c.id, c.name, c.type_id, c.description, c.duration_minutes, c.intensity, c.trainer_id, c.is_featured,
                     ct.name AS type_name, u.name AS trainer_name
              FROM class c
              LEFT JOIN class_type ct ON ct.id = c.type_id
              LEFT JOIN user u ON u.user_id = c.trainer_id
              ORDER BY c.name ASC"
+        )->fetchAll();
+    }
+
+    public static function getFeatured(PDO $db): array
+    {
+        return $db->query(
+            "SELECT c.id, c.name, c.type_id, c.description, c.duration_minutes, c.intensity, c.trainer_id,
+                    ct.name AS type_name, u.name AS trainer_name,
+                    (SELECT cs.room FROM class_session cs WHERE cs.class_id = c.id
+                     AND cs.datetime > datetime('now','localtime') ORDER BY cs.datetime ASC LIMIT 1) AS next_room
+             FROM class c
+             LEFT JOIN class_type ct ON ct.id = c.type_id
+             LEFT JOIN user u ON u.user_id = c.trainer_id
+             WHERE c.is_featured = 1
+             ORDER BY c.name ASC
+             LIMIT 4"
+        )->fetchAll();
+    }
+
+    public static function getFeaturedTrainers(PDO $db): array
+    {
+        return $db->query(
+            "SELECT u.user_id, u.name, u.profile_photo, tp.specializations, tp.is_featured
+             FROM trainer_profile tp
+             JOIN user u ON u.user_id = tp.user_id
+             WHERE tp.is_featured = 1 AND u.is_active = 1
+             ORDER BY u.name ASC
+             LIMIT 4"
         )->fetchAll();
     }
 
