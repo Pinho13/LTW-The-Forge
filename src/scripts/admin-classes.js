@@ -134,6 +134,12 @@ document.addEventListener('click', e => {
     setSelectValue('edit-class-type',    card.dataset.typeId);
     setSelectValue('edit-class-trainer', card.dataset.trainerId || '');
 
+    const isFeatured = card.dataset.isFeatured === '1';
+    document.getElementById('feature-class-id').value   = card.dataset.classId;
+    document.getElementById('feature-class-btn').textContent = isFeatured
+        ? '★ Remove from Homepage'
+        : '☆ Feature on Homepage';
+
     // Reset to session tab
     document.querySelectorAll('.admin-modal-tab').forEach((t, i) => t.classList.toggle('admin-modal-tab--active', i === 0));
     document.getElementById('tab-session').hidden = false;
@@ -339,3 +345,48 @@ document.getElementById('form-new-class').addEventListener('submit', async e => 
         btn.disabled = false;
     }
 });
+
+// ── Dashboard filter highlight ──
+if (ACTIVE_FILTER) {
+    const todayStr = new Date().toISOString().slice(0, 10);
+
+    const cardMatches = card => {
+        const enrolled   = parseInt(card.dataset.enrolled,   10);
+        const capacity   = parseInt(card.dataset.capacity,   10);
+        const waitlisted = parseInt(card.dataset.waitlisted, 10);
+        const trainerId  = parseInt(card.dataset.trainerId,  10);
+        const isFuture   = (card.dataset.datetime ?? '').slice(0, 10) >= todayStr;
+
+        if (ACTIVE_FILTER === 'no_trainer')  return isFuture && trainerId === 0;
+        if (ACTIVE_FILTER === 'at_capacity') return isFuture && enrolled >= capacity;
+        if (ACTIVE_FILTER === 'waitlisted')  return isFuture && waitlisted > 0;
+        if (ACTIVE_FILTER === 'empty')       return isFuture && enrolled === 0;
+        return false;
+    };
+
+    let first = null;
+
+    document.querySelectorAll('.calendar-day-column > .class-stack').forEach(stack => {
+        const cards  = Array.from(stack.querySelectorAll('.class-card--admin'));
+        const anyHit = cards.some(cardMatches);
+
+        if (anyHit) {
+            // Highlight the stack wrapper so it stands out as a unit
+            stack.classList.add('class-card--highlight');
+            if (!first) first = stack;
+        } else {
+            stack.classList.add('class-card--highlight-dim');
+        }
+    });
+
+    document.querySelectorAll('.calendar-day-column > .class-card--admin').forEach(card => {
+        if (cardMatches(card)) {
+            card.classList.add('class-card--highlight');
+            if (!first) first = card;
+        } else {
+            card.classList.add('class-card--highlight-dim');
+        }
+    });
+
+    if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}

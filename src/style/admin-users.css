@@ -1,3 +1,60 @@
+/* ── Active filter banner ── */
+.filter-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    margin: var(--space-s) var(--space-l) var(--space-s);
+    padding: var(--space-s) var(--space-m);
+    border-left: 2px solid var(--color-gold);
+    background: rgba(var(--color-gold-rgb), 0.05);
+    font-size: var(--font-size-xs);
+    color: var(--color-almost-white);
+}
+
+.filter-banner__clear {
+    flex-shrink: 0;
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+    text-decoration: none;
+    border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.3);
+    padding: 2px var(--space-s);
+}
+
+.filter-banner__clear:hover {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+}
+
+/* ── Header ── */
+main > header { position: relative; }
+
+.users-header-actions {
+    position: absolute;
+    right: var(--space-l);
+    bottom: var(--space-s);
+    display: flex;
+    gap: var(--space-s);
+}
+
+.users-header-btn {
+    color: var(--color-almost-white);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    outline: 1px solid rgba(var(--color-almost-white-rgb), 0.3);
+    padding: var(--space-xs) var(--space-m);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.users-header-btn:hover {
+    outline-color: var(--color-almost-white);
+}
+
 /* User filters bar */
 .user-filters {
     display: flex;
@@ -152,6 +209,16 @@
     color: rgba(var(--color-grey-rgb), 0.4);
 }
 
+.user-row__expiry {
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+}
+
+.user-row__expiry--expired {
+    color: var(--color-error);
+}
+
 .user-row__actions {
     width: 1px;
     white-space: nowrap;
@@ -264,6 +331,12 @@
 .user-modal__submit {
     width: 100%;
     margin-top: var(--space-l);
+}
+
+.user-modal__section-divider {
+    border: none;
+    border-top: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.15);
+    margin: var(--space-l) 0 var(--space-m);
 }
 
 .user-modal__hint {

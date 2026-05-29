@@ -1,3 +1,41 @@
+/* ── Active filter banner ── */
+.filter-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    margin: var(--space-s) var(--space-l) var(--space-s);
+    padding: var(--space-s) var(--space-m);
+    border-left: 2px solid var(--color-gold);
+    background: rgba(var(--color-gold-rgb), 0.05);
+    font-size: var(--font-size-xs);
+    color: var(--color-almost-white);
+}
+
+.filter-banner__clear {
+    flex-shrink: 0;
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+    text-decoration: none;
+    border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.3);
+    padding: 2px var(--space-s);
+}
+
+.filter-banner__clear:hover {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+}
+
+/* ── Dashboard filter highlight ── */
+.class-card--highlight {
+    outline: 2px solid var(--color-gold);
+    outline-offset: -2px;
+}
+
+.class-card--highlight-dim {
+    opacity: 0.35;
+}
+
 /* ── Header buttons ── */
 main > header {
     position: relative;
@@ -133,4 +171,74 @@ main > header {
     font-size: var(--font-size-xs);
     color: var(--color-grey);
     margin: 0 0 var(--space-s);
+}
+
+/* ── Featured card star ── */
+.class-card__star {
+    color: var(--color-gold);
+    font-size: 0.8em;
+    margin-left: 2px;
+}
+
+.class-card--featured {
+    border-left: 2px solid var(--color-gold);
+}
+
+/* ── Fixed-height scrollable class modal ── */
+#admin-class-modal[open] {
+    height: min(90vh, 36rem);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: 0;
+}
+
+#admin-class-modal .auth-modal__close {
+    position: absolute;
+    z-index: 10;
+}
+
+#admin-class-modal .auth-modal__title,
+#admin-class-modal .admin-modal-tabs {
+    flex-shrink: 0;
+}
+
+#admin-class-modal .admin-modal-panel {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#admin-class-modal .admin-modal-panel[hidden] {
+    display: none;
+}
+
+#admin-class-modal .auth-modal__form {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+#admin-class-modal .admin-modal-fields {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-s) 0;
+}
+
+#admin-class-modal .admin-modal-footer {
+    flex-shrink: 0;
+    padding: var(--space-s) 0 var(--space-m);
+    border-top: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.15);
+}
+
+#admin-class-modal #edit-class-description {
+    min-height: 5rem;
+    resize: vertical;
 }
