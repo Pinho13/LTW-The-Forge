@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS trainer_profile (
     bio             TEXT,
     specializations VARCHAR,
     certifications  VARCHAR,
+    is_featured     BOOLEAN NOT NULL DEFAULT 0 CHECK (is_featured IN (0, 1)),
     FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
 );
 
@@ -51,6 +52,7 @@ CREATE TABLE IF NOT EXISTS class (
     duration_minutes INTEGER NOT NULL CHECK (duration_minutes > 0),
     intensity        INTEGER NOT NULL CHECK (intensity BETWEEN 1 AND 5),
     trainer_id       INTEGER,
+    is_featured      BOOLEAN NOT NULL DEFAULT 0 CHECK (is_featured IN (0, 1)),
     FOREIGN KEY (type_id)    REFERENCES class_type(id) ON DELETE RESTRICT,
     FOREIGN KEY (trainer_id) REFERENCES user(user_id)  ON DELETE RESTRICT
 );
@@ -255,6 +257,18 @@ CREATE TABLE IF NOT EXISTS announcement (
 );
 
 -- ============================================================
+-- ADMIN LOG
+-- ============================================================
+CREATE TABLE IF NOT EXISTS admin_log (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    admin_id    INTEGER NOT NULL,
+    action_type VARCHAR NOT NULL CHECK (action_type IN ('CREATE','UPDATE','DELETE','LOGIN','ELEVATE','ASSIGN')),
+    description TEXT NOT NULL,
+    created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (admin_id) REFERENCES user(user_id) ON DELETE CASCADE
+);
+
+-- ============================================================
 -- INDEXES
 -- ============================================================
 CREATE INDEX IF NOT EXISTS idx_user_email           ON user(email);
@@ -270,3 +284,5 @@ CREATE INDEX IF NOT EXISTS idx_eq_reservation_unit  ON equipment_reservation(uni
 CREATE INDEX IF NOT EXISTS idx_facility_reservation ON facility_reservation(facility_id);
 CREATE INDEX IF NOT EXISTS idx_gym_visit_member     ON gym_visit(member_id);
 CREATE INDEX IF NOT EXISTS idx_gym_visit_status     ON gym_visit(status);
+CREATE INDEX IF NOT EXISTS idx_admin_log_admin      ON admin_log(admin_id);
+CREATE INDEX IF NOT EXISTS idx_admin_log_created    ON admin_log(created_at);
