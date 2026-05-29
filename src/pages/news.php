@@ -28,10 +28,12 @@ $TYPES = ['Gym News', 'Event', 'Coach Note', 'Maintenance', 'Member Story'];
     <main>
         <?php include '../components/flash-messages.php'; ?>
 
-        <header class="news-header">
+        <header>
             <h1>News</h1>
             <?php if ($session->isAdmin()): ?>
-                <button type="button" class="btn-primary btn-sm" id="new-post-btn">+ New Post</button>
+            <div class="news-header-actions">
+                <button type="button" class="news-header-btn" id="new-post-btn">+ New Post</button>
+            </div>
             <?php endif; ?>
         </header>
 
@@ -41,10 +43,14 @@ $TYPES = ['Gym News', 'Event', 'Coach Note', 'Maintenance', 'Member Story'];
             <p class="empty-state">No announcements yet.</p>
         <?php else: ?>
 
-            <?php if ($hero): ?>
+            <?php if ($hero):
+                $heroImg = $hero['image']
+                    ? '/database/assets/announcements/' . htmlspecialchars($hero['image'])
+                    : '/src/assets/images/main-page/left-image.png';
+            ?>
             <article class="news-hero" data-announcement-id="<?= (int)$hero['id'] ?>">
                 <a class="news-hero__image" href="news-article.php?id=<?= (int)$hero['id'] ?>">
-                    <img src="/src/assets/images/main-page/left-image.png" alt="The Forge gym floor">
+                    <img src="<?= $heroImg ?>" alt="<?= htmlspecialchars($hero['title']) ?>">
                 </a>
                 <div class="news-hero__content">
                     <p class="news-card__eyebrow">
@@ -60,7 +66,14 @@ $TYPES = ['Gym News', 'Event', 'Coach Note', 'Maintenance', 'Member Story'];
                     <p class="news-hero__body"><?= htmlspecialchars(mb_strimwidth($hero['body'], 0, 200, '…')) ?></p>
                     <a href="news-article.php?id=<?= (int)$hero['id'] ?>" class="news-hero__cta">Read Story</a>
                     <?php if ($session->isAdmin()): ?>
-                    <div class="news-card__admin">
+                    <div class="news-card__admin news-card__admin--hero">
+                        <button type="button" class="btn-ghost btn-sm js-edit-btn"
+                                data-id="<?= (int)$hero['id'] ?>"
+                                data-title="<?= htmlspecialchars($hero['title'], ENT_QUOTES) ?>"
+                                data-body="<?= htmlspecialchars($hero['body'], ENT_QUOTES) ?>"
+                                data-type="<?= htmlspecialchars($hero['type'], ENT_QUOTES) ?>"
+                                data-read-time="<?= (int)$hero['read_time'] ?>"
+                                data-pinned="<?= $hero['pinned'] ? '1' : '0' ?>">Edit</button>
                         <form method="POST" action="../actions/action_toggle_pin.php">
                             <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
                             <input type="hidden" name="announcement_id" value="<?= (int)$hero['id'] ?>">
@@ -81,6 +94,12 @@ $TYPES = ['Gym News', 'Event', 'Coach Note', 'Maintenance', 'Member Story'];
             <ul class="news-grid">
                 <?php foreach ($cards as $post): ?>
                 <li class="news-card <?= $post['pinned'] ? 'news-card--pinned' : '' ?>" data-announcement-id="<?= (int)$post['id'] ?>">
+                    <?php if ($post['image']): ?>
+                    <a href="news-article.php?id=<?= (int)$post['id'] ?>" class="news-card__thumb">
+                        <img src="/database/assets/announcements/<?= htmlspecialchars($post['image']) ?>"
+                             alt="<?= htmlspecialchars($post['title']) ?>">
+                    </a>
+                    <?php endif; ?>
                     <a href="news-article.php?id=<?= (int)$post['id'] ?>" class="news-card__link">
                         <p class="news-card__eyebrow">
                             <span class="news-card__type"><?= htmlspecialchars($post['type']) ?></span>
@@ -97,6 +116,13 @@ $TYPES = ['Gym News', 'Event', 'Coach Note', 'Maintenance', 'Member Story'];
                     </a>
                     <?php if ($session->isAdmin()): ?>
                     <div class="news-card__admin">
+                        <button type="button" class="btn-ghost btn-sm js-edit-btn"
+                                data-id="<?= (int)$post['id'] ?>"
+                                data-title="<?= htmlspecialchars($post['title'], ENT_QUOTES) ?>"
+                                data-body="<?= htmlspecialchars($post['body'], ENT_QUOTES) ?>"
+                                data-type="<?= htmlspecialchars($post['type'], ENT_QUOTES) ?>"
+                                data-read-time="<?= (int)$post['read_time'] ?>"
+                                data-pinned="<?= $post['pinned'] ? '1' : '0' ?>">Edit</button>
                         <form method="POST" action="../actions/action_toggle_pin.php">
                             <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
                             <input type="hidden" name="announcement_id" value="<?= (int)$post['id'] ?>">
@@ -125,7 +151,7 @@ $TYPES = ['Gym News', 'Event', 'Coach Note', 'Maintenance', 'Member Story'];
     <dialog id="post-modal" class="auth-modal">
         <button type="button" class="btn-ghost auth-modal__close" id="post-close">&times;</button>
         <h2 class="auth-modal__title">New Announcement</h2>
-        <form method="POST" action="../actions/action_create_announcement.php" class="auth-modal__form">
+        <form method="POST" action="../actions/action_create_announcement.php" class="auth-modal__form" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
 
             <label for="post-title">Title</label>
@@ -144,11 +170,63 @@ $TYPES = ['Gym News', 'Event', 'Coach Note', 'Maintenance', 'Member Story'];
             <label for="post-body">Body</label>
             <textarea id="post-body" name="body" rows="5" required maxlength="2000" placeholder="Write your announcement…"></textarea>
 
+            <label>Cover image <span style="color:var(--color-grey);font-size:var(--font-size-xxs)">(optional, shown in hero &amp; article)</span></label>
+            <label class="file-upload">
+                <input type="file" id="post-image" name="image" accept="image/jpeg,image/png,image/webp">
+                <span class="file-upload__btn">Choose File</span>
+                <span class="file-upload__name" id="post-image-name">No file chosen</span>
+            </label>
+
             <label class="checkbox-label">
                 <input type="checkbox" name="pinned" value="1"> Pin this announcement
             </label>
 
             <button type="submit" class="btn-primary modal-action-btn">Publish</button>
+        </form>
+    </dialog>
+    <dialog id="delete-confirm-modal" class="auth-modal">
+        <h2 class="auth-modal__title">Delete Announcement</h2>
+        <p class="news-delete-hint">Are you sure you want to delete <strong id="delete-confirm-title"></strong>? This cannot be undone.</p>
+        <div class="news-confirm-actions">
+            <button type="button" class="btn-ghost btn-sm" id="delete-cancel-btn">Cancel</button>
+            <button type="button" class="btn-danger btn-sm" id="delete-confirm-btn">Delete</button>
+        </div>
+    </dialog>
+    <dialog id="edit-modal" class="auth-modal">
+        <button type="button" class="btn-ghost auth-modal__close" id="edit-close">&times;</button>
+        <h2 class="auth-modal__title">Edit Announcement</h2>
+        <form method="POST" action="../actions/action_edit_announcement.php" class="auth-modal__form" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
+            <input type="hidden" name="announcement_id" id="edit-announcement-id">
+
+            <label for="edit-title">Title</label>
+            <input type="text" id="edit-title" name="title" required maxlength="150">
+
+            <label for="edit-type">Category</label>
+            <select id="edit-type" name="type">
+                <?php foreach ($TYPES as $t): ?>
+                <option value="<?= htmlspecialchars($t) ?>"><?= htmlspecialchars($t) ?></option>
+                <?php endforeach; ?>
+            </select>
+
+            <label for="edit-read-time">Read time (minutes)</label>
+            <input type="number" id="edit-read-time" name="read_time" min="1" max="30">
+
+            <label for="edit-body">Body</label>
+            <textarea id="edit-body" name="body" rows="5" required maxlength="2000"></textarea>
+
+            <label>Cover image <span style="color:var(--color-grey);font-size:var(--font-size-xxs)">(optional — leave blank to keep current)</span></label>
+            <label class="file-upload">
+                <input type="file" id="edit-image" name="image" accept="image/jpeg,image/png,image/webp">
+                <span class="file-upload__btn">Choose File</span>
+                <span class="file-upload__name" id="edit-image-name">No file chosen</span>
+            </label>
+
+            <label class="checkbox-label">
+                <input type="checkbox" name="pinned" id="edit-pinned" value="1"> Pin this announcement
+            </label>
+
+            <button type="submit" class="btn-primary modal-action-btn">Save Changes</button>
         </form>
     </dialog>
     <script>

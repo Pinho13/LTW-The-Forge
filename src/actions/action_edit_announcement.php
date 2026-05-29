@@ -6,18 +6,19 @@ require_once(__DIR__ . '/../../database/models/Announcement.class.php');
 [$session, $db] = requireAuthenticatedPost('/src/pages/news.php');
 
 if (!$session->isAdmin()) {
-    $session->addMessage('error', 'Only admins can post announcements.');
+    $session->addMessage('error', 'Only admins can edit announcements.');
     header('Location: /src/pages/news.php');
     exit;
 }
 
+$id       = (int)($_POST['announcement_id'] ?? 0);
 $title    = trim($_POST['title'] ?? '');
 $body     = trim($_POST['body'] ?? '');
 $type     = trim($_POST['type'] ?? 'Gym News');
 $readTime = max(1, (int)($_POST['read_time'] ?? 1));
 $pinned   = !empty($_POST['pinned']);
 
-if ($title === '' || $body === '') {
+if ($id <= 0 || $title === '' || $body === '') {
     $session->addMessage('error', 'Title and body are required.');
     header('Location: /src/pages/news.php');
     exit;
@@ -43,7 +44,7 @@ if ($file && $file['error'] === UPLOAD_ERR_OK) {
     }
 }
 
-Announcement::create($db, $session->getId(), $title, $body, $pinned, $type, $readTime, $imageName);
-$session->addMessage('success', 'Announcement published.');
+Announcement::update($db, $id, $title, $body, $type, $readTime, $pinned, $imageName);
+$session->addMessage('success', 'Announcement updated.');
 header('Location: /src/pages/news.php');
 exit;
