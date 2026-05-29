@@ -6,6 +6,7 @@ DELETE FROM personal_training_session;
 DELETE FROM gym_visit;
 DELETE FROM facility_reservation;
 DELETE FROM facility;
+DELETE FROM class_room;
 DELETE FROM equipment_reservation;
 DELETE FROM equipment_unit;
 DELETE FROM equipment;
@@ -57,6 +58,16 @@ INSERT INTO trainer_profile (user_id, bio, specializations, certifications) VALU
     (7, 'Boxing and kickboxing coach with a background in competitive martial arts. High-intensity is the only intensity.', 'Boxing, Kickboxing, HIIT, Functional Fitness', 'ACE-CPT, USA Boxing Coach Level 2'),
     (8, 'Nutrition-focused coach specialising in body recomposition and endurance training.', 'Endurance, Body Recomposition, Running, Cycling', 'ISSA-CPT, Precision Nutrition Level 1');
 
+
+-- ============================================================
+-- CLASS ROOMS
+-- ============================================================
+INSERT INTO class_room (name) VALUES
+    ('Room A'),
+    ('Room B'),
+    ('Room C'),
+    ('Spin Room'),
+    ('Studio A');
 
 -- ============================================================
 -- CLASS TYPES
@@ -345,13 +356,13 @@ INSERT INTO gym_visit (member_id, entered_at, left_at, status) VALUES
 --   7  = Smith Machine      (top-right zone)
 --   8  = Free Weight Rack   (top-left, far left column)
 -- ============================================================
-INSERT INTO equipment (name, type, description) VALUES
-    ('Treadmill',       'Cardio',        'Electric treadmill with speed and incline settings.'),
-    ('Cable Machine',   'Strength',      'Dual-stack cable machine for upper/lower body exercises.'),
-    ('Lat Pulldown',    'Strength',      'Lat pulldown and seated row station.'),
-    ('Stationary Bike', 'Cardio',        'Upright exercise bike with adjustable resistance.'),
-    ('Chest Press',     'Strength',      'Plate-loaded chest press machine.'),
-    ('Free Weight Rack','Weightlifting', 'Dumbbell rack with full weight range 2–40 kg.');
+INSERT INTO equipment (name, type, description, photo, default_w, default_h) VALUES
+    ('Treadmill',       'Cardio',        'Electric treadmill with speed and incline settings.',       'treadmill.png',       55, 24),
+    ('Cable Machine',   'Strength',      'Dual-stack cable machine for upper/lower body exercises.',  'cable_machine.png',   55, 38),
+    ('Lat Pulldown',    'Strength',      'Lat pulldown and seated row station.',                      'lat_pulldown.png',    53, 55),
+    ('Stationary Bike', 'Cardio',        'Upright exercise bike with adjustable resistance.',         'stationary_bike.png', 40, 55),
+    ('Chest Press',     'Strength',      'Plate-loaded chest press machine.',                         'chest_press.png',     37, 55),
+    ('Free Weight Rack','Weightlifting', 'Dumbbell rack with full weight range 2–40 kg.',             'free_weight_rack.png',  9, 55);
 
 
 -- ============================================================
@@ -548,28 +559,37 @@ INSERT INTO member_subscription (member_id, plan_id, start_date, end_date, statu
 -- ============================================================
 -- ANNOUNCEMENTS  (author_id 3 = admin@gmail.com)
 -- ============================================================
-INSERT INTO announcement (title, body, author_id, pinned, type, read_time, created_at) VALUES
+INSERT INTO announcement (title, body, author_id, pinned, type, read_time, image, created_at) VALUES
     ('Welcome to The Forge!',
      'We are excited to have you here. Browse our class schedule, book equipment, and connect with our trainers. Have a great workout!',
-     3, 1, 'Gym News', 2, '2026-05-01 09:00:00'),
+     3, 1, 'Gym News', 2, NULL, '2026-05-01 09:00:00'),
     ('New HIIT Classes Added',
      'We have added extra HIIT Blast sessions every Tuesday and Thursday evening. Check the Classes page for the full schedule.',
-     3, 0, 'Event', 1, '2026-05-10 10:00:00'),
+     3, 0, 'Event', 1, NULL, '2026-05-10 10:00:00'),
     ('TRD-02 Under Maintenance',
      'Treadmill TRD-02 is currently undergoing routine maintenance. We apologise for the inconvenience — TRD-01 and TRD-03 remain available.',
-     3, 0, 'Maintenance', 1, '2026-05-20 08:00:00'),
+     3, 0, 'Maintenance', 1, NULL, '2026-05-20 08:00:00'),
     ('Open-Mat Weekend — Apr 27',
      'Two days. Free for members. Bring a guest. No class structure, just open floor time to work on what you want. Both studios will be available from 8 AM to 6 PM.',
-     3, 0, 'Event', 1, '2026-04-22 09:00:00'),
+     3, 0, 'Event', 1, NULL, '2026-04-22 09:00:00'),
     ('Programming Update — Q2 Block',
      'We are moving to a 4-week conjugate cycle for the strength track. Mobility track stays as is. Expect heavier accessory work and shorter met-cons on alternating days.',
-     3, 0, 'Coach Note', 4, '2026-04-19 10:00:00'),
+     3, 0, 'Coach Note', 4, NULL, '2026-04-19 10:00:00'),
     ('Studio C Closed Fri 18 Apr',
      'Floor refit. Mobility classes relocate to Studio A. Schedule unchanged — check the app for updated room assignments.',
-     3, 0, 'Maintenance', 1, '2026-04-15 08:00:00'),
+     3, 0, 'Maintenance', 1, NULL, '2026-04-15 08:00:00'),
     ('Extended Hours Starting May 1',
      'Floor opens 5:30 AM weekdays. Studios stay on the 6:00 AM kickoff. Evening close moves to 10 PM Monday through Thursday.',
-     3, 0, 'Gym News', 1, '2026-04-04 09:00:00'),
+     3, 0, 'Gym News', 1, NULL, '2026-04-04 09:00:00'),
     ('New Squat Racks Installed',
      'Three new power racks added to Zone A. All have integrated weight storage and laser-cut j-hooks. Available now, no booking required.',
-     3, 0, 'Gym News', 2, '2026-03-28 11:00:00');
+     3, 0, 'Gym News', 2, NULL, '2026-03-28 11:00:00'),
+    ('New Equipment Arriving This Month',
+     'We are thrilled to announce the arrival of state-of-the-art equipment coming to The Forge this month. From advanced cable machines to updated cardio stations, we have invested heavily in upgrading your training experience. Installation will take place over the next two weeks with minimal disruption to your routine. Stay tuned for a full reveal!',
+     3, 1, 'Gym News', 2, 'news1.png', '2026-05-10 09:00:00'),
+    ('Summer Training Program Kicks Off',
+     'Our highly anticipated Summer Training Program is officially open for registration. Whether you are looking to build strength, improve endurance, or simply stay active during the warmer months, we have a program tailored for you. Sessions run Monday through Saturday at various times to fit your schedule. Spots are limited — sign up at the front desk or through your member portal.',
+     3, 0, 'Programs', 3, 'news2.png', '2026-05-18 10:30:00'),
+    ('Gym Floor Plan Renovation Complete',
+     'After weeks of planning and construction, the gym floor renovation is complete. We have reorganised the entire floor plan to improve flow, reduce congestion during peak hours, and create dedicated zones for stretching, free weights, and functional training. Come in and explore the new layout — we think you will love the difference.',
+     3, 0, 'Gym News', 2, 'news3.png', '2026-05-24 14:00:00');
