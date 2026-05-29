@@ -51,6 +51,13 @@ $date = new DateTimeImmutable($post['created_at']);
 
             <h1 class="article-title"><?= htmlspecialchars($post['title']) ?></h1>
 
+            <?php if ($post['image']): ?>
+            <div class="article-banner">
+                <img src="/database/assets/announcements/<?= htmlspecialchars($post['image']) ?>"
+                     alt="<?= htmlspecialchars($post['title']) ?>">
+            </div>
+            <?php endif; ?>
+
             <p class="article-meta">By <?= htmlspecialchars($post['author_name']) ?></p>
 
             <div class="article-content">
