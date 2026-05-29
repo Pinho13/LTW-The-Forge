@@ -6,7 +6,7 @@
 
 .plans__title {
     margin-top: 0;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-m);
     color: var(--color-light-gold);
     font-size: var(--font-size-xxl);
     text-align: center;
