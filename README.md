@@ -44,11 +44,11 @@ Styling for these pages can be found at src/style/
 - [x] Manage equipment in the main training area (add, update availability status, and remove items).
 - [x] Create, pin, and delete announcements/news posts.
 - [x] Elevate a user to admin status.
-- [ ] Oversee and ensure the smooth operation of the entire system.
+- [x] Oversee and ensure the smooth operation of the entire system.
 
 **Extra:**
 - [~] Membership plans (basic/premium; premium gates classes; members can pause; admins can adjust expiry; plan switching not implemented).
-- [ ] Personal logging of material.
+- [x] Personal logging of material.
 
 ## Running
 
