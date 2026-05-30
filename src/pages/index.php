@@ -115,7 +115,7 @@
                 $initials .= mb_strtoupper(mb_substr($w, 0, 1));
             }
         ?>
-        <article class="featured-trainer-card">
+        <article class="featured-trainer-card hover-lift">
           <div class="featured-trainer-card__avatar-wrap">
             <?php if ($pfpUrl): ?>
               <img src="<?= htmlspecialchars($pfpUrl) ?>" alt="<?= htmlspecialchars($ft['name']) ?>" class="featured-trainer-card__avatar">
