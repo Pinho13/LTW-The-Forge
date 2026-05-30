@@ -165,7 +165,7 @@
     <h2 class="plans__title">MEMBERSHIP PLANS</h2>
 
     <div class="plans__grid">
-      <article class="plan-card">
+      <article class="plan-card hover-lift">
         <h3 class="plan-card__name">Basic</h3>
         <p class="plan-card__price">19.99€ / month</p>
         <p class="plan-card__description">Access to the gym floor and cardio equipment.</p>
@@ -177,7 +177,7 @@
         <a class="plan-card__cta" href="#"><button class="btn-page">Be Basic!</button></a>
       </article>
 
-      <article class="plan-card plan-card--featured">
+      <article class="plan-card plan-card--featured hover-lift">
         <h3 class="plan-card__name">Premium</h3>
         <p class="plan-card__price">39.99€ / month</p>
         <p class="plan-card__description">Unlimited classes and full access to all facilities.</p>
