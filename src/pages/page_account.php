@@ -6,7 +6,12 @@ require_once(__DIR__ . '/../../database/models/User.class.php');
 require_once(__DIR__ . '/../../database/models/MemberSubscription.class.php');
 
 [$session, $db] = requireAuthenticatedPage();
-$user        = User::findById($db, $session->getId());
+$user = User::findById($db, $session->getId());
+if (!$user) {
+    $session->logout();
+    header('Location: /src/pages/index.php');
+    exit;
+}
 $planName    = MemberSubscription::getActivePlanName($db, $session->getId()) ?? 'Member';
 $memberSince = date('M Y', strtotime($user->created_at));
 

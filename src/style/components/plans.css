@@ -6,7 +6,7 @@
 
 .plans__title {
     margin-top: 0;
-    margin-bottom: var(--space-xl);
+    margin-bottom: var(--space-m);
     color: var(--color-light-gold);
     font-size: var(--font-size-xxl);
     text-align: center;
@@ -30,6 +30,14 @@
 .plan-card--featured {
     border-color: var(--color-light-gold);
     box-shadow: 0 0 0 1px rgba(var(--color-light-gold-rgb), 0.25);
+}
+
+.plan-card--featured.hover-lift:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow:
+        0 18px 45px rgba(var(--color-black-rgb), 0.45),
+        0 0 0 1px rgba(var(--color-light-gold-rgb), 0.35),
+        0 0 30px rgba(var(--color-light-gold-rgb), 0.25);
 }
 
 .plan-card__name {

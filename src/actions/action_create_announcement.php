@@ -23,7 +23,27 @@ if ($title === '' || $body === '') {
     exit;
 }
 
-Announcement::create($db, $session->getId(), $title, $body, $pinned, $type, $readTime);
+$imageName = null;
+$file = $_FILES['image'] ?? null;
+if ($file && $file['error'] === UPLOAD_ERR_OK) {
+    $allowed = ['image/jpeg', 'image/png', 'image/webp'];
+    $mime    = mime_content_type($file['tmp_name']);
+    if (!in_array($mime, $allowed)) {
+        $session->addMessage('error', 'Image must be JPG, PNG or WebP.');
+        header('Location: /src/pages/news.php');
+        exit;
+    }
+    $ext       = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'][$mime];
+    $imageName = bin2hex(random_bytes(8)) . '.' . $ext;
+    $dest      = __DIR__ . '/../../database/assets/announcements/' . $imageName;
+    if (!move_uploaded_file($file['tmp_name'], $dest)) {
+        $session->addMessage('error', 'Failed to save image.');
+        header('Location: /src/pages/news.php');
+        exit;
+    }
+}
+
+Announcement::create($db, $session->getId(), $title, $body, $pinned, $type, $readTime, $imageName);
 $session->addMessage('success', 'Announcement published.');
 header('Location: /src/pages/news.php');
 exit;

@@ -1,13 +1,31 @@
-.news-header {
+main > header {
+    position: relative;
+}
+
+.news-header-actions {
+    position: absolute;
+    right: var(--space-l);
+    bottom: var(--space-s);
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-inline: var(--space-m);
-    padding-block-start: var(--space-xs);
-    padding-block-end: var(--space-l);
-    border-bottom: solid rgba(var(--color-grey-rgb), 0.2);
-    border-bottom-width: var(--border-xs);
-    flex-shrink: 0;
+    gap: var(--space-s);
+}
+
+.news-header-btn {
+    color: var(--color-almost-white);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    outline: 1px solid rgba(var(--color-almost-white-rgb), 0.3);
+    padding: var(--space-xs) var(--space-m);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.news-header-btn:hover {
+    outline-color: var(--color-almost-white);
 }
 
 .news-body {
@@ -18,19 +36,26 @@
     overflow-y: auto;
     flex: 1;
     min-height: 0;
+    scrollbar-width: none;
+}
+
+.news-body::-webkit-scrollbar {
+    display: none;
 }
 
 /* ── Hero ── */
 .news-hero {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 3fr;
     border: 2px solid var(--color-gold);
     min-height: 300px;
+    max-height: 420px;
 }
 
 .news-hero__image {
     overflow: hidden;
     display: block;
+    min-width: 0;
 }
 
 .news-hero__image img {
@@ -48,12 +73,15 @@
     justify-content: center;
     gap: var(--space-s);
     background: #0e0e0c;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .news-hero__title {
     font-size: clamp(1.5rem, 2.8vw, 2.2rem);
     color: var(--color-almost-white);
     margin: 0;
+    margin-top: var(--space-s);
     line-height: 1.05;
     text-transform: uppercase;
 }
@@ -78,12 +106,37 @@
 
 /* ── Card ── */
 .news-card {
-    padding: var(--space-l);
     background: #0e0e0c;
     border: 1px solid rgba(var(--color-gold-rgb), 0.25);
     border-top: 3px solid var(--color-gold);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+}
+
+.news-card__thumb {
+    display: block;
+    width: 100%;
+    height: 140px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.news-card__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.85);
+    transition: filter 0.2s;
+}
+
+.news-card__thumb:hover img {
+    filter: brightness(1);
+}
+
+.news-card__link {
+    padding: var(--space-l);
 }
 
 .news-card--pinned {
@@ -160,6 +213,7 @@
     flex: 1;
     text-decoration: none;
     color: inherit;
+    padding: var(--space-l);
 }
 
 .news-card__link:hover .news-card__title {
@@ -201,10 +255,87 @@
 /* ── Admin actions ── */
 .news-card__admin {
     display: flex;
+    align-items: center;
     gap: var(--space-s);
     margin-top: var(--space-s);
-    padding-top: var(--space-s);
+    padding: var(--space-xs) var(--space-l) var(--space-xs) var(--space-s);
     border-top: 1px solid rgba(var(--color-grey-rgb), 0.15);
+}
+
+.news-card__admin--hero {
+    margin-top: 0;
+    padding: var(--space-xs) 0 0 0;
+    border-top: 1px solid rgba(var(--color-grey-rgb), 0.15);
+    align-self: stretch;
+    margin-left: -2px;
+}
+
+.news-card__admin .btn-ghost {
+    color: var(--color-almost-white);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    outline: 1px solid rgba(var(--color-almost-white-rgb), 0.3);
+    padding: var(--space-xs) var(--space-m);
+}
+
+.news-card__admin .btn-ghost:hover {
+    outline-color: var(--color-almost-white);
+}
+
+/* ── News modal titles ── */
+#post-modal .auth-modal__title,
+#edit-modal .auth-modal__title,
+#delete-confirm-modal .auth-modal__title {
+    width: fit-content;
+    margin-inline: auto;
+    padding-bottom: 3px;
+}
+
+#post-modal .auth-modal__title::after,
+#edit-modal .auth-modal__title::after,
+#delete-confirm-modal .auth-modal__title::after {
+    width: 100%;
+}
+
+/* ── Delete confirm modal ── */
+#delete-confirm-modal .auth-modal__title {
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+}
+
+#delete-confirm-modal .auth-modal__title::after {
+    width: 100%;
+}
+
+.news-delete-hint {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+    margin-bottom: var(--space-m);
+    line-height: 1.5;
+    text-align: center;
+}
+
+.news-confirm-actions {
+    display: flex;
+    gap: var(--space-m);
+    justify-content: center;
+}
+
+.news-confirm-actions .btn-ghost {
+    color: var(--color-almost-white);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    outline: 1px solid rgba(var(--color-almost-white-rgb), 0.3);
+    padding: var(--space-xs) var(--space-m);
+}
+
+.news-confirm-actions .btn-ghost:hover {
+    outline-color: var(--color-almost-white);
 }
 
 /* ── Checkbox in modal ── */
@@ -215,7 +346,7 @@
     font-size: var(--font-size-s);
     color: var(--color-almost-white);
     cursor: pointer;
-    margin: var(--space-s) 0;
+    margin: var(--space-xs) 0 0;
 }
 
 /* ── Responsive ── */

@@ -1,11 +1,13 @@
 -- Safe to re-run: clears all data and resets AUTOINCREMENT counters first
 PRAGMA foreign_keys = OFF;
+DELETE FROM admin_log;
 DELETE FROM announcement;
 DELETE FROM member_subscription;
 DELETE FROM personal_training_session;
 DELETE FROM gym_visit;
 DELETE FROM facility_reservation;
 DELETE FROM facility;
+DELETE FROM class_room;
 DELETE FROM equipment_reservation;
 DELETE FROM equipment_unit;
 DELETE FROM equipment;
@@ -44,19 +46,34 @@ INSERT INTO user (name, username, email, password_hash, role) VALUES
     ('Leo Fernandes', 'leo.fernandes','leo@member.com',    'placeholder', 'member'),
     ('Mia Correia',   'mia.correia',  'mia@member.com',    'placeholder', 'member'),
     ('Test Basic',    'test.basic',   'basic@test.com',    '$2y$12$FQ.O17XF.vsRLFle3DYH8e89S.E3zFsJZod00t3mWFyLBAM8hcO/a', 'member'),
-    ('Test Premium',  'test.premium', 'premium@test.com',  '$2y$12$NGENnzJodEY.YgVNAnWTS.mRS0vSLPClgozMxnD7d4RsiT6sh3kuG', 'member');
+    ('Test Premium',  'test.premium', 'premium@test.com',  '$2y$12$NGENnzJodEY.YgVNAnWTS.mRS0vSLPClgozMxnD7d4RsiT6sh3kuG', 'member'),
+    ('Banned Member',  'banned.user',   'banned@test.com',   'placeholder', 'member'),
+    ('Expired Member', 'expired.user',  'expired@test.com',  'placeholder', 'member');
+
+-- Banned member (id 15) — is_active defaults to 1, set to 0 after insert
+UPDATE user SET is_active = 0 WHERE username = 'banned.user';
 
 
 -- ============================================================
 -- TRAINER PROFILES
 -- ============================================================
-INSERT INTO trainer_profile (user_id, bio, specializations, certifications) VALUES
-    (2, 'Certified fitness coach with 8 years of experience.', 'HIIT, Yoga, Cardio', 'ACE Personal Trainer, RYT-200'),
-    (5, 'Former competitive powerlifter turned strength coach. 10 years on the platform, 5 years coaching.', 'Powerlifting, Strength & Conditioning, Olympic Lifting', 'NSCA-CSCS, USA Powerlifting Coach'),
-    (6, 'Mobility specialist and yoga instructor passionate about injury prevention and functional movement.', 'Yoga, Mobility, Pilates, Flexibility', 'RYT-500, FMS Level 2, NASM-CPT'),
-    (7, 'Boxing and kickboxing coach with a background in competitive martial arts. High-intensity is the only intensity.', 'Boxing, Kickboxing, HIIT, Functional Fitness', 'ACE-CPT, USA Boxing Coach Level 2'),
-    (8, 'Nutrition-focused coach specialising in body recomposition and endurance training.', 'Endurance, Body Recomposition, Running, Cycling', 'ISSA-CPT, Precision Nutrition Level 1');
+INSERT INTO trainer_profile (user_id, bio, specializations, certifications, is_featured) VALUES
+    (2, 'Certified fitness coach with 8 years of experience.', 'HIIT, Yoga, Cardio', 'ACE Personal Trainer, RYT-200', 1),
+    (5, 'Former competitive powerlifter turned strength coach. 10 years on the platform, 5 years coaching.', 'Powerlifting, Strength & Conditioning, Olympic Lifting', 'NSCA-CSCS, USA Powerlifting Coach', 1),
+    (6, 'Mobility specialist and yoga instructor passionate about injury prevention and functional movement.', 'Yoga, Mobility, Pilates, Flexibility', 'RYT-500, FMS Level 2, NASM-CPT', 0),
+    (7, 'Boxing and kickboxing coach with a background in competitive martial arts. High-intensity is the only intensity.', 'Boxing, Kickboxing, HIIT, Functional Fitness', 'ACE-CPT, USA Boxing Coach Level 2', 0),
+    (8, 'Nutrition-focused coach specialising in body recomposition and endurance training.', 'Endurance, Body Recomposition, Running, Cycling', 'ISSA-CPT, Precision Nutrition Level 1', 0);
 
+
+-- ============================================================
+-- CLASS ROOMS
+-- ============================================================
+INSERT INTO class_room (name) VALUES
+    ('Room A'),
+    ('Room B'),
+    ('Room C'),
+    ('Spin Room'),
+    ('Studio A');
 
 -- ============================================================
 -- CLASS TYPES
@@ -74,16 +91,17 @@ INSERT INTO class_type (name) VALUES
 -- ============================================================
 -- CLASSES
 -- ============================================================
-INSERT INTO class (name, type_id, description, duration_minutes, intensity, trainer_id) VALUES
-    ('Morning Yoga',    1, 'A calm morning flow to improve flexibility and mindfulness.', 60, 2, 2),
-    ('HIIT Blast',      2, 'High-intensity interval training to torch calories fast.',    60, 4, 2),
-    ('Cardio Burn',     3, 'Steady-state cardio session suitable for all fitness levels.', 60, 3, 2),
-    ('Power Hour',      4, 'Heavy compound lifts for total body strength.',               60, 5, 5),
-    ('Fight Club',      5, 'Bag work, combos and conditioning drills.',                   60, 5, 7),
-    ('Core & Flex',     6, 'Pilates-based core stability and flexibility work.',          60, 2, 6),
-    ('Spin Session',    7, 'High-cadence indoor cycling to upbeat music.',                60, 4, 8),
-    ('Evening Yoga',    1, 'Restorative yoga to wind down the day.',                      60, 1, 6),
-    ('Kettlebell Burn', 4, 'Functional strength with kettlebells.',                       60, 4, 5);
+INSERT INTO class (name, type_id, description, duration_minutes, intensity, trainer_id, is_featured) VALUES
+    ('Morning Yoga',    1, 'A calm morning flow to improve flexibility and mindfulness.', 60, 2, 2, 1),
+    ('HIIT Blast',      2, 'High-intensity interval training to torch calories fast.',    60, 4, 2, 1),
+    ('Cardio Burn',     3, 'Steady-state cardio session suitable for all fitness levels.', 60, 3, 2, 0),
+    ('Power Hour',      4, 'Heavy compound lifts for total body strength.',               60, 5, 5, 1),
+    ('Fight Club',      5, 'Bag work, combos and conditioning drills.',                   60, 5, 7, 0),
+    ('Core & Flex',     6, 'Pilates-based core stability and flexibility work.',          60, 2, 6, 0),
+    ('Spin Session',    7, 'High-cadence indoor cycling to upbeat music.',                60, 4, 8, 0),
+    ('Evening Yoga',    1, 'Restorative yoga to wind down the day.',                      60, 1, 6, 0),
+    ('Kettlebell Burn',    4, 'Functional strength with kettlebells.',      60, 4, 5, 0),
+    ('Boxing Foundations', 5, 'Intro to boxing technique and bag work.',  60, 3, NULL, 0);
 
 
 -- ============================================================
@@ -183,7 +201,8 @@ INSERT INTO class_session (class_id, datetime, room, capacity) VALUES
     (6, '2026-06-03 09:00', 'Studio A',  15),  -- id 77  Core & Flex      Tue
     (7, '2026-06-02 09:00', 'Spin Room', 20),  -- id 78  Spin Session     Mon
     (8, '2026-06-01 09:00', 'Studio A',  20),  -- id 79  Evening Yoga     Sun
-    (9, '2026-06-06 08:00', 'Room B',    12);  -- id 80  Kettlebell Burn  Sat
+    (9, '2026-06-06 08:00', 'Room B',    12),  -- id 80  Kettlebell Burn  Sat
+    (1, '2026-06-02 09:00', 'Studio A',   1); -- id 81  Morning Yoga at capacity (demo)
 
 
 -- ============================================================
@@ -284,7 +303,8 @@ INSERT INTO enrollment (member_id, session_id, status) VALUES
     (1, 57, 'completed'),
     (1, 58, 'completed'),
     (1, 59, 'missed'),
-    (1, 60, 'completed');
+    (1, 60, 'completed'),
+    (1, 81, 'enrolled');  -- fills session 81 to capacity (demo: at-capacity attention item)
 
 
 -- ============================================================
@@ -345,13 +365,13 @@ INSERT INTO gym_visit (member_id, entered_at, left_at, status) VALUES
 --   7  = Smith Machine      (top-right zone)
 --   8  = Free Weight Rack   (top-left, far left column)
 -- ============================================================
-INSERT INTO equipment (name, type, description) VALUES
-    ('Treadmill',       'Cardio',        'Electric treadmill with speed and incline settings.'),
-    ('Cable Machine',   'Strength',      'Dual-stack cable machine for upper/lower body exercises.'),
-    ('Lat Pulldown',    'Strength',      'Lat pulldown and seated row station.'),
-    ('Stationary Bike', 'Cardio',        'Upright exercise bike with adjustable resistance.'),
-    ('Chest Press',     'Strength',      'Plate-loaded chest press machine.'),
-    ('Free Weight Rack','Weightlifting', 'Dumbbell rack with full weight range 2–40 kg.');
+INSERT INTO equipment (name, type, description, photo, default_w, default_h) VALUES
+    ('Treadmill',       'Cardio',        'Electric treadmill with speed and incline settings.',       'treadmill.png',       55, 24),
+    ('Cable Machine',   'Strength',      'Dual-stack cable machine for upper/lower body exercises.',  'cable_machine.png',   55, 38),
+    ('Lat Pulldown',    'Strength',      'Lat pulldown and seated row station.',                      'lat_pulldown.png',    53, 55),
+    ('Stationary Bike', 'Cardio',        'Upright exercise bike with adjustable resistance.',         'stationary_bike.png', 40, 55),
+    ('Chest Press',     'Strength',      'Plate-loaded chest press machine.',                         'chest_press.png',     37, 55),
+    ('Free Weight Rack','Weightlifting', 'Dumbbell rack with full weight range 2–40 kg.',             'free_weight_rack.png',  9, 55);
 
 
 -- ============================================================
@@ -397,12 +417,8 @@ INSERT INTO equipment_unit (equipment_id, identifier, status, map_x, map_y, map_
     (5, 'CPR-06', 'available',   559, 164, 36, 53),
 
     -- Free Weight Rack (eq 6)
-    (6, 'FWR-01', 'available',    50, 212, 14, 66),
-    (6, 'FWR-02', 'available',    50,  74, 14, 66),
-    (6, 'FWR-03', 'available',    174, 28, 67, 14),
-    (6, 'FWR-04', 'available',    396,  28, 67, 14),
-    (6, 'FWR-05', 'maintenance',    444,  218, 66, 12),
-    (6, 'FWR-06', 'available',    245, 248, 66, 14);
+    (6, 'FWR-01', 'available', 50, 212, 14, 66),
+    (6, 'FWR-02', 'available', 50,  74, 14, 66);
 
 
 -- ========================================================================================================================
@@ -495,9 +511,9 @@ INSERT INTO equipment_reservation (member_id, unit_id, start_datetime, end_datet
     (4,  30, '2026-05-26 08:50:00', '2026-05-26 09:40:00'),
     (9,  30, '2026-05-26 12:10:00', '2026-05-26 13:00:00'),
     (10, 30, '2026-05-26 15:20:00', '2026-05-26 16:10:00'),
-    (4,  31, '2026-05-26 09:20:00', '2026-05-26 10:10:00'),
-    (9,  31, '2026-05-26 13:50:00', '2026-05-26 14:40:00'),
-    (10, 31, '2026-05-26 16:40:00', '2026-05-26 17:30:00');
+    (4,  30, '2026-05-26 09:20:00', '2026-05-26 10:10:00'),
+    (9,  30, '2026-05-26 13:50:00', '2026-05-26 14:40:00'),
+    (10, 30, '2026-05-26 16:40:00', '2026-05-26 17:30:00');
 
 
 -- ============================================================
@@ -542,34 +558,57 @@ INSERT INTO member_subscription (member_id, plan_id, start_date, end_date, statu
     (11, 1, '2026-05-01', '2027-05-01', 'active'),  -- Leo Fernandes — Basic
     (12, 2, '2026-05-01', '2027-05-01', 'active'),  -- Mia Correia   — Premium
     (13, 1, '2026-05-01', '2027-05-01', 'active'),  -- Test Basic    — Basic
-    (14, 2, '2026-05-01', '2027-05-01', 'active');  -- Test Premium  — Premium
+    (14, 2, '2026-05-01', '2027-05-01', 'active'),  -- Test Premium  — Premium
+    (16, 2, '2026-01-01', '2026-04-30', 'active');  -- Expired Member — expired Premium (end_date in past, status not updated)
 
 
 -- ============================================================
 -- ANNOUNCEMENTS  (author_id 3 = admin@gmail.com)
 -- ============================================================
-INSERT INTO announcement (title, body, author_id, pinned, type, read_time, created_at) VALUES
+INSERT INTO announcement (title, body, author_id, pinned, type, read_time, image, created_at) VALUES
     ('Welcome to The Forge!',
      'We are excited to have you here. Browse our class schedule, book equipment, and connect with our trainers. Have a great workout!',
-     3, 1, 'Gym News', 2, '2026-05-01 09:00:00'),
+     3, 1, 'Gym News', 2, NULL, '2026-05-01 09:00:00'),
     ('New HIIT Classes Added',
      'We have added extra HIIT Blast sessions every Tuesday and Thursday evening. Check the Classes page for the full schedule.',
-     3, 0, 'Event', 1, '2026-05-10 10:00:00'),
+     3, 0, 'Event', 1, NULL, '2026-05-10 10:00:00'),
     ('TRD-02 Under Maintenance',
      'Treadmill TRD-02 is currently undergoing routine maintenance. We apologise for the inconvenience — TRD-01 and TRD-03 remain available.',
-     3, 0, 'Maintenance', 1, '2026-05-20 08:00:00'),
+     3, 0, 'Maintenance', 1, NULL, '2026-05-20 08:00:00'),
     ('Open-Mat Weekend — Apr 27',
      'Two days. Free for members. Bring a guest. No class structure, just open floor time to work on what you want. Both studios will be available from 8 AM to 6 PM.',
-     3, 0, 'Event', 1, '2026-04-22 09:00:00'),
+     3, 0, 'Event', 1, NULL, '2026-04-22 09:00:00'),
     ('Programming Update — Q2 Block',
      'We are moving to a 4-week conjugate cycle for the strength track. Mobility track stays as is. Expect heavier accessory work and shorter met-cons on alternating days.',
-     3, 0, 'Coach Note', 4, '2026-04-19 10:00:00'),
+     3, 0, 'Coach Note', 4, NULL, '2026-04-19 10:00:00'),
     ('Studio C Closed Fri 18 Apr',
      'Floor refit. Mobility classes relocate to Studio A. Schedule unchanged — check the app for updated room assignments.',
-     3, 0, 'Maintenance', 1, '2026-04-15 08:00:00'),
+     3, 0, 'Maintenance', 1, NULL, '2026-04-15 08:00:00'),
     ('Extended Hours Starting May 1',
      'Floor opens 5:30 AM weekdays. Studios stay on the 6:00 AM kickoff. Evening close moves to 10 PM Monday through Thursday.',
-     3, 0, 'Gym News', 1, '2026-04-04 09:00:00'),
+     3, 0, 'Gym News', 1, NULL, '2026-04-04 09:00:00'),
     ('New Squat Racks Installed',
      'Three new power racks added to Zone A. All have integrated weight storage and laser-cut j-hooks. Available now, no booking required.',
-     3, 0, 'Gym News', 2, '2026-03-28 11:00:00');
+     3, 0, 'Gym News', 2, NULL, '2026-03-28 11:00:00'),
+    ('New Equipment Arriving This Month',
+     'We are thrilled to announce the arrival of state-of-the-art equipment coming to The Forge this month. From advanced cable machines to updated cardio stations, we have invested heavily in upgrading your training experience. Installation will take place over the next two weeks with minimal disruption to your routine. Stay tuned for a full reveal!',
+     3, 1, 'Gym News', 2, 'news1.png', '2026-05-10 09:00:00'),
+    ('Summer Training Program Kicks Off',
+     'Our highly anticipated Summer Training Program is officially open for registration. Whether you are looking to build strength, improve endurance, or simply stay active during the warmer months, we have a program tailored for you. Sessions run Monday through Saturday at various times to fit your schedule. Spots are limited — sign up at the front desk or through your member portal.',
+     3, 0, 'Programs', 3, 'news2.png', '2026-05-18 10:30:00'),
+    ('Gym Floor Plan Renovation Complete',
+     'After weeks of planning and construction, the gym floor renovation is complete. We have reorganised the entire floor plan to improve flow, reduce congestion during peak hours, and create dedicated zones for stretching, free weights, and functional training. Come in and explore the new layout — we think you will love the difference.',
+     3, 0, 'Gym News', 2, 'news3.png', '2026-05-24 14:00:00');
+
+-- ============================================================
+-- ADMIN LOG
+-- ============================================================
+INSERT INTO admin_log (admin_id, action_type, description, created_at) VALUES
+(3, 'LOGIN',   'Admin Admin User signed in',                     '2026-05-25 09:30:00'),
+(3, 'CREATE',  'Created class Pilates Reformer',                 '2026-05-24 10:38:00'),
+(3, 'UPDATE',  'Updated class HIIT Blast',                       '2026-05-24 10:42:00'),
+(3, 'UPDATE',  'Marked Treadmill TRD-02 maintenance',            '2026-05-23 10:11:00'),
+(3, 'ELEVATE', 'Changed Jane Smith role from member to trainer', '2026-05-23 09:54:00'),
+(3, 'CREATE',  'Created class Boxing Foundations',               '2026-05-22 14:20:00'),
+(3, 'DELETE',  'Deleted class Yoga Flow',                        '2026-05-21 11:05:00'),
+(3, 'UPDATE',  'Updated details for John Doe',                   '2026-05-20 16:33:00');

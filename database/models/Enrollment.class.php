@@ -263,6 +263,41 @@ class Enrollment
         return $row !== false ? (string) $row : null;
     }
 
+    public static function getSessionsForWeekAdmin(PDO $db, string $weekStart, string $weekEnd): array
+    {
+        $stmt = $db->prepare(
+            "SELECT
+                cs.id AS session_id,
+                cs.datetime,
+                cs.room,
+                cs.capacity,
+                c.id AS class_id,
+                c.name AS class_name,
+                c.intensity,
+                c.duration_minutes,
+                c.description,
+                ct.id AS type_id,
+                ct.name AS type_name,
+                u.user_id AS trainer_id,
+                u.name AS trainer_name,
+                c.is_featured,
+                COUNT(CASE WHEN e.status = 'enrolled'   THEN 1 END) AS enrolled_count,
+                COUNT(CASE WHEN e.status = 'waitlisted' THEN 1 END) AS waitlisted_count,
+                (SELECT ROUND(AVG(r.rating), 1) FROM review r WHERE r.class_id = c.id) AS avg_rating,
+                (SELECT COUNT(*) FROM review r WHERE r.class_id = c.id) AS review_count
+             FROM class_session cs
+             JOIN class c ON c.id = cs.class_id
+             LEFT JOIN class_type ct ON ct.id = c.type_id
+             LEFT JOIN user u ON u.user_id = c.trainer_id
+             LEFT JOIN enrollment e ON e.session_id = cs.id
+             WHERE cs.datetime >= :start AND cs.datetime < :end
+             GROUP BY cs.id
+             ORDER BY cs.datetime ASC"
+        );
+        $stmt->execute([':start' => $weekStart, ':end' => $weekEnd]);
+        return $stmt->fetchAll();
+    }
+
     public static function getSessionsForWeek(PDO $db, int $memberId, string $weekStart, string $weekEnd): array
     {
         $stmt = $db->prepare(

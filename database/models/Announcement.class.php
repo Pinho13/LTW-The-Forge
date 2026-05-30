@@ -6,7 +6,7 @@ class Announcement
     public static function getAll(PDO $db, int $limit = 20, int $offset = 0): array
     {
         $stmt = $db->prepare(
-            "SELECT a.id, a.title, a.body, a.pinned, a.type, a.read_time, a.created_at,
+            "SELECT a.id, a.title, a.body, a.pinned, a.type, a.read_time, a.image, a.created_at,
                     u.name AS author_name
              FROM announcement a
              JOIN user u ON u.user_id = a.author_id
@@ -22,7 +22,7 @@ class Announcement
     public static function getById(PDO $db, int $id): ?array
     {
         $stmt = $db->prepare(
-            "SELECT a.id, a.title, a.body, a.pinned, a.type, a.read_time, a.created_at,
+            "SELECT a.id, a.title, a.body, a.pinned, a.type, a.read_time, a.image, a.created_at,
                     u.name AS author_name
              FROM announcement a
              JOIN user u ON u.user_id = a.author_id
@@ -38,11 +38,11 @@ class Announcement
         return (int) $db->query("SELECT COUNT(*) FROM announcement")->fetchColumn();
     }
 
-    public static function create(PDO $db, int $authorId, string $title, string $body, bool $pinned, string $type, int $readTime): void
+    public static function create(PDO $db, int $authorId, string $title, string $body, bool $pinned, string $type, int $readTime, ?string $image = null): void
     {
         $stmt = $db->prepare(
-            "INSERT INTO announcement (title, body, author_id, pinned, type, read_time)
-             VALUES (:title, :body, :author_id, :pinned, :type, :read_time)"
+            "INSERT INTO announcement (title, body, author_id, pinned, type, read_time, image)
+             VALUES (:title, :body, :author_id, :pinned, :type, :read_time, :image)"
         );
         $stmt->execute([
             ':title'     => $title,
@@ -51,7 +51,23 @@ class Announcement
             ':pinned'    => $pinned ? 1 : 0,
             ':type'      => $type,
             ':read_time' => $readTime,
+            ':image'     => $image,
         ]);
+    }
+
+    public static function update(PDO $db, int $id, string $title, string $body, string $type, int $readTime, bool $pinned, ?string $image = null): void
+    {
+        if ($image !== null) {
+            $stmt = $db->prepare(
+                "UPDATE announcement SET title=:title, body=:body, type=:type, read_time=:read_time, pinned=:pinned, image=:image WHERE id=:id"
+            );
+            $stmt->execute([':title' => $title, ':body' => $body, ':type' => $type, ':read_time' => $readTime, ':pinned' => $pinned ? 1 : 0, ':image' => $image, ':id' => $id]);
+        } else {
+            $stmt = $db->prepare(
+                "UPDATE announcement SET title=:title, body=:body, type=:type, read_time=:read_time, pinned=:pinned WHERE id=:id"
+            );
+            $stmt->execute([':title' => $title, ':body' => $body, ':type' => $type, ':read_time' => $readTime, ':pinned' => $pinned ? 1 : 0, ':id' => $id]);
+        }
     }
 
     public static function delete(PDO $db, int $id): void

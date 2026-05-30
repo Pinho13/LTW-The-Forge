@@ -23,6 +23,11 @@
     padding: var(--space-xl) var(--space-l) var(--space-xl) var(--space-xxl);
     overflow-y: auto;
     max-width: 720px;
+    scrollbar-width: none;
+}
+
+.trainer-profile-content::-webkit-scrollbar {
+    display: none;
 }
 
 .trainer-profile-identity {
@@ -160,6 +165,7 @@
 
 .trainer-card {
     border: 2px solid var(--color-gold);
+    position: relative;
 }
 
 .trainer-card__link {
@@ -212,7 +218,13 @@
     background: #0e0e0c;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    gap: var(--space-s);
+}
+
+.trainer-card__body {
+    display: flex;
+    flex-direction: column;
     gap: var(--space-s);
 }
 
@@ -264,6 +276,60 @@
     color: var(--color-grey);
     font-size: var(--font-size-s);
     margin-top: var(--space-l);
+}
+
+/* ── Admin feature toggle ── */
+.trainer-feature-form {
+    margin-bottom: var(--space-l);
+}
+
+.trainer-feature-btn {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gold);
+    border: var(--border-xs) solid rgba(var(--color-gold-rgb), 0.4);
+    background: transparent;
+    padding: var(--space-xs) var(--space-m);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.trainer-feature-btn:hover {
+    border-color: var(--color-gold);
+    background: rgba(var(--color-gold-rgb), 0.06);
+}
+
+.trainer-card__feature-form {
+    position: absolute;
+    bottom: var(--space-m);
+    right: var(--space-m);
+    margin: 0;
+}
+
+.trainer-card--reversed .trainer-card__feature-form {
+    right: calc(200px + var(--space-m));
+}
+
+
+.trainer-card__feature-btn {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xxs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-grey);
+    border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.3);
+    background: rgba(var(--color-black-rgb), 0.6);
+    padding: 4px var(--space-xs);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.trainer-card__feature-btn:hover,
+.trainer-card__feature-btn--active {
+    color: var(--color-gold);
+    border-color: rgba(var(--color-gold-rgb), 0.5);
 }
 
 @media (max-width: 700px) {

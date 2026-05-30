@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 function getDatabaseConnection(): PDO
 {
-    $databasePath = __DIR__ . '/database.db';
+    $databasePath = __DIR__ . '/sql/database.db';
     $dsn = 'sqlite:' . $databasePath;
 
     $options = [

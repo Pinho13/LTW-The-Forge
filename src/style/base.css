@@ -72,6 +72,16 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: 5.5em;
     font-size: clamp(12px, 1.5vw, 16px);
+    scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+*::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    scrollbar-width: none;
 }
 
 body {

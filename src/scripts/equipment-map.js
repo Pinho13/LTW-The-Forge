@@ -343,3 +343,85 @@ document.querySelector('#reserve-modal form')?.addEventListener('submit', async 
 });
 
 } // end Premium-only block
+
+// ── Admin: Edit Status mode ───────────────────────────────────
+if (IS_ADMIN) {
+    const editStatusBtn  = document.getElementById('edit-status-btn');
+    const editLayoutBtn  = document.getElementById('edit-layout-btn');
+    let statusMode = false;
+
+    const statusToolbar  = document.getElementById('status-toolbar');
+    const statusDoneBtn  = document.getElementById('status-done-btn');
+    statusDoneBtn?.addEventListener('click', () => exitStatusMode());
+
+    function exitStatusMode() {
+        statusMode = false;
+        editStatusBtn.style.outlineColor = '';
+        editStatusBtn.style.color        = '';
+        document.body.classList.remove('status-edit-mode');
+        if (statusToolbar) statusToolbar.hidden = true;
+        if (editLayoutBtn) editLayoutBtn.disabled = false;
+    }
+
+    window.__exitStatusMode = exitStatusMode;
+
+    editStatusBtn?.addEventListener('click', () => {
+        if (statusMode) {
+            exitStatusMode();
+        } else {
+            statusMode = true;
+            editStatusBtn.style.outlineColor = 'var(--color-gold)';
+            editStatusBtn.style.color        = 'var(--color-gold)';
+            document.body.classList.add('status-edit-mode');
+            if (statusToolbar) statusToolbar.hidden = false;
+            if (editLayoutBtn) editLayoutBtn.disabled = true;
+        }
+    });
+
+    document.addEventListener('click', async e => {
+        if (!statusMode) return;
+        let node = e.target.closest('.equip-node');
+        if (!node) {
+            // SVG elements may not support closest — walk up manually
+            let el = e.target;
+            while (el && el !== document) {
+                if (el.classList && el.classList.contains('equip-node')) { node = el; break; }
+                el = el.parentElement;
+            }
+        }
+        if (!node) return;
+        e.stopImmediatePropagation();
+
+        const unitId  = node.dataset.unitId;
+        const info    = UNIT_MAP[unitId];
+        if (!info) return;
+
+        const next = info.status === 'maintenance' ? 'available' : 'maintenance';
+
+        const body = new URLSearchParams({ unit_id: unitId, status: next, csrf_token: CSRF_TOKEN });
+        const res  = await fetch('/src/actions/action_set_equipment_status.php', { method: 'POST', body });
+        const data = await res.json();
+        if (!res.ok || !data.success) return;
+
+        info.status = next;
+
+        const tint = node.querySelector('.equip-tint');
+        if (!tint) return;
+
+        if (next === 'maintenance') {
+            tint.setAttribute('fill',   'url(#maintenance-pattern)');
+            tint.setAttribute('stroke', '#c9a227');
+            node.classList.add('equip-node--maintenance');
+            node.classList.remove('equip-node--clickable', 'equip-node--busy');
+            node.classList.add('equip-node--readonly');
+            node.setAttribute('tabindex', '-1');
+        } else {
+            tint.setAttribute('fill',   COLOR_GREEN);
+            tint.setAttribute('stroke', COLOR_GREEN);
+            node.classList.remove('equip-node--maintenance', 'equip-node--readonly', 'equip-node--busy');
+            node.classList.add('equip-node--clickable');
+            node.setAttribute('tabindex', '0');
+            refreshCounts();
+        }
+    }, true);
+}

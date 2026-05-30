@@ -4,6 +4,11 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 main {
@@ -11,3 +16,231 @@ main {
     display: flex;
     flex-direction: column;
 }
+
+
+/* ── Featured Section ── */
+.featured {
+    padding: var(--space-xl) var(--space-l);
+}
+
+.featured__title {
+    margin-top: 0;
+    margin-bottom: var(--space-m);
+    color: var(--color-light-gold);
+    font-size: var(--font-size-xxl);
+    text-align: center;
+}
+
+.featured__block {
+    margin-bottom: var(--space-xl);
+}
+
+.featured__block:last-child {
+    margin-bottom: 0;
+}
+
+.featured__subtitle {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-m);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-grey);
+    margin: 0 0 var(--space-s);
+    text-align: center;
+}
+
+.featured__grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--space-m);
+    justify-content: center;
+}
+
+.featured__grid--classes  .featured-card         { width: clamp(14rem, calc(25vw - 3rem), 20rem); }
+.featured__grid--trainers .featured-trainer-card  { width: clamp(10rem, calc(25vw - 3rem), 16rem); }
+
+/* ── Featured class card ── */
+.featured-card {
+    border: var(--border-xs) solid rgba(var(--color-gold-rgb), 0.3);
+    border-top: 2px solid var(--color-gold);
+    padding: var(--space-m) var(--space-l);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    background: rgba(var(--color-gold-rgb), 0.03);
+}
+
+.featured-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.featured-card__type {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xxs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-grey);
+}
+
+.featured-card__badge {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xxs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gold);
+    background: rgba(var(--color-gold-rgb), 0.12);
+    padding: 2px var(--space-xs);
+}
+
+.featured-card__name {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-m);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-almost-white);
+    margin: 0;
+}
+
+.featured-card__desc {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.featured-card__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+
+.featured-card__room {
+    font-size: var(--font-size-xxs);
+    color: var(--color-grey);
+    margin-bottom: calc(-1 * var(--space-xs));
+}
+
+.featured-card__trainer {
+    font-size: var(--font-size-xxs);
+    color: var(--color-grey);
+}
+
+.featured-card__intensity {
+    display: flex;
+    gap: 3px;
+}
+
+.featured-card__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(var(--color-grey-rgb), 0.3);
+}
+
+.featured-card__dot.filled {
+    background: var(--color-gold);
+}
+
+.featured-card__cta {
+    display: inline-block;
+    margin-top: var(--space-s);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gold);
+    text-decoration: none;
+    border: var(--border-xs) solid rgba(var(--color-gold-rgb), 0.4);
+    padding: var(--space-xs) var(--space-m);
+    text-align: center;
+    transition: border-color 0.15s;
+}
+
+.featured-card__cta:hover {
+    border-color: var(--color-gold);
+}
+
+/* ── Featured trainer card ── */
+.featured-trainer-card {
+    border: var(--border-xs) solid rgba(var(--color-gold-rgb), 0.3);
+    border-top: 2px solid var(--color-gold);
+    padding: var(--space-m) var(--space-l);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-s);
+    text-align: center;
+    background: rgba(var(--color-gold-rgb), 0.03);
+}
+
+.featured-trainer-card .featured-card__cta {
+    margin-top: auto;
+}
+
+.featured-trainer-card__avatar-wrap {
+    position: relative;
+    width: 5rem;
+    height: 5rem;
+}
+
+.featured-trainer-card__avatar {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.featured-trainer-card__avatar--initials {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background: var(--color-brown);
+    color: var(--color-light-gold);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-m);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.featured-trainer-card__badge {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    font-size: 0.55rem;
+    font-family: "Big Shoulders", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-gold);
+    background: var(--color-brown, #1a1a18);
+    padding: 1px 4px;
+    border: 1px solid rgba(var(--color-gold-rgb), 0.4);
+}
+
+.featured-trainer-card__name {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-s);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-almost-white);
+    margin: 0;
+}
+
+.featured-trainer-card__spec {
+    font-size: var(--font-size-xxs);
+    color: var(--color-grey);
+    margin: 0;
+    line-height: 1.4;
+}
+
+@media (max-width: 640px) {
+    .featured {
+        padding: var(--space-l) var(--space-m);
+    }
+    .featured__grid--classes  { grid-template-columns: 1fr; }
+    .featured__grid--trainers { grid-template-columns: repeat(2, 1fr); }
+}
+

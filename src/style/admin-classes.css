@@ -1,0 +1,244 @@
+/* ── Active filter banner ── */
+.filter-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-m);
+    margin: var(--space-s) var(--space-l) var(--space-s);
+    padding: var(--space-s) var(--space-m);
+    border-left: 2px solid var(--color-gold);
+    background: rgba(var(--color-gold-rgb), 0.05);
+    font-size: var(--font-size-xs);
+    color: var(--color-almost-white);
+}
+
+.filter-banner__clear {
+    flex-shrink: 0;
+    color: var(--color-grey);
+    font-size: var(--font-size-xs);
+    text-decoration: none;
+    border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.3);
+    padding: 2px var(--space-s);
+}
+
+.filter-banner__clear:hover {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+}
+
+/* ── Dashboard filter highlight ── */
+.class-card--highlight {
+    outline: 2px solid var(--color-gold);
+    outline-offset: -2px;
+}
+
+.class-card--highlight-dim {
+    opacity: 0.35;
+}
+
+/* ── Header buttons ── */
+main > header {
+    position: relative;
+}
+
+.admin-classes-header-actions {
+    position: absolute;
+    right: var(--space-l);
+    bottom: var(--space-s);
+    display: flex;
+    gap: var(--space-s);
+}
+
+/* ── Admin modal title: gold border instead of underline pseudo-element ── */
+#admin-class-modal .auth-modal__title,
+#admin-confirm-modal .auth-modal__title {
+    color: var(--color-almost-white);
+    width: fit-content;
+    margin-inline: auto;
+    padding-bottom: 3px;
+}
+
+#admin-class-modal .auth-modal__title::after,
+#admin-confirm-modal .auth-modal__title::after {
+    width: 100%;
+}
+
+/* ── Admin card variant ── */
+.class-card--admin {
+    cursor: pointer;
+}
+
+.class-card--admin:hover {
+    outline: 1px solid rgba(var(--color-gold-rgb), 0.5);
+}
+
+/* ── Edit modal tabs ── */
+.admin-modal-tabs {
+    display: flex;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-m);
+}
+
+.admin-modal-tab {
+    background: transparent;
+    border: 1px solid rgba(var(--color-grey-rgb), 0.3);
+    color: var(--color-grey);
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: var(--space-xxs) var(--space-m);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.admin-modal-tab--active {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+}
+
+/* ── Modal actions row ── */
+.admin-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    margin-top: 0;
+}
+
+.admin-modal-actions .modal-action-btn,
+#admin-class-modal .admin-modal-actions button,
+#admin-class-modal .auth-modal__form .btn-primary {
+    flex: 1;
+    font-size: var(--font-size-xs) !important;
+    line-height: 1 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    box-sizing: border-box;
+    width: auto;
+}
+
+#admin-class-modal #save-session-btn,
+#admin-class-modal #save-class-btn {
+    padding: var(--space-xs) var(--space-m) !important;
+    font-size: var(--font-size-xs) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    width: auto !important;
+}
+
+#admin-class-modal #delete-session-btn,
+#admin-class-modal #delete-class-btn {
+    padding: var(--space-s) var(--space-m) !important;
+}
+
+
+/* ── Date + hour split ── */
+.datetime-split {
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.datetime-split input[type="date"] {
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+}
+
+.datetime-split select {
+    width: 7rem;
+}
+
+.datetime-split input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+/* ── Tighter form gap inside admin modal ── */
+#admin-class-modal .auth-modal__form {
+    gap: var(--space-xs);
+}
+
+/* ── Enrolled info line ── */
+.admin-modal-enrolled {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+    margin: 0 0 var(--space-s);
+}
+
+/* ── Featured card star ── */
+.class-card__star {
+    color: var(--color-gold);
+    font-size: 0.8em;
+    margin-left: 2px;
+}
+
+.class-card--featured {
+    border-left: 2px solid var(--color-gold);
+}
+
+/* ── Fixed-height scrollable class modal ── */
+#admin-class-modal[open] {
+    height: min(90vh, 36rem);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: 0;
+}
+
+#admin-class-modal .auth-modal__close {
+    position: absolute;
+    z-index: 10;
+}
+
+#admin-class-modal .auth-modal__title,
+#admin-class-modal .admin-modal-tabs {
+    flex-shrink: 0;
+}
+
+#admin-class-modal .admin-modal-panel {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#admin-class-modal .admin-modal-panel[hidden] {
+    display: none;
+}
+
+#admin-class-modal .auth-modal__form {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+#admin-class-modal .admin-modal-fields {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-s) 0;
+}
+
+#admin-class-modal .admin-modal-footer {
+    flex-shrink: 0;
+    padding: var(--space-s) 0 var(--space-m);
+    border-top: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.15);
+}
+
+#admin-class-modal #edit-class-description {
+    min-height: 5rem;
+    resize: vertical;
+}

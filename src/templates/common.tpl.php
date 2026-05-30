@@ -30,7 +30,7 @@ require_once(__DIR__ . '/../utils/session.php');
     </nav>
     <header class="site-header">
       <nav class="top-nav" id="top-nav-bar">
-        <a class="top-nav__link" href="#about">ABOUT US</a>
+        <a class="top-nav__link" href="#overview">ABOUT US</a>
         <a class="top-nav__link" href="#facilities">FACILITIES</a>
 
         <?php include __DIR__ . '/../components/logo.php'; ?>

@@ -7,7 +7,7 @@ class TrainerProfile
     {
         $stmt = $db->prepare(
             "SELECT u.user_id, u.name, u.username,
-                    tp.bio, tp.specializations, tp.certifications
+                    tp.bio, tp.specializations, tp.certifications, tp.is_featured
              FROM user u
              JOIN trainer_profile tp ON tp.user_id = u.user_id
              WHERE u.is_active = 1
@@ -21,7 +21,7 @@ class TrainerProfile
     {
         $stmt = $db->prepare(
             "SELECT u.user_id, u.name, u.username,
-                    tp.bio, tp.specializations, tp.certifications
+                    tp.bio, tp.specializations, tp.certifications, tp.is_featured
              FROM user u
              JOIN trainer_profile tp ON tp.user_id = u.user_id
              WHERE u.user_id = :id AND u.is_active = 1"
