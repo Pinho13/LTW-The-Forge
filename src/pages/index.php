@@ -128,7 +128,7 @@
           <?php if ($ft['specializations']): ?>
           <p class="featured-trainer-card__spec"><?= htmlspecialchars($ft['specializations']) ?></p>
           <?php endif; ?>
-          <a href="<?= $session->isLoggedIn() ? '/src/pages/trainers.php?id=' . (int)$ft['user_id'] : '/?open=login' ?>" class="featured-card__cta">View Profile</a>
+          <a href="<?= $session->isLoggedIn() ? '/src/pages/trainers.php?id=' . (int)$ft['user_id'] : '/src/pages/trainers.php' ?>" class="featured-card__cta">View Profile</a>
         </article>
         <?php endforeach; ?>
       </div>
