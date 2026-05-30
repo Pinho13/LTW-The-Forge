@@ -7,7 +7,7 @@
 The Forge is a gym management web application developed for the LTW course.
 
 The platform supports three core user roles: members, trainers, and administrators.
-Members can browse and enroll in classes and track their activity, trainers manage sessions and profiles, and administrators oversee users, classes, and equipment.
+Members can browse and enroll in classes, reserve equipment, and track their activity; trainers have public profiles and upcoming classes; and administrators oversee users, classes, and equipment.
 
 The system is being developed following the requirements of the course, including structured CSS, PHP with PDO, and role-based functionality.
 
@@ -26,7 +26,7 @@ Styling for these pages can be found at src/style/
 - [x] Edit their profile, including name, username, password, and profile photo.
 
 **Members:**
-- [~] Browse the weekly schedule of fitness classes (calendar view; filters not implemented yet).
+- [~] Browse the weekly schedule of fitness classes (calendar view; premium members only; filters not implemented yet).
 - [x] Enroll in and cancel enrollment from upcoming classes, subject to capacity limits (waitlist supported).
 - [x] View trainer profiles, including their specializations and the classes they teach.
 - [x] Check the current availability of equipment in the main training area.
@@ -39,15 +39,15 @@ Styling for these pages can be found at src/style/
 - [ ] Track and manage their assigned class schedule.
 
 **Admins:**
-- [ ] Manage members and trainers (create, update, and deactivate accounts).
-- [ ] Manage the class catalog (create, edit, and remove classes) and assign trainers to them.
-- [ ] Manage equipment in the main training area (add, update availability status, and remove items).
+- [x] Manage members and trainers (update details, roles, status, and subscriptions).
+- [x] Manage the class catalog (create, edit, and remove classes) and assign trainers to them.
+- [x] Manage equipment in the main training area (add, update availability status, and remove items).
 - [x] Create, pin, and delete announcements/news posts.
-- [ ] Elevate a user to admin status.
+- [x] Elevate a user to admin status.
 - [ ] Oversee and ensure the smooth operation of the entire system.
 
 **Extra:**
-- [~] Membership plans (basic/premium shown in UI; subscription changes not implemented).
+- [~] Membership plans (basic/premium; premium gates classes; members can pause; admins can adjust expiry; plan switching not implemented).
 - [ ] Personal logging of material.
 
 ## Running
@@ -115,7 +115,7 @@ These resources are available in the `design/` folder, which is organized into s
 - CSS3
 - PHP
 - JavaScript
-- Ajax / JSON
+- AJAX / JSON
 - SQLite
 - PDO
 
