@@ -72,7 +72,7 @@
         <?php foreach ($featuredClasses as $fc):
             $intensity = (int)$fc['intensity'];
         ?>
-        <article class="featured-card">
+        <article class="featured-card hover-lift">
           <div class="featured-card__top">
             <span class="featured-card__type"><?= htmlspecialchars($fc['type_name'] ?? '') ?></span>
             <span class="featured-card__badge">★ Featured</span>
