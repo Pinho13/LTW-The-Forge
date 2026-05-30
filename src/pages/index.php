@@ -28,32 +28,32 @@
     <p class="terminal-text" data-text="The Forge is more than a gym. It is a training ground built for those who show up. Discipline is the only membership that matters."></p>
     <div class="about__grid platform-overview__grid">
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">FACILITIES</h3>
         <p>Over 2,500m² of training space including free weight zones, machine circuits, functional training areas, and dedicated recovery zones. Every section is optimized for flow and performance.</p>
       </div>
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">EQUIPMENT</h3>
         <p>Premium-grade machines from leading brands, Olympic lifting platforms, calibrated plates, and high-end cardio systems. Built to handle both beginners and elite athletes.</p>
       </div>
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">FUNCTIONAL TRAINING</h3>
         <p>A complete functional zone with sled tracks, battle ropes, kettlebells, rigs, and open space for mobility and conditioning. Designed for real-world strength and performance.</p>
       </div>
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">RECOVERY</h3>
         <p>Recovery is part of the process. We provide stretching areas, foam rolling stations, and guided mobility zones to keep your performance sustainable.</p>
       </div>
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">COMMUNITY</h3>
         <p>THE FORGE is built around a focused and driven community. No distractions — just people committed to improving every day.</p>
       </div>
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">COACHING</h3>
         <p>Access to experienced trainers, structured programs, and performance tracking tools to help you push past limits and stay consistent.</p>
       </div>
