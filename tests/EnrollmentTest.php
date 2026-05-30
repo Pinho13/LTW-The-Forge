@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../database/Enrollment.class.php';
+require_once __DIR__ . '/../database/models/Enrollment.class.php';
 
 class EnrollmentTest extends TestCase
 {
     private PDO $db;
+    private int $unitId;
 
     protected function setUp(): void
     {
@@ -17,7 +18,7 @@ class EnrollmentTest extends TestCase
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-        $schema = file_get_contents(__DIR__ . '/../database/schema.sql');
+        $schema = file_get_contents(__DIR__ . '/../database/sql/schema.sql');
         $this->db->exec($schema);
 
         // Seed one member and one class (needed for FK constraints)
@@ -29,6 +30,11 @@ class EnrollmentTest extends TestCase
             INSERT INTO class (name, type_id, description, duration_minutes, intensity) VALUES
                 ('Morning Yoga', 1, '', 60, 2);
         ");
+
+        $this->db->exec("INSERT INTO equipment (name) VALUES ('Treadmill');");
+        $equipmentId = (int) $this->db->lastInsertId();
+        $this->db->exec("INSERT INTO equipment_unit (equipment_id) VALUES ({$equipmentId});");
+        $this->unitId = (int) $this->db->lastInsertId();
     }
 
     private function insertSession(string $datetime): int
@@ -46,6 +52,15 @@ class EnrollmentTest extends TestCase
             "INSERT INTO enrollment (member_id, session_id, status) VALUES (?, ?, ?)"
         );
         $stmt->execute([$memberId, $sessionId, $status]);
+    }
+
+    private function reserve(int $memberId, string $startDatetime, string $endDatetime): void
+    {
+        $stmt = $this->db->prepare(
+            "INSERT INTO equipment_reservation (member_id, unit_id, start_datetime, end_datetime)
+             VALUES (?, ?, ?, ?)"
+        );
+        $stmt->execute([$memberId, $this->unitId, $startDatetime, $endDatetime]);
     }
 
     // --- countEnrolledThisMonth ---
@@ -115,74 +130,61 @@ class EnrollmentTest extends TestCase
 
     // --- countUpcoming ---
 
-    public function testCountUpcomingReturnsZeroForNoEnrollments(): void
+    public function testCountUpcomingReturnsZeroForNoReservations(): void
     {
         $this->assertSame(0, Enrollment::countUpcoming($this->db, 1));
     }
 
-    public function testCountUpcomingCountsFutureSessions(): void
+    public function testCountUpcomingCountsFutureReservations(): void
     {
-        $future = date('Y-m-d H:i:s', strtotime('+1 day'));
-        $sessionId = $this->insertSession($future);
-        $this->enroll(1, $sessionId);
+        $start = date('Y-m-d H:i:s', strtotime('+1 day'));
+        $end = date('Y-m-d H:i:s', strtotime('+1 day +1 hour'));
+        $this->reserve(1, $start, $end);
 
         $this->assertSame(1, Enrollment::countUpcoming($this->db, 1));
     }
 
-    public function testCountUpcomingIgnoresPastSessions(): void
+    public function testCountUpcomingIgnoresPastReservations(): void
     {
-        $past = date('Y-m-d H:i:s', strtotime('-1 day'));
-        $sessionId = $this->insertSession($past);
-        $this->enroll(1, $sessionId);
-
-        $this->assertSame(0, Enrollment::countUpcoming($this->db, 1));
-    }
-
-    public function testCountUpcomingIgnoresCancelledStatus(): void
-    {
-        $future = date('Y-m-d H:i:s', strtotime('+1 day'));
-        $sessionId = $this->insertSession($future);
-        $this->enroll(1, $sessionId, 'cancelled');
-
-        $this->assertSame(0, Enrollment::countUpcoming($this->db, 1));
-    }
-
-    public function testCountUpcomingIgnoresWaitlistedStatus(): void
-    {
-        $future = date('Y-m-d H:i:s', strtotime('+1 day'));
-        $sessionId = $this->insertSession($future);
-        $this->enroll(1, $sessionId, 'waitlisted');
+        $start = date('Y-m-d H:i:s', strtotime('-1 day'));
+        $end = date('Y-m-d H:i:s', strtotime('-1 day +1 hour'));
+        $this->reserve(1, $start, $end);
 
         $this->assertSame(0, Enrollment::countUpcoming($this->db, 1));
     }
 
     public function testCountUpcomingOnlyCountsCorrectUser(): void
     {
-        $future = date('Y-m-d H:i:s', strtotime('+1 day'));
-        $sessionId = $this->insertSession($future);
-        $this->enroll(2, $sessionId); // user 2, not user 1
+        $start = date('Y-m-d H:i:s', strtotime('+1 day'));
+        $end = date('Y-m-d H:i:s', strtotime('+1 day +1 hour'));
+        $this->reserve(2, $start, $end); // user 2, not user 1
 
         $this->assertSame(0, Enrollment::countUpcoming($this->db, 1));
     }
 
-    public function testCountUpcomingCountsMultipleFutureSessions(): void
+    public function testCountUpcomingCountsMultipleFutureReservations(): void
     {
-        $s1 = $this->insertSession(date('Y-m-d H:i:s', strtotime('+1 day')));
-        $s2 = $this->insertSession(date('Y-m-d H:i:s', strtotime('+5 days')));
-        $s3 = $this->insertSession(date('Y-m-d H:i:s', strtotime('+10 days')));
-        $this->enroll(1, $s1);
-        $this->enroll(1, $s2);
-        $this->enroll(1, $s3);
+        $s1 = date('Y-m-d H:i:s', strtotime('+1 day'));
+        $e1 = date('Y-m-d H:i:s', strtotime('+1 day +1 hour'));
+        $s2 = date('Y-m-d H:i:s', strtotime('+5 days'));
+        $e2 = date('Y-m-d H:i:s', strtotime('+5 days +1 hour'));
+        $s3 = date('Y-m-d H:i:s', strtotime('+10 days'));
+        $e3 = date('Y-m-d H:i:s', strtotime('+10 days +1 hour'));
+        $this->reserve(1, $s1, $e1);
+        $this->reserve(1, $s2, $e2);
+        $this->reserve(1, $s3, $e3);
 
         $this->assertSame(3, Enrollment::countUpcoming($this->db, 1));
     }
 
-    public function testCountUpcomingMixedPastAndFuture(): void
+    public function testCountUpcomingMixedPastAndFutureReservations(): void
     {
-        $past   = $this->insertSession(date('Y-m-d H:i:s', strtotime('-1 day')));
-        $future = $this->insertSession(date('Y-m-d H:i:s', strtotime('+1 day')));
-        $this->enroll(1, $past);
-        $this->enroll(1, $future);
+        $pastStart   = date('Y-m-d H:i:s', strtotime('-1 day'));
+        $pastEnd     = date('Y-m-d H:i:s', strtotime('-1 day +1 hour'));
+        $futureStart = date('Y-m-d H:i:s', strtotime('+1 day'));
+        $futureEnd   = date('Y-m-d H:i:s', strtotime('+1 day +1 hour'));
+        $this->reserve(1, $pastStart, $pastEnd);
+        $this->reserve(1, $futureStart, $futureEnd);
 
         $this->assertSame(1, Enrollment::countUpcoming($this->db, 1));
     }
@@ -196,12 +198,12 @@ class EnrollmentTest extends TestCase
         $this->assertSame(0, Enrollment::countEnrolledThisMonth($this->db, 1));
     }
 
-    // SQL uses >, so a session at exactly now is NOT counted as upcoming
-    public function testCountUpcomingExcludesSessionAtExactlyNow(): void
+    // SQL uses >, so a reservation at exactly now is NOT counted as upcoming
+    public function testCountUpcomingExcludesReservationAtExactlyNow(): void
     {
         $now = date('Y-m-d H:i:s');
-        $sessionId = $this->insertSession($now);
-        $this->enroll(1, $sessionId);
+        $end = date('Y-m-d H:i:s', strtotime('+1 hour'));
+        $this->reserve(1, $now, $end);
 
         $this->assertSame(0, Enrollment::countUpcoming($this->db, 1));
     }
