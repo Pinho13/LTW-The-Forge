@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-require_once __DIR__ . '/../database/GymVisit.class.php';
+require_once __DIR__ . '/../database/models/GymVisit.class.php';
 
 class GymVisitTest extends TestCase
 {
@@ -17,7 +17,7 @@ class GymVisitTest extends TestCase
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-        $schema = file_get_contents(__DIR__ . '/../database/schema.sql');
+        $schema = file_get_contents(__DIR__ . '/../database/sql/schema.sql');
         $this->db->exec($schema);
 
         $this->db->exec("
