@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once(__DIR__ . '/../../utils/page_bootstrap.php');
+require_once(__DIR__ . '/../utils/page_bootstrap.php');
 require_once(__DIR__ . '/../../database/models/AdminUser.class.php');
 
 [$session, $db] = requireAuthenticatedPage();
