@@ -11,7 +11,7 @@ class Enrollment
             "SELECT COUNT(*) FROM enrollment
              JOIN class_session ON class_session.id = enrollment.session_id
              WHERE enrollment.member_id = :member_id
-               AND enrollment.status = 'enrolled'
+               AND enrollment.status = 'completed'
                AND strftime('%Y-%m', class_session.datetime) = strftime('%Y-%m', 'now', '+1 hour')"
         );
         $stmt->execute([':member_id' => $memberId]);
