@@ -28,32 +28,32 @@
     <p class="terminal-text" data-text="The Forge is more than a gym. It is a training ground built for those who show up. Discipline is the only membership that matters."></p>
     <div class="about__grid platform-overview__grid">
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">FACILITIES</h3>
         <p>Over 2,500m² of training space including free weight zones, machine circuits, functional training areas, and dedicated recovery zones. Every section is optimized for flow and performance.</p>
       </div>
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">EQUIPMENT</h3>
         <p>Premium-grade machines from leading brands, Olympic lifting platforms, calibrated plates, and high-end cardio systems. Built to handle both beginners and elite athletes.</p>
       </div>
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">FUNCTIONAL TRAINING</h3>
         <p>A complete functional zone with sled tracks, battle ropes, kettlebells, rigs, and open space for mobility and conditioning. Designed for real-world strength and performance.</p>
       </div>
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">RECOVERY</h3>
         <p>Recovery is part of the process. We provide stretching areas, foam rolling stations, and guided mobility zones to keep your performance sustainable.</p>
       </div>
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">COMMUNITY</h3>
         <p>THE FORGE is built around a focused and driven community. No distractions — just people committed to improving every day.</p>
       </div>
 
-      <div class="about__block">
+      <div class="about__block hover-lift">
         <h3 class="about__block-title">COACHING</h3>
         <p>Access to experienced trainers, structured programs, and performance tracking tools to help you push past limits and stay consistent.</p>
       </div>
@@ -72,7 +72,7 @@
         <?php foreach ($featuredClasses as $fc):
             $intensity = (int)$fc['intensity'];
         ?>
-        <article class="featured-card">
+        <article class="featured-card hover-lift">
           <div class="featured-card__top">
             <span class="featured-card__type"><?= htmlspecialchars($fc['type_name'] ?? '') ?></span>
             <span class="featured-card__badge">★ Featured</span>
@@ -115,7 +115,7 @@
                 $initials .= mb_strtoupper(mb_substr($w, 0, 1));
             }
         ?>
-        <article class="featured-trainer-card">
+        <article class="featured-trainer-card hover-lift">
           <div class="featured-trainer-card__avatar-wrap">
             <?php if ($pfpUrl): ?>
               <img src="<?= htmlspecialchars($pfpUrl) ?>" alt="<?= htmlspecialchars($ft['name']) ?>" class="featured-trainer-card__avatar">
@@ -128,7 +128,7 @@
           <?php if ($ft['specializations']): ?>
           <p class="featured-trainer-card__spec"><?= htmlspecialchars($ft['specializations']) ?></p>
           <?php endif; ?>
-          <a href="<?= $session->isLoggedIn() ? '/src/pages/trainers.php?id=' . (int)$ft['user_id'] : '/?open=login' ?>" class="featured-card__cta">View Profile</a>
+          <a href="<?= $session->isLoggedIn() ? '/src/pages/trainers.php?id=' . (int)$ft['user_id'] : '/src/pages/trainers.php' ?>" class="featured-card__cta">View Profile</a>
         </article>
         <?php endforeach; ?>
       </div>
@@ -165,7 +165,7 @@
     <h2 class="plans__title">MEMBERSHIP PLANS</h2>
 
     <div class="plans__grid">
-      <article class="plan-card">
+      <article class="plan-card hover-lift">
         <h3 class="plan-card__name">Basic</h3>
         <p class="plan-card__price">19.99€ / month</p>
         <p class="plan-card__description">Access to the gym floor and cardio equipment.</p>
@@ -177,7 +177,7 @@
         <a class="plan-card__cta" href="#"><button class="btn-page">Be Basic!</button></a>
       </article>
 
-      <article class="plan-card plan-card--featured">
+      <article class="plan-card plan-card--featured hover-lift">
         <h3 class="plan-card__name">Premium</h3>
         <p class="plan-card__price">39.99€ / month</p>
         <p class="plan-card__description">Unlimited classes and full access to all facilities.</p>
