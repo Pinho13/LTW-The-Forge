@@ -62,6 +62,7 @@ $nextWeek  = $weekOffset + 1;
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/classes.css">
     <link rel="stylesheet" href="../style/admin-classes.css">
+    <link rel="stylesheet" href="../style/trainer-schedule.css">
 </head>
 <body>
     <?php $activePage = 'admin-classes'; include '../components/side-menu.php'; ?>
@@ -231,15 +232,31 @@ $nextWeek  = $weekOffset + 1;
 
     <div class="modal-backdrop" id="page-backdrop"></div>
 
+    <!-- Action picker modal -->
+    <dialog id="card-picker-modal" class="auth-modal feature-swap-modal">
+        <button type="button" class="btn-ghost auth-modal__close" id="picker-close">&times;</button>
+        <h2 class="auth-modal__title" id="picker-title"></h2>
+        <p class="feature-swap-modal__hint" id="picker-meta"></p>
+        <ul class="feature-swap-modal__list" id="picker-list">
+            <li><button type="button" class="feature-swap-modal__pick" id="picker-edit-session">Edit Session</button></li>
+            <li><button type="button" class="feature-swap-modal__pick" id="picker-edit-class">Edit Class</button></li>
+            <li><button type="button" class="feature-swap-modal__pick" id="picker-roster">View Roster</button></li>
+            <li><button type="button" class="feature-swap-modal__pick" id="picker-waitlist">View Waitlist</button></li>
+        </ul>
+    </dialog>
+
+    <!-- Roster / waitlist modal -->
+    <dialog id="roster-modal" class="auth-modal auth-modal--simple">
+        <button type="button" class="btn-ghost auth-modal__close" id="roster-close">&times;</button>
+        <h2 class="auth-modal__title" id="roster-title"></h2>
+        <div id="roster-body" class="roster-body"></div>
+    </dialog>
+
     <!-- Edit session/class modal -->
     <dialog id="admin-class-modal" class="auth-modal class-modal">
         <button type="button" class="btn-ghost auth-modal__close" id="admin-modal-close">&times;</button>
         <h2 class="auth-modal__title" id="admin-modal-title"></h2>
-
-        <div class="admin-modal-tabs">
-            <button type="button" class="admin-modal-tab admin-modal-tab--active" data-tab="session">Session</button>
-            <button type="button" class="admin-modal-tab" data-tab="class">Class</button>
-        </div>
+        <p class="auth-modal__subtitle" id="admin-modal-subtitle"></p>
 
         <!-- Session tab -->
         <div class="admin-modal-panel" id="tab-session">
@@ -396,6 +413,7 @@ $nextWeek  = $weekOffset + 1;
     </script>
     <script src="../scripts/classes.js"></script>
     <script src="../scripts/admin-classes.js"></script>
+    <script src="../scripts/admin-picker.js"></script>
     <script type="module">
         import { initFeatureSwap } from '../scripts/feature-swap.js';
         initFeatureSwap();
