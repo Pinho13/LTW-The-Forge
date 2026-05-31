@@ -120,7 +120,7 @@ Holds design assets, mockups, and visual references for the application.
 ## Design and Mockups
 
 The project includes design assets and mockups used to guide the visual development of the platform.  
-These resources are available in the `design/` folder, which is organized into subfolders such as [`ui/`](design/ui/), [`colors/`](design/colors/), and [`fonts/`](design/fonts/).
+These resources are available in the [`design/`](design/) folder, which is organized into subfolders such as [`ui/`](design/ui/), [`colors/`](design/colors/), and [`fonts/`](design/fonts/).
 
 ## Technologies Used
 
@@ -142,14 +142,12 @@ The project includes the following security practices:
 - Output escaping to mitigate XSS
 - Role-based access control
 
-(Some of these features are still being refined.)
-
 ## Extra project details
 > Faculdade de Engenharia da Universidade do Porto
 >
-> Página do Curso: https://pages.up.pt/~up353972/page/courses/ltw/
+> Course Page: https://pages.up.pt/~up353972/page/courses/ltw/
 >
-> Descrição do Projeto: https://pages.up.pt/~up353972/page/courses/ltw/project/ 
+> Project Description: https://pages.up.pt/~up353972/page/courses/ltw/project/ 
 
 
 ## Team LTW12G01
