@@ -417,3 +417,38 @@ main > header { position: relative; }
     gap: var(--space-m);
     justify-content: center;
 }
+
+/* ── Fixed-height scrollable user modal ── */
+#user-modal[open] {
+    height: min(90vh, 36rem);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: 0;
+}
+
+#user-modal .auth-modal__close {
+    position: absolute;
+    z-index: 10;
+}
+
+#user-modal .auth-modal__title,
+#user-modal .user-modal-tabs {
+    flex-shrink: 0;
+}
+
+#user-modal .user-modal-panel {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding-bottom: var(--space-m);
+}
+
+#user-modal .user-modal-panel::-webkit-scrollbar {
+    display: none;
+}
+
+#user-modal .user-modal-panel[hidden] {
+    display: none;
+}

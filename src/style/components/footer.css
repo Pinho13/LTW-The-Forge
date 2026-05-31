@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding: var(--space-s);
+    padding: var(--space-xs) var(--space-s);
     border-top: var(--border-s) solid var(--color-gold);
     color: var(--color-gold);
     font-family: "Big Shoulders", sans-serif;
