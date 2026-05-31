@@ -82,4 +82,29 @@ class Announcement
         $row->execute([':id' => $id]);
         return (bool) $row->fetchColumn();
     }
+
+    public static function getPinned(PDO $db): ?array
+    {
+        $stmt = $db->query("SELECT id, title FROM announcement WHERE pinned = 1 LIMIT 1");
+        $row = $stmt->fetch();
+        return $row ?: null;
+    }
+
+    public static function swapPin(PDO $db, int $unpinId, int $pinId): void
+    {
+        $db->prepare("UPDATE announcement SET pinned = 0 WHERE id = :id")->execute([':id' => $unpinId]);
+        $db->prepare("UPDATE announcement SET pinned = 1 WHERE id = :id")->execute([':id' => $pinId]);
+    }
+
+    public static function pin(PDO $db, int $id): void
+    {
+        $db->prepare("UPDATE announcement SET pinned = 0 WHERE pinned = 1")->execute();
+        $db->prepare("UPDATE announcement SET pinned = 1 WHERE id = :id")->execute([':id' => $id]);
+    }
+
+    public static function getAllUnpinned(PDO $db): array
+    {
+        $stmt = $db->query("SELECT id, title FROM announcement WHERE pinned = 0 ORDER BY created_at DESC");
+        return $stmt->fetchAll();
+    }
 }

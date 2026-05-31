@@ -2,6 +2,7 @@
 declare(strict_types=1);
 require_once(__DIR__ . '/action_bootstrap.php');
 require_once(__DIR__ . '/../../database/models/Announcement.class.php');
+require_once(__DIR__ . '/../../database/models/AdminLog.class.php');
 
 [$session, $db] = requireAuthenticatedPost('/src/pages/news.php');
 
@@ -45,6 +46,7 @@ if ($file && $file['error'] === UPLOAD_ERR_OK) {
 }
 
 Announcement::update($db, $id, $title, $body, $type, $readTime, $pinned, $imageName);
+AdminLog::write($db, $session->getId(), 'UPDATE', "Updated announcement \"$title\"");
 $session->addMessage('success', 'Announcement updated.');
 header('Location: /src/pages/news.php');
 exit;

@@ -48,8 +48,7 @@ main > header {
     display: grid;
     grid-template-columns: 2fr 3fr;
     border: 2px solid var(--color-gold);
-    min-height: 300px;
-    max-height: 420px;
+    height: 360px;
 }
 
 .news-hero__image {
@@ -354,6 +353,20 @@ main > header {
     .news-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+#edit-modal #edit-body {
+    min-height: 12rem;
+}
+
+#edit-modal .edit-modal__footer {
+    flex-shrink: 0;
+    padding: var(--space-s) 0 var(--space-m);
+    border-top: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.15);
+}
+
+#edit-modal .edit-modal__footer .btn-primary {
+    width: 100%;
 }
 
 @media (max-width: 640px) {

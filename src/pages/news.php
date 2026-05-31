@@ -184,7 +184,13 @@ $TYPES = ['Gym News', 'Event', 'Coach Note', 'Maintenance', 'Member Story'];
             <button type="submit" class="btn-primary modal-action-btn">Publish</button>
         </form>
     </dialog>
-    <dialog id="delete-confirm-modal" class="auth-modal">
+    <dialog id="pin-swap-modal" class="auth-modal feature-swap-modal">
+        <button type="button" class="btn-ghost auth-modal__close" id="pin-swap-close">&times;</button>
+        <h2 class="auth-modal__title">Swap Pinned Post</h2>
+        <p class="feature-swap-modal__hint">Choose a post to pin in its place:</p>
+        <ul class="feature-swap-modal__list" id="pin-swap-list"></ul>
+    </dialog>
+    <dialog id="delete-confirm-modal" class="auth-modal auth-modal--simple">
         <h2 class="auth-modal__title">Delete Announcement</h2>
         <p class="news-delete-hint">Are you sure you want to delete <strong id="delete-confirm-title"></strong>? This cannot be undone.</p>
         <div class="news-confirm-actions">
@@ -195,7 +201,7 @@ $TYPES = ['Gym News', 'Event', 'Coach Note', 'Maintenance', 'Member Story'];
     <dialog id="edit-modal" class="auth-modal">
         <button type="button" class="btn-ghost auth-modal__close" id="edit-close">&times;</button>
         <h2 class="auth-modal__title">Edit Announcement</h2>
-        <form method="POST" action="../actions/action_edit_announcement.php" class="auth-modal__form" enctype="multipart/form-data">
+        <form id="edit-form" method="POST" action="../actions/action_edit_announcement.php" class="auth-modal__form" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" value="<?= $session->getCsrfToken() ?>">
             <input type="hidden" name="announcement_id" id="edit-announcement-id">
 
@@ -225,9 +231,10 @@ $TYPES = ['Gym News', 'Event', 'Coach Note', 'Maintenance', 'Member Story'];
             <label class="checkbox-label">
                 <input type="checkbox" name="pinned" id="edit-pinned" value="1"> Pin this announcement
             </label>
-
-            <button type="submit" class="btn-primary modal-action-btn">Save Changes</button>
         </form>
+        <div class="edit-modal__footer">
+            <button type="submit" form="edit-form" class="btn-primary modal-action-btn">Save Changes</button>
+        </div>
     </dialog>
     <script>
         const CSRF_TOKEN = <?= json_encode($session->getCsrfToken()) ?>;
