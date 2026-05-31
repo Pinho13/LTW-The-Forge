@@ -76,7 +76,8 @@ function adminConfirm(msg, fromModal, fn) {
     pendingConfirmFn   = fn;
     pendingConfirmFrom = fromModal;
     if (fromModal) closeModal(fromModal);
-    confirmModal.showModal();
+    confirmModal.show();
+    backdrop.classList.add('modal-backdrop--visible');
 }
 
 // ── Open/close helpers ────────────────────────────────────────

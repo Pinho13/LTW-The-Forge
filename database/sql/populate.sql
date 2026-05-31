@@ -30,13 +30,14 @@ PRAGMA foreign_keys = ON;
 
 -- ============================================================
 -- USERS
--- Passwords: NormalTest1! / TrainerTest1! / AdminTest1! / Member2Test1!
+-- Passwords: NormalTest1! / TrainerTest1! / AdminTest1! / Member2Test1! / TrainerTest1! (alex@theforge.com)
 -- ============================================================
 INSERT INTO user (name, username, email, password_hash, role) VALUES
     ('Normal User',   'normaluser',   'normal@gmail.com',   '$2y$12$5WlMPEie.uE7qRwWQDSWzeYLrlXWtfbpPviuh5jwa5gRJ7MMoAYSi', 'member'),
     ('Trainer User',  'traineruser',  'trainer@gmail.com',  '$2y$12$GlvsxUI5MAx52be90F/jt.TlhCy2ts.JftMMON1TaXPfLAM4fS/xe', 'trainer'),
     ('Admin User',    'adminuser',    'admin@gmail.com',    '$2y$12$M8bgiimX4JSAQ43Y7lcKSOi.3Vc7IqalZxWTPzWmhhhmshzW3HbHu', 'admin'),
     ('Member Two',    'membertwo',    'member2@gmail.com',  '$2y$12$TNGOaPId2WaZRqcgugHHaOqu9EErBKhiXoxTD7CXbl1NpHtyyk5RC', 'member'),
+    ('Alex Trainer',  'alextrainer',  'alex@theforge.com',  '$2y$12$F6/LQEnjSH83o56TsAnKMekd9LtgXaxJ6ltR0lyV1iXfx3fT7u1EG', 'trainer'),
     ('Marcus Steel',  'marcus.steel', 'marcus@theforge.com','placeholder', 'trainer'),
     ('Elena Voss',    'elena.voss',   'elena@theforge.com', 'placeholder', 'trainer'),
     ('Daniel Cruz',   'daniel.cruz',  'daniel@theforge.com','placeholder', 'trainer'),
@@ -59,10 +60,11 @@ UPDATE user SET is_active = 0 WHERE username = 'banned.user';
 -- ============================================================
 INSERT INTO trainer_profile (user_id, bio, specializations, certifications, is_featured) VALUES
     (2, 'Certified fitness coach with 8 years of experience.', 'HIIT, Yoga, Cardio', 'ACE Personal Trainer, RYT-200', 1),
-    (5, 'Former competitive powerlifter turned strength coach. 10 years on the platform, 5 years coaching.', 'Powerlifting, Strength & Conditioning, Olympic Lifting', 'NSCA-CSCS, USA Powerlifting Coach', 1),
-    (6, 'Mobility specialist and yoga instructor passionate about injury prevention and functional movement.', 'Yoga, Mobility, Pilates, Flexibility', 'RYT-500, FMS Level 2, NASM-CPT', 0),
-    (7, 'Boxing and kickboxing coach with a background in competitive martial arts. High-intensity is the only intensity.', 'Boxing, Kickboxing, HIIT, Functional Fitness', 'ACE-CPT, USA Boxing Coach Level 2', 0),
-    (8, 'Nutrition-focused coach specialising in body recomposition and endurance training.', 'Endurance, Body Recomposition, Running, Cycling', 'ISSA-CPT, Precision Nutrition Level 1', 0);
+    ((SELECT user_id FROM user WHERE email='alex@theforge.com'),   'Experienced trainer specialising in strength and conditioning.', 'Strength, Conditioning', 'NSCA-CPT', 0),
+    ((SELECT user_id FROM user WHERE email='marcus@theforge.com'), 'Former competitive powerlifter turned strength coach. 10 years on the platform, 5 years coaching.', 'Powerlifting, Strength & Conditioning, Olympic Lifting', 'NSCA-CSCS, USA Powerlifting Coach', 1),
+    ((SELECT user_id FROM user WHERE email='elena@theforge.com'),  'Mobility specialist and yoga instructor passionate about injury prevention and functional movement.', 'Yoga, Mobility, Pilates, Flexibility', 'RYT-500, FMS Level 2, NASM-CPT', 0),
+    ((SELECT user_id FROM user WHERE email='daniel@theforge.com'), 'Boxing and kickboxing coach with a background in competitive martial arts. High-intensity is the only intensity.', 'Boxing, Kickboxing, HIIT, Functional Fitness', 'ACE-CPT, USA Boxing Coach Level 2', 0),
+    ((SELECT user_id FROM user WHERE email='sofia@theforge.com'),  'Nutrition-focused coach specialising in body recomposition and endurance training.', 'Endurance, Body Recomposition, Running, Cycling', 'ISSA-CPT, Precision Nutrition Level 1', 0);
 
 
 -- ============================================================
@@ -95,12 +97,12 @@ INSERT INTO class (name, type_id, description, duration_minutes, intensity, trai
     ('Morning Yoga',    1, 'A calm morning flow to improve flexibility and mindfulness.', 60, 2, 2, 1),
     ('HIIT Blast',      2, 'High-intensity interval training to torch calories fast.',    60, 4, 2, 1),
     ('Cardio Burn',     3, 'Steady-state cardio session suitable for all fitness levels.', 60, 3, 2, 0),
-    ('Power Hour',      4, 'Heavy compound lifts for total body strength.',               60, 5, 5, 1),
-    ('Fight Club',      5, 'Bag work, combos and conditioning drills.',                   60, 5, 7, 0),
-    ('Core & Flex',     6, 'Pilates-based core stability and flexibility work.',          60, 2, 6, 0),
-    ('Spin Session',    7, 'High-cadence indoor cycling to upbeat music.',                60, 4, 8, 0),
-    ('Evening Yoga',    1, 'Restorative yoga to wind down the day.',                      60, 1, 6, 0),
-    ('Kettlebell Burn',    4, 'Functional strength with kettlebells.',      60, 4, 5, 0),
+    ('Power Hour',      4, 'Heavy compound lifts for total body strength.',               60, 5, (SELECT user_id FROM user WHERE email='marcus@theforge.com'), 1),
+    ('Fight Club',      5, 'Bag work, combos and conditioning drills.',                   60, 5, (SELECT user_id FROM user WHERE email='daniel@theforge.com'), 0),
+    ('Core & Flex',     6, 'Pilates-based core stability and flexibility work.',          60, 2, (SELECT user_id FROM user WHERE email='elena@theforge.com'), 0),
+    ('Spin Session',    7, 'High-cadence indoor cycling to upbeat music.',                60, 4, (SELECT user_id FROM user WHERE email='sofia@theforge.com'), 0),
+    ('Evening Yoga',    1, 'Restorative yoga to wind down the day.',                      60, 1, (SELECT user_id FROM user WHERE email='elena@theforge.com'), 0),
+    ('Kettlebell Burn',    4, 'Functional strength with kettlebells.',      60, 4, (SELECT user_id FROM user WHERE email='marcus@theforge.com'), 0),
     ('Boxing Foundations', 5, 'Intro to boxing technique and bag work.',  60, 3, NULL, 0);
 
 

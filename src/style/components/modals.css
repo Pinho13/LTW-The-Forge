@@ -1,3 +1,12 @@
+dialog[open] {
+    position: fixed;
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
 .modal-backdrop {
     display: none;
     position: fixed;
@@ -20,6 +29,7 @@
     bottom: auto;
     transform: translate(-50%, -50%);
     margin: 0;
+    box-sizing: border-box;
     width: min(32rem, calc(100% - 2 * var(--space-xl)));
     max-height: calc(100vh - 2 * var(--space-xl));
     overflow-y: auto;
@@ -356,11 +366,6 @@
 @media (max-width: 640px) {
     .auth-modal {
         width: calc(100% - 2 * var(--space-xl));
-        top: 50%;
-        bottom: auto;
-        left: 50%;
-        right: auto;
-        transform: translate(-50%, -50%);
         padding: var(--space-m) var(--space-m) var(--space-xl);
         border-radius: 0;
     }
@@ -391,7 +396,7 @@
 
 /* ── Feature swap modal ── */
 .feature-swap-modal[open] {
-    width: min(28rem, calc(100% - 8 * var(--space-l)));
+    width: min(32rem, calc(100% - 2 * var(--space-xl)));
     max-height: min(90vh, 28rem);
     display: flex;
     flex-direction: column;

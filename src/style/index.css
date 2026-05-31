@@ -238,9 +238,25 @@ main {
 
 @media (max-width: 640px) {
     .featured {
-        padding: var(--space-l) var(--space-m);
+        padding: var(--space-l) 0;
     }
-    .featured__grid--classes  { grid-template-columns: 1fr; }
-    .featured__grid--trainers { grid-template-columns: repeat(2, 1fr); }
+
+    .featured__title {
+        padding: 0 var(--space-m);
+    }
+
+    .featured__grid {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: var(--space-s) var(--space-m) var(--space-m);
+        scrollbar-width: none;
+    }
+
+    .featured__grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .featured__grid--classes  .featured-card        { width: 75vw; max-width: 18rem; flex-shrink: 0; }
+    .featured__grid--trainers .featured-trainer-card { width: 48vw; max-width: 14rem; flex-shrink: 0; }
 }
 

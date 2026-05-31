@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../../database/connection.db.php');
 
 $session = new Session();
 if (!$session->isLoggedIn()) { http_response_code(401); echo json_encode([]); exit; }
-if (!$session->isAdmin())    { http_response_code(403); echo json_encode([]); exit; }
+if (!$session->isAdmin() && !$session->isTrainer()) { http_response_code(403); echo json_encode([]); exit; }
 
 $db = getDatabaseConnection();
 

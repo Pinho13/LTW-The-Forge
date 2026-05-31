@@ -16,8 +16,13 @@ function ensureModal() {
     `;
     document.body.appendChild(modal);
 
-    modal.querySelector('.auth-modal__close').addEventListener('click', () => modal.close());
-    modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+    const backdrop = document.getElementById('page-backdrop');
+    const closeFeatureModal = () => {
+        modal.close();
+        backdrop?.classList.remove('modal-backdrop--visible');
+    };
+    modal.querySelector('.auth-modal__close').addEventListener('click', closeFeatureModal);
+    backdrop?.addEventListener('click', () => { if (modal.open) closeFeatureModal(); });
 
     return modal;
 }
@@ -74,7 +79,8 @@ function handleFeatureForm(form) {
                 li.appendChild(btn);
                 list.appendChild(li);
             });
-            modal.showModal();
+            modal.show();
+            document.getElementById('page-backdrop')?.classList.add('modal-backdrop--visible');
             return;
         }
 

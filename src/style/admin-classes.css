@@ -186,6 +186,8 @@ main > header {
 
 /* ── Fixed-height scrollable class modal ── */
 #admin-class-modal[open] {
+    width: min(32rem, calc(100% - 2 * var(--space-xl)));
+    box-sizing: border-box;
     height: min(90vh, 36rem);
     display: flex;
     flex-direction: column;
