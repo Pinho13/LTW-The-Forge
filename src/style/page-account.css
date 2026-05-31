@@ -109,7 +109,7 @@
 
 .profile-form__submit {
     display: block;
-    width: 50%;
+    width: 100%;
     margin-left: auto;
     margin-top: var(--space-m);
 }
@@ -170,14 +170,21 @@
 .pause-option {
     flex: 1;
     background: transparent;
-    color: var(--color-white);
-    outline-color: var(--color-dark-grey);
+    color: var(--color-grey);
+    border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.3);
+    outline: none;
+}
+
+.pause-option:hover {
+    color: var(--color-almost-white);
+    border-color: rgba(var(--color-grey-rgb), 0.6);
 }
 
 .pause-option--selected {
     background-color: var(--color-gold);
     color: var(--color-black);
-    outline-color: var(--color-gold);
+    border-color: var(--color-gold);
+    outline: none;
 }
 
 #logout-modal .btn-primary {
@@ -191,6 +198,48 @@
 .profile-section .btn-outline,
 .profile-section .btn-danger {
     font-size: var(--font-size-m);
+}
+
+.profile-edit-btn {
+    color: rgba(var(--color-gold-rgb), 0.8);
+    border: var(--border-xs) solid rgba(var(--color-gold-rgb), 0.35);
+    padding: var(--space-xs) var(--space-m);
+    font-size: var(--font-size-s);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.profile-edit-btn:hover {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
+}
+
+.profile-edit-cancel {
+    color: rgba(var(--color-error-rgb), 0.8);
+    border: var(--border-xs) solid rgba(var(--color-error-rgb), 0.35);
+    padding: var(--space-xs) var(--space-m);
+    font-size: var(--font-size-s);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.profile-edit-cancel:hover {
+    color: var(--color-error);
+    border-color: var(--color-error);
+}
+
+.profile-edit-save {
+    color: rgba(var(--color-gold-rgb), 0.8);
+    border: var(--border-xs) solid rgba(var(--color-gold-rgb), 0.35);
+    padding: var(--space-xs) var(--space-m);
+    font-size: var(--font-size-s);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.profile-edit-save:hover {
+    color: var(--color-gold);
+    border-color: var(--color-gold);
 }
 
 

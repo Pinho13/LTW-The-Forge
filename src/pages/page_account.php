@@ -13,6 +13,8 @@ if (!$user) {
     exit;
 }
 $planName    = MemberSubscription::getActivePlanName($db, $session->getId()) ?? 'Member';
+$isFrozen    = $session->isFrozen();
+$frozenUntil = $isFrozen ? MemberSubscription::getFrozenUntil($db, $session->getId()) : null;
 $memberSince = date('M Y', strtotime($user->created_at));
 
 $heroInitials = $user->getInitials();
@@ -21,13 +23,8 @@ $pfpPath  = __DIR__ . '/../../database/profile_pictures/' . $user->user_id . '.p
 $pfpUrl   = file_exists($pfpPath)
     ? '/database/profile_pictures/' . $user->user_id . '.png?v=' . filemtime($pfpPath)
     : null;
-$uploadError = $session->popFormError('upload_pfp');
-
-$accountError    = $session->popFormError('update_account');
-$accountSuccess  = $session->popFormSuccess('update_account');
-$passwordError   = $session->popFormError('change_password');
-$passwordSuccess = $session->popFormSuccess('change_password');
-$deleteError     = $session->popFormError('delete_account');
+$accountError = $session->popFormError('update_account');
+$deleteError  = $session->popFormError('delete_account');
 $accountFormData = $session->popFormData('update_account');
 
 $fieldName     = $accountFormData['name']     ?? $user->name;
@@ -116,18 +113,13 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
                 </div>
             </form>
             <div class="profile-section__actions">
-                <button type="button" id="unlock-btn" class="btn-secondary">
-                    <?= $accountError ? 'Discard Changes' : 'Unlock Info' ?>
-                </button>
-                <button type="submit" id="confirm-btn" form="account-form" class="btn-primary" <?= $accountError ? '' : 'disabled' ?>>
-                    Confirm Changes
-                </button>
+                <?php if ($accountError): ?>
+                    <button type="button" id="cancel-btn" class="btn-ghost profile-edit-cancel">Cancel</button>
+                    <button type="submit" id="confirm-btn" form="account-form" class="btn-ghost profile-edit-save">Save</button>
+                <?php else: ?>
+                    <button type="button" id="edit-btn" class="btn-ghost profile-edit-btn">Edit Profile</button>
+                <?php endif; ?>
             </div>
-            <?php if ($accountError): ?>
-                <p class="profile-form__feedback profile-form__error"><?= htmlspecialchars($accountError) ?></p>
-            <?php elseif ($accountSuccess): ?>
-                <p class="profile-form__feedback profile-form__success"><?= htmlspecialchars($accountSuccess) ?></p>
-            <?php endif; ?>
         </section>
 
         <section class="profile-section">
@@ -139,12 +131,7 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
                     <?php drawPasswordField('new-password', 'new_password', 'New Password', 'new-password'); ?>
                     <?php drawPasswordField('confirm-password', 'confirm_password', 'Confirm New', 'new-password'); ?>
                 </div>
-                <button type="submit" class="btn-primary profile-form__submit">Update Password</button>
-                <?php if ($passwordError): ?>
-                    <p class="profile-form__feedback profile-form__error"><?= htmlspecialchars($passwordError) ?></p>
-                <?php elseif ($passwordSuccess): ?>
-                    <p class="profile-form__feedback profile-form__success"><?= htmlspecialchars($passwordSuccess) ?></p>
-                <?php endif; ?>
+                <button type="submit" class="btn-ghost profile-edit-save profile-form__submit">Update Password</button>
             </form>
         </section>
 
@@ -161,11 +148,40 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
 
             <div class="danger-zone__item">
                 <div class="danger-zone__info">
-                    <strong>Pause membership</strong>
-                    <p>Freeze your subscription for up to 60 days.</p>
+                    <?php if ($isFrozen): ?>
+                        <strong>Membership Paused</strong>
+                        <p>Paused until <?= htmlspecialchars(date('M j, Y', strtotime($frozenUntil))) ?>. Resume early at any time.</p>
+                    <?php else: ?>
+                        <strong>Pause membership</strong>
+                        <p>Freeze your subscription for 1, 2, or 3 months.</p>
+                    <?php endif; ?>
                 </div>
-                <button type="button" class="btn-outline" id="pause-btn">Pause</button>
+                <?php if ($isFrozen): ?>
+                    <form method="post" action="../actions/action_unpause_membership.php">
+                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+                        <button type="submit" class="btn-outline">Unpause</button>
+                    </form>
+                <?php else: ?>
+                    <button type="button" class="btn-outline" id="pause-btn">Pause</button>
+                <?php endif; ?>
             </div>
+
+            <?php if ($session->isMember() && !$isFrozen): ?>
+            <div class="danger-zone__item">
+                <div class="danger-zone__info">
+                    <?php if ($session->isPremium()): ?>
+                        <strong>Downgrade to Basic</strong>
+                        <p>Switch to the Basic plan. You will lose access to classes and scheduling.</p>
+                    <?php else: ?>
+                        <strong>Upgrade to Premium</strong>
+                        <p>Unlock unlimited classes, full facility access, and more.</p>
+                    <?php endif; ?>
+                </div>
+                <button type="button" class="btn-outline" id="plan-change-btn">
+                    <?= $session->isPremium() ? 'Downgrade' : 'Upgrade' ?>
+                </button>
+            </div>
+            <?php endif; ?>
 
             <div class="danger-zone__item">
                 <div class="danger-zone__info">
@@ -185,18 +201,15 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
 
     <div class="modal-backdrop" id="page-backdrop"></div>
 
-    <dialog id="pfp-modal" class="auth-modal" <?= $uploadError ? 'data-open-on-load' : '' ?>>
+    <dialog id="pfp-modal" class="auth-modal auth-modal--simple">
         <button type="button" class="btn-ghost auth-modal__close">&times;</button>
         <h2 class="auth-modal__title">Profile Picture</h2>
         <img id="pfp-preview" src="" alt="Preview" class="pfp-modal__preview">
-        <?php if ($uploadError): ?>
-            <p class="auth-modal__error"><?= htmlspecialchars($uploadError) ?></p>
-        <?php endif; ?>
         <button type="button" id="pfp-confirm-btn" class="btn-primary pfp-modal__confirm">Save Picture</button>
         <p class="auth-modal__switch"><a href="#" id="pfp-cancel-btn">Cancel</a></p>
     </dialog>
 
-    <dialog id="logout-modal" class="auth-modal">
+    <dialog id="logout-modal" class="auth-modal auth-modal--simple">
         <button type="button" class="btn-ghost auth-modal__close">&times;</button>
         <h2 class="auth-modal__title">Log Out</h2>
         <form method="post" action="../actions/action_logout.php" class="auth-modal__form">
@@ -215,29 +228,50 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
             <p class="auth-modal__prompt">This is permanent and cannot be undone. Enter your password to confirm.</p>
             <label for="delete-password">Password</label>
             <input type="password" id="delete-password" name="password" autocomplete="current-password">
-            <?php if ($deleteError): ?>
-                <p class="auth-modal__error"><?= htmlspecialchars($deleteError) ?></p>
-            <?php endif; ?>
             <button type="submit" class="btn-danger">Yes, delete my account</button>
         </form>
         <p class="auth-modal__switch"><a href="#" id="delete-cancel-btn">Cancel</a></p>
     </dialog>
 
+    <?php if ($session->isMember() && !$isFrozen): ?>
+    <dialog id="plan-change-modal" class="auth-modal auth-modal--simple">
+        <button type="button" class="btn-ghost auth-modal__close">&times;</button>
+        <?php if ($session->isPremium()): ?>
+        <h2 class="auth-modal__title">DOWNGRADE TO BASIC</h2>
+        <h3 class="auth-modal__subtitle">19.99€ / month</h3>
+        <p class="auth-modal__prompt">You will lose access to classes and scheduling. Are you sure?</p>
+        <?php else: ?>
+        <h2 class="auth-modal__title">UPGRADE TO PREMIUM</h2>
+        <h3 class="auth-modal__subtitle">39.99€ / month</h3>
+        <p class="auth-modal__prompt">Unlock unlimited classes, full facility access, and more. Confirm your upgrade?</p>
+        <?php endif; ?>
+        <form method="post" action="../actions/action_change_plan.php" class="auth-modal__form">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
+            <button type="submit" class="<?= $session->isPremium() ? 'btn-danger-solid' : 'btn-primary' ?>" style="margin-top: var(--space-m); margin-bottom: var(--space-s);">
+                <?= $session->isPremium() ? 'CONFIRM DOWNGRADE' : 'CONFIRM UPGRADE' ?>
+            </button>
+        </form>
+        <button type="button" id="plan-change-cancel" class="btn-ghost profile-edit-cancel" style="width: 100%; text-align: center; padding: var(--space-xs) 0;">Cancel</button>
+    </dialog>
+    <?php endif; ?>
+
+    <?php if (!$isFrozen): ?>
     <dialog id="pause-modal" class="auth-modal">
         <button type="button" class="btn-ghost auth-modal__close">&times;</button>
         <h2 class="auth-modal__title">Pause Membership</h2>
         <form method="post" action="../actions/action_pause_membership.php" class="auth-modal__form">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($session->getCsrfToken()) ?>">
             <input type="hidden" name="duration" id="pause-duration" value="">
-            <p class="auth-modal__prompt">Select how long to freeze your subscription:</p>
+            <p class="auth-modal__prompt">Select how long to pause your membership:</p>
             <div class="pause-options">
                 <?php foreach (MemberSubscription::ALLOWED_PAUSE_DAYS as $days): ?>
-                    <button type="button" class="pause-option" data-days="<?= $days ?>"><?= $days ?> Days</button>
+                    <button type="button" class="pause-option" data-days="<?= $days ?>"><?= MemberSubscription::PAUSE_LABELS[$days] ?></button>
                 <?php endforeach; ?>
             </div>
             <button type="submit" class="btn-primary" id="pause-confirm-btn" disabled>Confirm Pause</button>
         </form>
     </dialog>
+    <?php endif; ?>
 
     <?php include '../components/footer.php'; ?>
 

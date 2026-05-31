@@ -14,6 +14,7 @@ $formData = ['name' => $name, 'username' => $username, 'email' => $email, 'phone
 
 function failUpdateAccount(Session $session, string $msg, array $data): never {
     $session->setFormError('update_account', $msg, $data);
+    $session->addMessage('error', $msg);
     header('Location: /src/pages/page_account.php');
     exit;
 }
@@ -36,7 +37,7 @@ if ($existing && $existing->user_id !== $userId) failUpdateAccount($session, 'Em
 
 User::update($db, $userId, $name, $username, $email, $phone);
 $session->setName($name);
-$session->setFormSuccess('update_account', 'Account info updated successfully.');
+$session->addMessage('success', 'Account info updated successfully.');
 
 header('Location: /src/pages/page_account.php');
 exit;

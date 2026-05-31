@@ -8,12 +8,14 @@ $password = $_POST['password'] ?? '';
 
 if ($password === '') {
     $session->setFormError('delete_account', 'Password is required.');
+    $session->addMessage('error', 'Password is required.');
     header('Location: /src/pages/page_account.php');
     exit;
 }
 
 if (!User::verifyCurrentPassword($db, $session->getId(), $password)) {
     $session->setFormError('delete_account', 'Incorrect password.');
+    $session->addMessage('error', 'Incorrect password.');
     header('Location: /src/pages/page_account.php');
     exit;
 }

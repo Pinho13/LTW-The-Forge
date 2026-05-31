@@ -66,4 +66,43 @@ export function initAuthModals() {
             });
         });
     });
+
+    // Password strength single-line hint for register modal
+    const pwInput = document.getElementById('register-password');
+    const pwHint  = document.getElementById('pw-hint');
+
+    if (pwInput && pwHint) {
+        const rules = [
+            { check: v => v.length >= 8,         msg: 'At least 8 characters' },
+            { check: v => /[A-Z]/.test(v),        msg: 'One uppercase letter' },
+            { check: v => /[a-z]/.test(v),        msg: 'One lowercase letter' },
+            { check: v => /[0-9]/.test(v),        msg: 'One number' },
+            { check: v => /[^a-zA-Z0-9]/.test(v), msg: 'One special character' },
+        ];
+
+        function updatePwHint() {
+            if (pwInput.value.includes(' ')) {
+                pwInput.value = pwInput.value.replace(/ /g, '');
+            }
+            const val = pwInput.value;
+
+            if (!rules[0].check(val)) {
+                pwHint.textContent = rules[0].msg;
+                pwHint.className = 'pw-hint pw-hint--error';
+                return;
+            }
+
+            const unmet = rules.slice(1).find(r => !r.check(val));
+            if (unmet) {
+                pwHint.textContent = unmet.msg;
+                pwHint.className = 'pw-hint pw-hint--error';
+            } else {
+                pwHint.textContent = 'All requirements met';
+                pwHint.className = 'pw-hint pw-hint--ok';
+            }
+        }
+
+        updatePwHint();
+        pwInput.addEventListener('input', updatePwHint);
+    }
 }

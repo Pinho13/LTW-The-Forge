@@ -9,7 +9,7 @@ $new     = $_POST['new_password']     ?? '';
 $confirm = $_POST['confirm_password'] ?? '';
 
 function failChangePassword(Session $session, string $msg): never {
-    $session->setFormError('change_password', $msg);
+    $session->addMessage('error', $msg);
     header('Location: /src/pages/page_account.php');
     exit;
 }
@@ -29,7 +29,7 @@ if (!User::verifyCurrentPassword($db, $session->getId(), $current)) failChangePa
 if (User::verifyCurrentPassword($db, $session->getId(), $new))      failChangePassword($session, 'New password must differ from current password.');
 
 User::updatePassword($db, $session->getId(), $new);
-$session->setFormSuccess('change_password', 'Password updated successfully.');
+$session->addMessage('success', 'Password updated successfully.');
 
 header('Location: /src/pages/page_account.php');
 exit;
