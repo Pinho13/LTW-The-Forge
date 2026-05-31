@@ -14,11 +14,15 @@ $memberId = $session->getId();
 
 // Week navigation: offset in weeks from current week (Mon-based)
 $weekOffset = (int) ($_GET['week'] ?? 0);
+$startParam = $_GET['start'] ?? '';
+$startDate  = $startParam !== '' ? DateTimeImmutable::createFromFormat('Y-m-d', $startParam) : false;
+if ($startDate === false) $startDate = null;
 
 // Compute Monday of the displayed week
-$today = new DateTimeImmutable('today');
-$monday = $today->modify('Monday this week')->modify("{$weekOffset} weeks");
-$sunday = $monday->modify('+6 days');
+$today      = new DateTimeImmutable('today');
+$anchorDate = $startDate ?? $today->modify("{$weekOffset} weeks");
+$monday     = $anchorDate->modify('Monday this week');
+$sunday     = $monday->modify('+6 days');
 
 $weekStart = $monday->format('Y-m-d') . ' 00:00:00';
 $weekEnd   = $sunday->format('Y-m-d') . ' 23:59:59';
@@ -31,6 +35,22 @@ foreach ($sessions as $s) {
     $dt  = new DateTimeImmutable($s['datetime']);
     $dow = (int) $dt->format('N') - 1; // 0=Mon, 6=Sun
     $byDay[$dow][] = $s;
+}
+
+$mobileStart = $startDate ?? $anchorDate;
+$mobileEnd   = $mobileStart->modify('+2 days');
+
+$mobileStartTs = $mobileStart->format('Y-m-d') . ' 00:00:00';
+$mobileEndTs   = $mobileEnd->format('Y-m-d') . ' 23:59:59';
+$mobileSessions = Enrollment::getSessionsForWeek($db, $memberId, $mobileStartTs, $mobileEndTs);
+
+$mobileByDay = array_fill(0, 3, []);
+foreach ($mobileSessions as $s) {
+    $dt   = new DateTimeImmutable($s['datetime']);
+    $diff = (int) $dt->diff($mobileStart)->format('%r%a');
+    if ($diff >= 0 && $diff < 3) {
+        $mobileByDay[$diff][] = $s;
+    }
 }
 
 // Calendar grid: 8 AM start, each row = 15 min
@@ -52,9 +72,25 @@ function durationToGridSpan(int $minutes): int {
 $dayLabels = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 $todayDow  = (int) $today->format('N') - 1;
 $todayDate = $today->format('Y-m-d');
+$prevWeekStart  = $monday->modify('-7 days')->format('Y-m-d');
+$nextWeekStart  = $monday->modify('+7 days')->format('Y-m-d');
+$prevMobileStart = $mobileStart->modify('-3 days')->format('Y-m-d');
+$nextMobileStart = $mobileStart->modify('+3 days')->format('Y-m-d');
 
-$prevWeek = $weekOffset - 1;
-$nextWeek = $weekOffset + 1;
+$grids = [
+    [
+        'class' => 'calendar-grid--week',
+        'start' => $monday,
+        'days'  => 7,
+        'byDay' => $byDay,
+    ],
+    [
+        'class' => 'calendar-grid--mobile',
+        'start' => $mobileStart,
+        'days'  => 3,
+        'byDay' => $mobileByDay,
+    ],
+];
 ?>
 <!DOCTYPE html>
 <html lang="en-US">
@@ -79,22 +115,28 @@ $nextWeek = $weekOffset + 1;
 
         <section class="calendar">
 
-            <nav class="calendar-nav" aria-label="Week navigation">
-                <a href="?week=<?= $prevWeek ?>" class="btn-ghost">&#8592; Prev</a>
-                <h2><?= $monday->format('M j') ?> &ndash; <?= $sunday->format('M j, Y') ?></h2>
-                <a href="?week=<?= $nextWeek ?>" class="btn-ghost">Next &#8594;</a>
+            <nav class="calendar-nav" aria-label="Schedule navigation">
+                <a href="?start=<?= urlencode($prevWeekStart) ?>" class="btn-ghost calendar-nav__week">&#8592; Prev</a>
+                <h2 class="calendar-nav__range calendar-nav__week"><?= $monday->format('M j') ?> &ndash; <?= $sunday->format('M j, Y') ?></h2>
+                <a href="?start=<?= urlencode($nextWeekStart) ?>" class="btn-ghost calendar-nav__week">Next &#8594;</a>
+
+                <a href="?start=<?= urlencode($prevMobileStart) ?>" class="btn-ghost calendar-nav__mobile">&#8592; Prev</a>
+                <h2 class="calendar-nav__range calendar-nav__mobile"><?= $mobileStart->format('M j') ?> &ndash; <?= $mobileEnd->format('M j, Y') ?></h2>
+                <a href="?start=<?= urlencode($nextMobileStart) ?>" class="btn-ghost calendar-nav__mobile">Next &#8594;</a>
             </nav>
 
-            <div class="calendar-grid">
+            <?php foreach ($grids as $grid): ?>
+            <div class="calendar-grid <?= $grid['class'] ?>">
 
                 <div class="calendar-time-spacer"></div>
 
-                <?php for ($d = 0; $d < 7; $d++):
-                    $dayDate = $monday->modify("+{$d} days");
-                    $isToday = $dayDate->format('Y-m-d') === $todayDate;
+                <?php for ($d = 0; $d < $grid['days']; $d++):
+                    $dayDate    = $grid['start']->modify("+{$d} days");
+                    $isToday    = $dayDate->format('Y-m-d') === $todayDate;
+                    $labelIndex = (int) $dayDate->format('N') - 1;
                 ?>
                 <div class="calendar-day-header <?= $isToday ? 'today' : '' ?>">
-                    <span class="day-name"><?= $dayLabels[$d] ?></span>
+                    <span class="day-name"><?= $dayLabels[$labelIndex] ?></span>
                     <span class="day-date"><?= $dayDate->format('j') ?></span>
                 </div>
                 <?php endfor; ?>
@@ -105,12 +147,12 @@ $nextWeek = $weekOffset + 1;
                     <?php endfor; ?>
                 </div>
 
-                <?php for ($d = 0; $d < 7; $d++): ?>
+                <?php for ($d = 0; $d < $grid['days']; $d++): ?>
                 <div class="calendar-day-column">
                     <?php
                     // Group this day's sessions by grid row to detect overlaps
                     $byRow = [];
-                    foreach ($byDay[$d] as $s) {
+                    foreach ($grid['byDay'][$d] as $s) {
                         $byRow[timeToGridRow($s['datetime'])][] = $s;
                     }
                     foreach ($byRow as $row => $group):
@@ -234,6 +276,7 @@ $nextWeek = $weekOffset + 1;
                 <?php endfor; ?>
 
             </div>
+            <?php endforeach; ?>
         </section>
     </main>
 
