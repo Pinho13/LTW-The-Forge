@@ -13,6 +13,7 @@
     border: var(--border-xs) solid rgba(var(--color-grey-rgb), 0.15);
     border-top: 2px solid var(--color-gold);
     background: rgba(var(--color-dark-grey-rgb), 0.04);
+    min-width: 0;
 }
 
 .analytics-panel__header {
