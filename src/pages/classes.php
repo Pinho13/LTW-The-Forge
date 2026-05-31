@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once(__DIR__ . '/../utils/page_bootstrap.php');
+require_once(__DIR__ . '/../utils/calendar_helpers.php');
 require_once(__DIR__ . '/../../database/models/Enrollment.class.php');
 
 [$session, $db] = requireAuthenticatedPage();
@@ -34,20 +35,7 @@ foreach ($sessions as $s) {
 }
 
 // Calendar grid: 8 AM start, each row = 15 min
-const GRID_START_HOUR = 8;
-const GRID_ROWS       = 52; // 13 hours * 4
 
-function timeToGridRow(string $datetime): int {
-    $dt     = new DateTimeImmutable($datetime);
-    $hour   = (int) $dt->format('G');
-    $min    = (int) $dt->format('i');
-    $offset = ($hour - GRID_START_HOUR) * 4 + intdiv($min, 15);
-    return max(1, $offset + 1);
-}
-
-function durationToGridSpan(int $minutes): int {
-    return max(1, intdiv($minutes, 15));
-}
 
 $dayLabels = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 $todayDow  = (int) $today->format('N') - 1;
