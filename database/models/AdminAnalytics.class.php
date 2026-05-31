@@ -87,11 +87,11 @@ class AdminAnalytics {
                 FROM enrollment e
                 JOIN class_session cs ON cs.id = e.session_id
                 WHERE e.status IN ('completed', 'enrolled')
-                  AND cs.datetime <= datetime('now')
+                  AND cs.datetime <= datetime('now', '+1 hour')
                 UNION ALL
                 SELECT start_datetime AS activity_dt
                 FROM equipment_reservation
-                WHERE start_datetime <= datetime('now')
+                WHERE start_datetime <= datetime('now', '+1 hour')
             )
             GROUP BY dow
             ORDER BY dow ASC

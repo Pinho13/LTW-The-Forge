@@ -6,8 +6,8 @@ class AdminLog
     public static function write(PDO $db, int $adminId, string $type, string $description): void
     {
         $db->prepare(
-            "INSERT INTO admin_log (admin_id, action_type, description) VALUES (:admin_id, :type, :desc)"
-        )->execute([':admin_id' => $adminId, ':type' => $type, ':desc' => $description]);
+            "INSERT INTO admin_log (admin_id, action_type, description, created_at) VALUES (:admin_id, :type, :desc, :ts)"
+        )->execute([':admin_id' => $adminId, ':type' => $type, ':desc' => $description, ':ts' => date('Y-m-d H:i:s')]);
     }
 
     public static function getAll(PDO $db): array

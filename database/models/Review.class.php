@@ -18,11 +18,11 @@ class Review
     {
         $stmt = $db->prepare(
             "INSERT INTO review (member_id, class_id, rating, comment, created_at)
-             VALUES (:member_id, :class_id, :rating, :comment, datetime('now'))
+             VALUES (:member_id, :class_id, :rating, :comment, datetime('now', '+1 hour'))
              ON CONFLICT (member_id, class_id) DO UPDATE SET
                rating = excluded.rating,
                comment = excluded.comment,
-               created_at = datetime('now')"
+               created_at = datetime('now', '+1 hour')"
         );
         $stmt->execute([
             ':member_id' => $memberId,

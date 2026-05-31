@@ -19,8 +19,8 @@ class Equipment
                                 AND NOT EXISTS (
                                     SELECT 1 FROM equipment_reservation er
                                     WHERE er.unit_id = eu.id
-                                      AND er.start_datetime <= datetime('now', 'localtime')
-                                      AND er.end_datetime   >  datetime('now', 'localtime')
+                                      AND er.start_datetime <= datetime('now', '+1 hour')
+                                      AND er.end_datetime   >  datetime('now', '+1 hour')
                                 ) THEN 1 END) AS available_units
              FROM equipment e
              LEFT JOIN equipment_unit eu ON eu.equipment_id = e.id
@@ -41,8 +41,8 @@ class Equipment
                          WHEN EXISTS (
                              SELECT 1 FROM equipment_reservation er
                              WHERE er.unit_id = eu.id
-                               AND er.start_datetime <= datetime('now', 'localtime')
-                               AND er.end_datetime   >  datetime('now', 'localtime')
+                               AND er.start_datetime <= datetime('now', '+1 hour')
+                               AND er.end_datetime   >  datetime('now', '+1 hour')
                          ) THEN 0
                          ELSE 1 END AS is_available
              FROM equipment_unit eu
@@ -63,7 +63,7 @@ class Equipment
              JOIN equipment_unit eu ON eu.id = er.unit_id
              JOIN equipment e ON e.id = eu.equipment_id
              WHERE er.member_id = :mid
-               AND er.end_datetime > datetime('now', 'localtime')
+               AND er.end_datetime > datetime('now', '+1 hour')
              ORDER BY er.start_datetime ASC"
         );
         $stmt->execute([':mid' => $memberId]);
