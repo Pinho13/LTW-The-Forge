@@ -40,11 +40,10 @@ $_menu_role = $session->getRole() ?? 'member';
             <?php endif; ?>
 
         <?php elseif ($_menu_role === 'trainer'): ?>
-            <a href="/src/pages/my-account.php"        <?= $activePage === 'account'         ? 'class="active"' : '' ?>>MY ACCOUNT</a>
-            <a href="/src/pages/trainer-schedule.php"  <?= $activePage === 'trainer-schedule'? 'class="active"' : '' ?>>MY SCHEDULE</a>
-
-            <a href="/src/pages/trainer-profile.php"   <?= $activePage === 'trainer-profile' ? 'class="active"' : '' ?>>MY PROFILE</a>
-            <a href="/src/pages/news.php"              <?= $activePage === 'news'             ? 'class="active"' : '' ?>>NEWS</a>
+            <a href="/src/pages/trainer-dashboard.php" <?= $activePage === 'trainer-dashboard' ? 'class="active"' : '' ?>>DASHBOARD</a>
+            <a href="/src/pages/trainer-schedule.php"  <?= $activePage === 'trainer-schedule'  ? 'class="active"' : '' ?>>MY SCHEDULE</a>
+            <a href="/src/pages/trainer-profile.php"   <?= $activePage === 'trainer-profile'   ? 'class="active"' : '' ?>>MY PROFILE</a>
+            <a href="/src/pages/news.php"              <?= $activePage === 'news'               ? 'class="active"' : '' ?>>NEWS</a>
 
         <?php elseif ($_menu_role === 'admin'): ?>
             <a href="/src/pages/admin-dashboard.php"  <?= $activePage === 'account'          ? 'class="active"' : '' ?>>DASHBOARD</a>
