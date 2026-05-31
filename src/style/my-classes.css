@@ -152,3 +152,10 @@ section {
     border: var(--border-1px) dashed rgba(var(--color-grey-rgb), 0.3);
 }
 
+
+@media (max-width: 640px) {
+    body:has(.stale-banner) {
+        grid-template-areas: "mobile-top" "main" "stale" "footer";
+        grid-template-rows: auto 1fr auto auto;
+    }
+}
