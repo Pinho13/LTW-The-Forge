@@ -1,0 +1,42 @@
+.premium-gate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-xxl) var(--space-l);
+    flex: 1;
+    min-height: 60vh;
+}
+
+.premium-gate__icon {
+    font-size: 3rem;
+    color: var(--color-gold);
+    margin-bottom: var(--space-m);
+    line-height: 1;
+}
+
+.premium-gate__title {
+    font-family: "Big Shoulders", sans-serif;
+    font-size: var(--font-size-xxl);
+    color: rgba(var(--color-almost-white-rgb), 0.35);
+    margin: 0 0 var(--space-s);
+    letter-spacing: 0.05em;
+}
+
+.premium-gate__subtitle {
+    font-size: var(--font-size-l);
+    color: var(--color-almost-white);
+    margin: 0 0 var(--space-xs);
+}
+
+.premium-gate__desc {
+    font-size: var(--font-size-s);
+    color: var(--color-grey);
+    margin: 0 0 var(--space-l);
+    max-width: 28rem;
+}
+
+.premium-gate__cta {
+    font-size: var(--font-size-m);
+}

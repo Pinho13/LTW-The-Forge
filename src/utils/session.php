@@ -84,14 +84,25 @@ class Session
         $_SESSION['user_name'] = $name;
     }
 
-    public function setUser(int $id, string $name, string $role, string $plan = ''): void
+    public function setUser(int $id, string $name, string $role, string $plan = '', bool $frozen = false): void
     {
         session_regenerate_id(true);
 
-        $_SESSION['user_id']   = $id;
-        $_SESSION['user_name'] = $name;
-        $_SESSION['user_role'] = $role;
-        $_SESSION['user_plan'] = strtolower($plan);
+        $_SESSION['user_id']     = $id;
+        $_SESSION['user_name']   = $name;
+        $_SESSION['user_role']   = $role;
+        $_SESSION['user_plan']   = strtolower($plan);
+        $_SESSION['user_frozen'] = $frozen;
+    }
+
+    public function isFrozen(): bool
+    {
+        return !empty($_SESSION['user_frozen']);
+    }
+
+    public function setFrozen(bool $frozen): void
+    {
+        $_SESSION['user_frozen'] = $frozen;
     }
 
     public function getPlan(): string

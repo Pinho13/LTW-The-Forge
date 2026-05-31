@@ -79,7 +79,7 @@ async function handleEnroll(card, sessionId, btn) {
     }
 
     const newStatus = json.status; // 'enrolled' | 'waitlisted'
-    updateCardStatus(card, newStatus);
+    updateCardStatus(card, newStatus, json.waitlist_position ?? null);
     closeModal();
 }
 
@@ -98,12 +98,14 @@ async function handleCancel(card, sessionId, btn) {
         return;
     }
 
-    updateCardStatus(card, null);
+    const prevStatus = card.dataset.status || null;
+    updateCardStatus(card, null, null, prevStatus);
     closeModal();
 }
 
-function updateCardStatus(card, status) {
+function updateCardStatus(card, status, waitlistPosition = null, prevStatus = null) {
     card.dataset.status = status ?? '';
+    if (waitlistPosition !== null) card.dataset.waitlistPosition = waitlistPosition;
     card.classList.remove('class-card--enrolled', 'class-card--waitlisted', 'class-card--full');
 
     const spotsSpan = card.querySelector('footer > span');
@@ -116,8 +118,8 @@ function updateCardStatus(card, status) {
         card.classList.add('class-card--waitlisted');
         if (spotsSpan) spotsSpan.textContent = 'Waitlisted';
     } else {
-        // freed a spot
-        const newSpots = spots + 1;
+        // only free a spot if the user was actually enrolled (not waitlisted)
+        const newSpots = (prevStatus === 'enrolled') ? spots + 1 : spots;
         card.dataset.spots = newSpots;
         if (newSpots <= 0) {
             card.classList.add('class-card--full');
@@ -232,7 +234,8 @@ document.addEventListener('click', e => {
     const intensity    = parseInt(card.dataset.intensity, 10);
     const spotsLeft    = parseInt(card.dataset.spots, 10);
     const capacity     = parseInt(card.dataset.capacity, 10);
-    const status       = card.dataset.status || null;
+    const status          = card.dataset.status || null;
+    const waitlistPosition = card.dataset.waitlistPosition ? parseInt(card.dataset.waitlistPosition, 10) : null;
     const type         = card.dataset.type;
     const avgRating    = card.dataset.avgRating ? parseFloat(card.dataset.avgRating) : null;
     const reviewCount  = parseInt(card.dataset.reviewCount, 10) || 0;
@@ -263,7 +266,7 @@ document.addEventListener('click', e => {
     if (status === 'enrolled') {
         spotsEl.textContent = 'You are enrolled in this class.';
     } else if (status === 'waitlisted') {
-        spotsEl.textContent = 'You are on the waitlist for this class.';
+        spotsEl.textContent = waitlistPosition ? `You are on the waitlist — position #${waitlistPosition}.` : 'You are on the waitlist for this class.';
     } else {
         spotsEl.textContent = spotsLeft > 0
             ? `${spotsLeft} spot${spotsLeft !== 1 ? 's' : ''} left`
@@ -285,6 +288,20 @@ document.addEventListener('click', e => {
     const sid  = m[1];
     const card = document.querySelector(`.class-card[data-session-id="${sid}"]`);
     if (!card) return;
+
+    // If the card is inside a stack, activate it instantly (no animation)
+    const stack = card.closest('.class-stack');
+    if (stack) {
+        const cards = [...stack.querySelectorAll('.class-stack__card')];
+        const dots  = [...stack.querySelectorAll('.class-stack__dot')];
+        const idx   = cards.indexOf(card);
+        if (idx > 0) {
+            cards.forEach((c, i) => c.classList.toggle('class-stack__card--active', i === idx));
+            dots.forEach((d, i) => d.classList.toggle('class-stack__dot--active', i === idx));
+            stack.dataset.index = idx;
+        }
+    }
+
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     card.dispatchEvent(new MouseEvent('click', { bubbles: true }));
 })();

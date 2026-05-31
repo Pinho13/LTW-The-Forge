@@ -9,7 +9,7 @@ class GymVisit
         // that started in the past. Only past/current activity counts.
         $stmt = $db->prepare(
             "SELECT DISTINCT
-                date(activity_dt, 'localtime', '-' || strftime('%w', activity_dt, 'localtime') || ' days') AS week_start
+                date(activity_dt, '+1 hour', '-' || strftime('%w', activity_dt, '+1 hour') || ' days') AS week_start
              FROM (
                  SELECT cs.datetime AS activity_dt
                  FROM enrollment e
@@ -20,7 +20,7 @@ class GymVisit
                  SELECT start_datetime AS activity_dt
                  FROM equipment_reservation
                  WHERE member_id = :mid2
-                   AND start_datetime <= datetime('now', 'localtime')
+                   AND start_datetime <= datetime('now', '+1 hour')
              )
              ORDER BY week_start DESC"
         );

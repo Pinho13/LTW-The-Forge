@@ -10,6 +10,10 @@ const deleteConfirmBtn = document.getElementById('delete-confirm-btn');
 const editModal = document.getElementById('edit-modal');
 const editClose = document.getElementById('edit-close');
 
+const pinSwapModal = document.getElementById('pin-swap-modal');
+const pinSwapClose = document.getElementById('pin-swap-close');
+const pinSwapList  = document.getElementById('pin-swap-list');
+
 function openModal() {
     postModal.show();
     backdrop.classList.add('modal-backdrop--visible');
@@ -37,6 +41,7 @@ function closeEditModal() {
 newBtn.addEventListener('click', openModal);
 postClose.addEventListener('click', closeModal);
 editClose.addEventListener('click', closeEditModal);
+pinSwapClose.addEventListener('click', () => pinSwapModal.close());
 backdrop.addEventListener('click', () => { closeModal(); closeEditModal(); });
 
 document.getElementById('news-list')?.addEventListener('click', e => {
@@ -54,11 +59,75 @@ deleteConfirmBtn.addEventListener('click', async () => {
     pendingDeleteForm = null;
 });
 
+async function handlePinToggle(form) {
+    const item = form.closest('[data-announcement-id]');
+    const id   = item?.dataset.announcementId;
+    if (!id) return;
+
+    const btn = form.querySelector('button');
+    btn.disabled = true;
+
+    try {
+        const body = new URLSearchParams({ announcement_id: id, csrf_token: CSRF_TOKEN });
+        const res  = await fetch(form.action, { method: 'POST', body });
+        const data = await res.json();
+
+        if (data.success) {
+            location.reload();
+            return;
+        }
+
+        if (data.must_swap) {
+            // Populate swap modal with candidates
+            pinSwapList.innerHTML = '';
+            if (!data.candidates || data.candidates.length === 0) {
+                const li = document.createElement('li');
+                li.className = 'feature-swap-modal__item';
+                li.textContent = 'No other posts available to pin.';
+                pinSwapList.appendChild(li);
+            } else {
+                data.candidates.forEach(candidate => {
+                    const li  = document.createElement('li');
+                    li.className = 'feature-swap-modal__item';
+                    const pickBtn = document.createElement('button');
+                    pickBtn.className = 'feature-swap-modal__pick';
+                    pickBtn.textContent = candidate.title;
+                    pickBtn.addEventListener('click', async () => {
+                        pinSwapModal.close();
+                        const swapBody = new URLSearchParams({
+                            announcement_id: id,
+                            swap_id: candidate.id,
+                            action: 'swap',
+                            csrf_token: CSRF_TOKEN,
+                        });
+                        await fetch(form.action, { method: 'POST', body: swapBody });
+                        location.reload();
+                    });
+                    li.appendChild(pickBtn);
+                    pinSwapList.appendChild(li);
+                });
+            }
+            pinSwapModal.showModal();
+            btn.disabled = false;
+            return;
+        }
+
+        btn.disabled = false;
+    } catch {
+        btn.disabled = false;
+    }
+}
+
 async function submitNewsForm(form, confirmed = false) {
     const action      = form.action;
     const isDelete    = action.includes('delete_announcement');
     const isTogglePin = action.includes('toggle_pin');
     if (!isDelete && !isTogglePin) return;
+
+    if (isTogglePin) {
+        await handlePinToggle(form);
+        return;
+    }
 
     const item = form.closest('[data-announcement-id]');
     const id   = item?.dataset.announcementId;

@@ -17,15 +17,27 @@ $_menu_role = $session->getRole() ?? 'member';
 
     <div class="side-nav">
         <?php if ($_menu_role === 'member'): ?>
-            <a href="/src/pages/my-account.php"   <?= $activePage === 'account'      ? 'class="active"' : '' ?>>MY ACCOUNT</a>
+            <a href="/src/pages/my-account.php" <?= $activePage === 'account' ? 'class="active"' : '' ?>>MY ACCOUNT</a>
+            <?php if ($session->isFrozen()): ?>
+            <a href="/src/pages/frozen.php?page=classes"       class="nav-locked">CLASSES</a>
+            <a href="/src/pages/frozen.php?page=my-classes"    class="nav-locked">MY CLASSES</a>
+            <a href="/src/pages/frozen.php?page=equipment"     class="nav-locked">EQUIPMENT</a>
+            <a href="/src/pages/frozen.php?page=reservations"  class="nav-locked">RESERVATIONS</a>
+            <a href="/src/pages/frozen.php?page=trainers"      class="nav-locked">TRAINERS</a>
+            <a href="/src/pages/frozen.php?page=news"          class="nav-locked">NEWS</a>
+            <?php else: ?>
             <?php if ($session->isPremium()): ?>
             <a href="/src/pages/classes.php"       <?= $activePage === 'classes'      ? 'class="active"' : '' ?>>CLASSES</a>
             <a href="/src/pages/my-classes.php"    <?= $activePage === 'my-classes'   ? 'class="active"' : '' ?>>MY CLASSES</a>
+            <?php else: ?>
+            <a href="/src/pages/premium-only.php?page=classes"    class="nav-locked">CLASSES</a>
+            <a href="/src/pages/premium-only.php?page=my-classes" class="nav-locked">MY CLASSES</a>
             <?php endif; ?>
-            <a href="/src/pages/equipment-map.php" <?= $activePage === 'equipment'     ? 'class="active"' : '' ?>>EQUIPMENT</a>
+            <a href="/src/pages/equipment-map.php" <?= $activePage === 'equipment'    ? 'class="active"' : '' ?>>EQUIPMENT</a>
             <a href="/src/pages/reservations.php"  <?= $activePage === 'reservations' ? 'class="active"' : '' ?>>RESERVATIONS</a>
             <a href="/src/pages/trainers.php"      <?= $activePage === 'trainers'     ? 'class="active"' : '' ?>>TRAINERS</a>
             <a href="/src/pages/news.php"          <?= $activePage === 'news'         ? 'class="active"' : '' ?>>NEWS</a>
+            <?php endif; ?>
 
         <?php elseif ($_menu_role === 'trainer'): ?>
             <a href="/src/pages/my-account.php"        <?= $activePage === 'account'         ? 'class="active"' : '' ?>>MY ACCOUNT</a>

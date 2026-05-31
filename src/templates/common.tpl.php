@@ -101,6 +101,10 @@ require_once(__DIR__ . '/../utils/session.php');
 
       <?php drawPasswordField($isLogin ? 'password' : 'register-password', 'password', 'PASSWORD', $isLogin ? 'current-password' : 'new-password'); ?>
 
+      <?php if (!$isLogin): ?>
+      <p class="pw-hint" id="pw-hint"></p>
+      <?php endif; ?>
+
       <?php if ($isLogin) { ?>
         <a href="index.php" class="form__forgot">Forgot your password?</a>
       <?php } else { ?>

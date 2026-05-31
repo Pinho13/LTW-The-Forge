@@ -247,13 +247,18 @@
     width: min(38rem, calc(100% - 2 * var(--space-m)));
 }
 
-.reserve-submit {
+.reserve-modal .auth-modal__title {
+    margin-bottom: var(--space-s);
+}
+
+
+.auth-modal__form .reserve-submit {
     display: block;
     width: 100%;
     box-sizing: border-box;
     text-align: center;
-    margin-top: var(--space-s);
-    margin-bottom: var(--space-s);
+    margin-top: var(--space-xxs);
+    margin-bottom: 0;
     font-size: var(--font-size-m);
     cursor: pointer;
 }

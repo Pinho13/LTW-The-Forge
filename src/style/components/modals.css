@@ -20,7 +20,7 @@
     margin: 0;
     width: min(32rem, calc(100% - 2 * var(--space-m)));
     padding: var(--space-xl) clamp(var(--space-m), 8vw, var(--space-xxl));
-    border: none;
+    border: var(--border-thin) solid var(--color-gold);
     border-top: var(--border-l) solid var(--color-gold);
     background-color: var(--color-golden-brown);
     color: var(--color-white);
@@ -272,6 +272,77 @@
     opacity: 0.5;
 }
 
+/* ── Fixed-height scrollable modal (all auth-modal except --simple, feature-swap, admin-class, user-modal) ── */
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) {
+    max-height: min(90vh, 36rem);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: 0;
+}
+
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) .auth-modal__close {
+    position: absolute;
+    z-index: 10;
+}
+
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) .auth-modal__title,
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) .auth-modal__subtitle {
+    flex-shrink: 0;
+}
+
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) .auth-modal__form {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding-bottom: var(--space-m);
+}
+
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) .auth-modal__form::-webkit-scrollbar {
+    display: none;
+}
+
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) .auth-modal__form .btn-primary,
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) .auth-modal__form .modal-action-btn,
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) .auth-modal__form .btn-danger {
+    position: sticky;
+    bottom: 0;
+    margin-top: var(--space-m);
+    margin-bottom: 0;
+}
+
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) .auth-modal__form .btn-danger {
+    background: var(--color-golden-brown);
+}
+
+.auth-modal[open]:not(.auth-modal--simple):not(.feature-swap-modal):not(#admin-class-modal):not(#user-modal):not(#reserve-modal):not(#register-modal) .auth-modal__form::after {
+    content: '';
+    display: block;
+    height: var(--space-m);
+    position: sticky;
+    bottom: 0;
+    background: var(--color-golden-brown);
+    margin-top: 0;
+    flex-shrink: 0;
+}
+
+/* ── Password strength hint ── */
+.pw-hint {
+    margin: var(--space-xs) 0 0;
+    font-size: var(--font-size-xs);
+    min-height: 1.2em;
+    transition: color 0.15s;
+}
+
+.pw-hint--error {
+    color: rgba(var(--color-error-rgb), 0.85);
+}
+
+.pw-hint--ok {
+    color: rgba(var(--color-success-rgb), 0.9);
+}
+
 @keyframes modal-in {
     from { opacity: 0; transform: translate(-50%, -48%); }
     to   { opacity: 1; transform: translate(-50%, -50%); }
@@ -314,11 +385,26 @@
 }
 
 /* ── Feature swap modal ── */
-.feature-swap-modal {
+.feature-swap-modal[open] {
     width: min(28rem, calc(100% - 2 * var(--space-l)));
+    height: min(90vh, 28rem);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: var(--space-m);
+}
+
+.feature-swap-modal[open] .auth-modal__close {
+    position: absolute;
+    z-index: 10;
+}
+
+.feature-swap-modal[open] .auth-modal__title {
+    flex-shrink: 0;
 }
 
 .feature-swap-modal__hint {
+    flex-shrink: 0;
     color: var(--color-grey);
     font-size: var(--font-size-s);
     margin: var(--space-s) 0 var(--space-m);
@@ -332,6 +418,12 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.feature-swap-modal__list::-webkit-scrollbar {
+    display: none;
 }
 
 .feature-swap-modal__pick {

@@ -108,7 +108,7 @@ $staleEnrollments = Enrollment::getStaleForMember($db, $memberId, $now);
 
     <div class="modal-backdrop" id="page-backdrop"></div>
 
-    <dialog id="cancel-modal" class="auth-modal">
+    <dialog id="cancel-modal" class="auth-modal auth-modal--simple">
         <button type="button" class="btn-ghost auth-modal__close">&times;</button>
         <h2 class="auth-modal__title">Cancel Class</h2>
         <form method="POST" action="../actions/action_cancel_enrollment.php" class="auth-modal__form">
@@ -139,7 +139,7 @@ $staleEnrollments = Enrollment::getStaleForMember($db, $memberId, $now);
         </form>
     </dialog>
 
-    <dialog id="stale-modal" class="auth-modal">
+    <dialog id="stale-modal" class="auth-modal auth-modal--simple">
         <button type="button" class="btn-ghost auth-modal__close">&times;</button>
         <h2 class="auth-modal__title">Update Status</h2>
         <p class="stale-progress" id="stale-progress"></p>

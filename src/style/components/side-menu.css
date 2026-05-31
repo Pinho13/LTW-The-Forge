@@ -63,6 +63,14 @@
 }
 
 
+.side-nav a.nav-locked {
+    color: rgba(var(--color-grey-rgb), 0.4);
+}
+
+.side-nav a.nav-locked:hover {
+    color: rgba(var(--color-grey-rgb), 0.6);
+}
+
 #side-menu-toggle,
 .side-menu-backdrop,
 .mobile-top-bar {

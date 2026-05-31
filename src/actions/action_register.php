@@ -72,6 +72,9 @@ if ($password !== $confirmPassword) {
 
 $passwordErrors = [];
 
+if (str_contains($password, ' ')) {
+    $passwordErrors[] = 'no spaces allowed';
+}
 if (strlen($password) < 8) {
     $passwordErrors[] = 'at least 8 characters';
 }

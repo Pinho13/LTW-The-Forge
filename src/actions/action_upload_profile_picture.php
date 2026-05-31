@@ -9,7 +9,7 @@ $destDir = __DIR__ . '/../../database/profile_pictures';
 $dest    = $destDir . '/' . $userId . '.png';
 
 function failUpload(Session $session, string $msg): never {
-    $session->setFormError('upload_pfp', $msg);
+    $session->addMessage('error', $msg);
     header('Location: /src/pages/page_account.php');
     exit;
 }
@@ -54,5 +54,6 @@ if (!is_dir($destDir)) {
 imagepng($out, $dest);
 imagedestroy($out);
 
+$session->addMessage('success', 'Profile picture updated.');
 header('Location: /src/pages/page_account.php');
 exit;

@@ -12,7 +12,7 @@
 .btn-secondary {
     display: inline-block;
     width: auto;
-    padding: var(--space-xxs) var(--space-xl);
+    padding: var(--space-xs) var(--space-xl);
     font-size: inherit;
     text-transform: uppercase;
 }
@@ -30,6 +30,17 @@
 .btn-danger {
     background: transparent;
     color: var(--color-error);
+    outline-color: var(--color-error);
+}
+
+.btn-danger-solid {
+    display: inline-block;
+    width: auto;
+    padding: var(--space-xs) var(--space-xl);
+    font-size: inherit;
+    text-transform: uppercase;
+    background-color: var(--color-error);
+    color: var(--color-white);
     outline-color: var(--color-error);
 }
 

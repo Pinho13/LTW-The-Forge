@@ -41,12 +41,14 @@ if ($user === null) {
     redirectLoginError($session, $formData, 'Invalid email or password.');
 }
 
-$plan = '';
+$plan   = '';
+$frozen = false;
 if ($user->role === 'member') {
     require_once(__DIR__ . '/../../database/models/MemberSubscription.class.php');
-    $plan = MemberSubscription::getActivePlanName($db, $user->user_id) ?? '';
+    $plan   = MemberSubscription::getActivePlanName($db, $user->user_id) ?? '';
+    $frozen = MemberSubscription::isFrozen($db, $user->user_id);
 }
-$session->setUser($user->user_id, $user->name, $user->role, $plan);
+$session->setUser($user->user_id, $user->name, $user->role, $plan, $frozen);
 $session->addMessage('toast', 'Login successful.');
 
 if ($user->role === 'admin') {

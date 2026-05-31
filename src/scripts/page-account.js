@@ -1,19 +1,29 @@
-// Account info unlock / discard / confirm
-const accountForm = document.getElementById('account-form');
+// Account info edit / cancel / save
+const accountForm   = document.getElementById('account-form');
 const accountInputs = accountForm.querySelectorAll('input:not([type="hidden"])');
-const unlockBtn = document.getElementById('unlock-btn');
-const confirmBtn = document.getElementById('confirm-btn');
+const actionsEl     = accountForm.closest('.profile-section').querySelector('.profile-section__actions');
 
 const originalValues = {};
 accountInputs.forEach(input => { originalValues[input.name] = input.value; });
 
 let locked = !accountForm.dataset.unlocked;
 
+function renderActions() {
+    if (locked) {
+        actionsEl.innerHTML = '<button type="button" id="edit-btn" class="btn-ghost profile-edit-btn">Edit Profile</button>';
+        actionsEl.querySelector('#edit-btn').addEventListener('click', unlock);
+    } else {
+        actionsEl.innerHTML =
+            '<button type="button" id="cancel-btn" class="btn-ghost profile-edit-cancel">Cancel</button>' +
+            '<button type="submit" id="confirm-btn" form="account-form" class="btn-ghost profile-edit-save">Save</button>';
+        actionsEl.querySelector('#cancel-btn').addEventListener('click', discard);
+    }
+}
+
 function unlock() {
     accountInputs.forEach(input => input.removeAttribute('readonly'));
-    unlockBtn.textContent = 'Discard Changes';
-    confirmBtn.disabled = false;
     locked = false;
+    renderActions();
 }
 
 function discard() {
@@ -21,12 +31,14 @@ function discard() {
         input.value = originalValues[input.name];
         input.setAttribute('readonly', '');
     });
-    unlockBtn.textContent = 'Unlock Info';
-    confirmBtn.disabled = true;
     locked = true;
+    renderActions();
 }
 
-unlockBtn.addEventListener('click', () => locked ? unlock() : discard());
+renderActions();
+if (!locked) {
+    accountInputs.forEach(input => input.removeAttribute('readonly'));
+}
 
 // Modal helpers
 const backdrop = document.getElementById('page-backdrop');
@@ -58,15 +70,25 @@ deleteModal.querySelector('.auth-modal__close').addEventListener('click', () => 
 document.getElementById('delete-cancel-btn').addEventListener('click', e => { e.preventDefault(); closeModal(deleteModal); });
 if ('openOnLoad' in deleteModal.dataset) openModal(deleteModal);
 
+// Plan change modal
+const planChangeModal = document.getElementById('plan-change-modal');
+const planChangeBtn   = document.getElementById('plan-change-btn');
+if (planChangeModal && planChangeBtn) {
+    planChangeBtn.addEventListener('click', () => openModal(planChangeModal));
+    planChangeModal.querySelector('.auth-modal__close').addEventListener('click', () => closeModal(planChangeModal));
+    document.getElementById('plan-change-cancel').addEventListener('click', () => closeModal(planChangeModal));
+}
+
 // Pause membership modal
 const pauseModal = document.getElementById('pause-modal');
 const pauseDurationInput = document.getElementById('pause-duration');
 const pauseConfirmBtn = document.getElementById('pause-confirm-btn');
 
-document.getElementById('pause-btn').addEventListener('click', () => openModal(pauseModal));
-pauseModal.querySelector('.auth-modal__close').addEventListener('click', () => closeModal(pauseModal));
+const pauseBtn = document.getElementById('pause-btn');
+if (pauseBtn) pauseBtn.addEventListener('click', () => openModal(pauseModal));
+if (pauseModal) pauseModal.querySelector('.auth-modal__close').addEventListener('click', () => closeModal(pauseModal));
 
-pauseModal.querySelectorAll('.pause-option').forEach(btn => {
+pauseModal && pauseModal.querySelectorAll('.pause-option').forEach(btn => {
     btn.addEventListener('click', () => {
         pauseModal.querySelectorAll('.pause-option').forEach(b => b.classList.remove('pause-option--selected'));
         btn.classList.add('pause-option--selected');
@@ -105,8 +127,6 @@ pfpModal.querySelector('.auth-modal__close').addEventListener('click', () => {
     closeModal(pfpModal);
     pfpInput.value = '';
 });
-if ('openOnLoad' in pfpModal.dataset) openModal(pfpModal);
-
 // Password toggles
 document.querySelectorAll('.form__toggle-password').forEach(button => {
     button.addEventListener('click', () => {

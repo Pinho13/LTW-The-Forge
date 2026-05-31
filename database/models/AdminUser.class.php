@@ -32,11 +32,11 @@ class AdminUser
             $where[] = 'u.is_active = 1 AND ms.status = \'frozen\'';
         }
         if ($joined === 'week') {
-            $where[] = "u.created_at >= datetime('now', '-7 days', 'localtime')";
+            $where[] = "u.created_at >= datetime('now', '+1 hour', '-7 days')";
         } elseif ($joined === 'month') {
-            $where[] = "u.created_at >= datetime('now', 'start of month', 'localtime')";
+            $where[] = "u.created_at >= datetime('now', '+1 hour', 'start of month')";
         } elseif ($joined === 'year') {
-            $where[] = "u.created_at >= datetime('now', 'start of year', 'localtime')";
+            $where[] = "u.created_at >= datetime('now', '+1 hour', 'start of year')";
         }
         if ($subscription === 'expired') {
             $where[] = "u.user_id IN (SELECT member_id FROM member_subscription WHERE status='active' AND end_date < date('now'))";

@@ -42,7 +42,7 @@ class TrainerProfile
              LEFT JOIN class_type ct ON ct.id = c.type_id
              LEFT JOIN enrollment e ON e.session_id = cs.id
              WHERE c.trainer_id = :trainer_id
-               AND cs.datetime > datetime('now', 'localtime')
+               AND cs.datetime > datetime('now', '+1 hour')
              GROUP BY cs.id
              ORDER BY cs.datetime ASC
              LIMIT :limit"

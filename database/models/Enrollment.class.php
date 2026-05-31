@@ -12,7 +12,7 @@ class Enrollment
              JOIN class_session ON class_session.id = enrollment.session_id
              WHERE enrollment.member_id = :member_id
                AND enrollment.status = 'enrolled'
-               AND strftime('%Y-%m', class_session.datetime) = strftime('%Y-%m', 'now', 'localtime')"
+               AND strftime('%Y-%m', class_session.datetime) = strftime('%Y-%m', 'now', '+1 hour')"
         );
         $stmt->execute([':member_id' => $memberId]);
 
@@ -24,7 +24,7 @@ class Enrollment
         $stmt = $db->prepare(
             "SELECT COUNT(*) FROM equipment_reservation
              WHERE member_id = :member_id
-               AND start_datetime > datetime('now', 'localtime')"
+               AND start_datetime > datetime('now', '+1 hour')"
         );
         $stmt->execute([':member_id' => $memberId]);
 
@@ -44,7 +44,7 @@ class Enrollment
              LEFT JOIN user ON user.user_id = class.trainer_id
              WHERE enrollment.member_id = :member_id
                AND enrollment.status = 'enrolled'
-               AND class_session.datetime > datetime('now', 'localtime')
+               AND class_session.datetime > datetime('now', '+1 hour')
              ORDER BY class_session.datetime ASC
              LIMIT 1"
         );
@@ -80,7 +80,7 @@ class Enrollment
              LEFT JOIN class_type ON class_type.id = class.type_id
              WHERE enrollment.member_id = :member_id
                AND enrollment.status IN ('enrolled', 'waitlisted')
-               AND class_session.datetime > datetime('now', 'localtime')
+               AND class_session.datetime > datetime('now', '+1 hour')
              ORDER BY class_session.datetime ASC
              LIMIT :limit OFFSET :offset"
         );
@@ -114,7 +114,7 @@ class Enrollment
             LEFT JOIN class_type ON class_type.id = class.type_id
             LEFT JOIN review ON review.class_id = class.id AND review.member_id = enrollment.member_id
             WHERE enrollment.member_id = :member_id
-            AND class_session.datetime < datetime('now', 'localtime')
+            AND class_session.datetime < datetime('now', '+1 hour')
             AND enrollment.status NOT IN ('cancelled', 'waitlisted')
             ORDER BY class_session.datetime DESC
             LIMIT :limit OFFSET :offset"
@@ -314,6 +314,10 @@ class Enrollment
                 u.name AS trainer_name,
                 COUNT(CASE WHEN e.status = 'enrolled' THEN 1 END) AS enrolled_count,
                 MAX(CASE WHEN e.member_id = :member_id AND e.status NOT IN ('cancelled') THEN e.status END) AS member_status,
+                (SELECT COUNT(*) + 1 FROM enrollment e2
+                 WHERE e2.session_id = cs.id AND e2.status = 'waitlisted'
+                   AND e2.enrolled_at < (SELECT enrolled_at FROM enrollment WHERE session_id = cs.id AND member_id = :member_id2 AND status = 'waitlisted' LIMIT 1)
+                ) AS waitlist_position,
                 (SELECT ROUND(AVG(r.rating), 1) FROM review r WHERE r.class_id = c.id) AS avg_rating,
                 (SELECT COUNT(*) FROM review r WHERE r.class_id = c.id) AS review_count
              FROM class_session cs
@@ -326,9 +330,10 @@ class Enrollment
              ORDER BY cs.datetime ASC"
         );
         $stmt->execute([
-            ':member_id' => $memberId,
-            ':start' => $weekStart,
-            ':end' => $weekEnd,
+            ':member_id'  => $memberId,
+            ':member_id2' => $memberId,
+            ':start'      => $weekStart,
+            ':end'        => $weekEnd,
         ]);
         return $stmt->fetchAll();
     }
@@ -344,8 +349,8 @@ class Enrollment
              JOIN class ON class.id = class_session.class_id
              WHERE enrollment.member_id = :member_id
                AND enrollment.status IN ('completed', 'missed')
-               AND class_session.datetime <= datetime('now', 'localtime')
-               AND class_session.datetime >= datetime('now', 'localtime', '-14 days')
+               AND class_session.datetime <= datetime('now', '+1 hour')
+               AND class_session.datetime >= datetime('now', '+1 hour', '-14 days')
              ORDER BY class_session.datetime DESC
              LIMIT 7"
         );

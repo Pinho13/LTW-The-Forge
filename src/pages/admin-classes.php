@@ -380,7 +380,7 @@ $nextWeek  = $weekOffset + 1;
         </form>
     </dialog>
 
-    <dialog id="admin-confirm-modal" class="auth-modal">
+    <dialog id="admin-confirm-modal" class="auth-modal auth-modal--simple">
         <h2 class="auth-modal__title" id="admin-confirm-title">Confirm</h2>
         <p class="news-delete-hint" id="admin-confirm-msg"></p>
         <div class="news-confirm-actions">
