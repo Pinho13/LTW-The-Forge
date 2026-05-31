@@ -41,19 +41,25 @@ function closeEditModal() {
 newBtn.addEventListener('click', openModal);
 postClose.addEventListener('click', closeModal);
 editClose.addEventListener('click', closeEditModal);
-pinSwapClose.addEventListener('click', () => pinSwapModal.close());
-backdrop.addEventListener('click', () => { closeModal(); closeEditModal(); });
+pinSwapClose.addEventListener('click', () => { pinSwapModal.close(); backdrop.classList.remove('modal-backdrop--visible'); });
+backdrop.addEventListener('click', () => {
+    closeModal();
+    closeEditModal();
+    if (pinSwapModal.open) { pinSwapModal.close(); backdrop.classList.remove('modal-backdrop--visible'); }
+    if (deleteModal.open)  { deleteModal.close();  backdrop.classList.remove('modal-backdrop--visible'); }
+});
 
 document.getElementById('news-list')?.addEventListener('click', e => {
     const btn = e.target.closest('.js-edit-btn');
     if (btn) openEditModal(btn);
 });
-deleteCancelBtn.addEventListener('click', () => deleteModal.close());
+deleteCancelBtn.addEventListener('click', () => { deleteModal.close(); backdrop.classList.remove('modal-backdrop--visible'); });
 
 let pendingDeleteForm = null;
 
 deleteConfirmBtn.addEventListener('click', async () => {
     deleteModal.close();
+    backdrop.classList.remove('modal-backdrop--visible');
     if (!pendingDeleteForm) return;
     await submitNewsForm(pendingDeleteForm, true);
     pendingDeleteForm = null;
@@ -107,7 +113,8 @@ async function handlePinToggle(form) {
                     pinSwapList.appendChild(li);
                 });
             }
-            pinSwapModal.showModal();
+            pinSwapModal.show();
+            backdrop.classList.add('modal-backdrop--visible');
             btn.disabled = false;
             return;
         }
@@ -137,7 +144,8 @@ async function submitNewsForm(form, confirmed = false) {
         const titleEl = item.querySelector('.news-hero__title, .news-card__title');
         document.getElementById('delete-confirm-title').textContent = titleEl?.textContent.trim() ?? 'this announcement';
         pendingDeleteForm = form;
-        deleteModal.showModal();
+        deleteModal.show();
+        backdrop.classList.add('modal-backdrop--visible');
         return;
     }
 

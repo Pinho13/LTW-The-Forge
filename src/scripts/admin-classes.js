@@ -76,7 +76,8 @@ function adminConfirm(msg, fromModal, fn) {
     pendingConfirmFn   = fn;
     pendingConfirmFrom = fromModal;
     if (fromModal) closeModal(fromModal);
-    confirmModal.showModal();
+    confirmModal.show();
+    backdrop.classList.add('modal-backdrop--visible');
 }
 
 // ── Open/close helpers ────────────────────────────────────────
@@ -89,22 +90,13 @@ function closeModal(el) {
     backdrop.classList.remove('modal-backdrop--visible');
 }
 
-adminModalClose.addEventListener('click', () => closeModal(adminModal));
-document.getElementById('new-session-close').addEventListener('click', () => closeModal(newSessionModal));
-document.getElementById('new-class-close').addEventListener('click',   () => closeModal(newClassModal));
+adminModalClose?.addEventListener('click', () => closeModal(adminModal));
+document.getElementById('new-session-close')?.addEventListener('click', () => closeModal(newSessionModal));
+document.getElementById('new-class-close')?.addEventListener('click',   () => closeModal(newClassModal));
 backdrop.addEventListener('click', () => {
-    [adminModal, newSessionModal, newClassModal].forEach(m => { if (m.open) closeModal(m); });
+    [adminModal, newSessionModal, newClassModal].filter(Boolean).forEach(m => { if (m.open) closeModal(m); });
 });
 
-// ── Tabs ──────────────────────────────────────────────────────
-document.querySelectorAll('.admin-modal-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        document.querySelectorAll('.admin-modal-tab').forEach(t => t.classList.remove('admin-modal-tab--active'));
-        tab.classList.add('admin-modal-tab--active');
-        document.querySelectorAll('.admin-modal-panel').forEach(p => p.hidden = true);
-        document.getElementById('tab-' + tab.dataset.tab).hidden = false;
-    });
-});
 
 // ── Open edit modal on card click ─────────────────────────────
 document.addEventListener('click', e => {
@@ -140,8 +132,6 @@ document.addEventListener('click', e => {
         ? '★ Remove from Homepage'
         : '☆ Feature on Homepage';
 
-    // Reset to session tab
-    document.querySelectorAll('.admin-modal-tab').forEach((t, i) => t.classList.toggle('admin-modal-tab--active', i === 0));
     document.getElementById('tab-session').hidden = false;
     document.getElementById('tab-class').hidden   = true;
     clearErrors();
@@ -266,7 +256,7 @@ function editDatetime() {
 });
 
 // ── New session ───────────────────────────────────────────────
-document.getElementById('new-session-btn').addEventListener('click', () => {
+document.getElementById('new-session-btn')?.addEventListener('click', () => {
     document.getElementById('form-new-session').reset();
     document.getElementById('new-session-error').textContent = '';
     loadAllRooms(document.getElementById('ns-room'));
@@ -275,7 +265,7 @@ document.getElementById('new-session-btn').addEventListener('click', () => {
 
 
 ['ns-date', 'ns-hour'].forEach(id => {
-    document.getElementById(id).addEventListener('change', () => {
+    document.getElementById(id)?.addEventListener('change', () => {
         const d  = document.getElementById('ns-date').value;
         const h  = document.getElementById('ns-hour').value.padStart(2, '0');
         if (!d) return;
@@ -283,7 +273,7 @@ document.getElementById('new-session-btn').addEventListener('click', () => {
     });
 });
 
-document.getElementById('form-new-session').addEventListener('submit', async e => {
+document.getElementById('form-new-session')?.addEventListener('submit', async e => {
     e.preventDefault();
     const err = document.getElementById('new-session-error');
     err.textContent = '';
@@ -312,13 +302,13 @@ document.getElementById('form-new-session').addEventListener('submit', async e =
 });
 
 // ── New class ─────────────────────────────────────────────────
-document.getElementById('new-class-btn').addEventListener('click', () => {
+document.getElementById('new-class-btn')?.addEventListener('click', () => {
     document.getElementById('form-new-class').reset();
     document.getElementById('new-class-error').textContent = '';
     openModal(newClassModal);
 });
 
-document.getElementById('form-new-class').addEventListener('submit', async e => {
+document.getElementById('form-new-class')?.addEventListener('submit', async e => {
     e.preventDefault();
     const err = document.getElementById('new-class-error');
     err.textContent = '';

@@ -4,24 +4,28 @@ require_once(__DIR__ . '/action_bootstrap.php');
 
 [$session, ] = requireAuthenticatedPost('/src/pages/page_account.php');
 
+$allowed_returns = ['page_account', 'trainer-profile'];
+$ret = in_array($_GET['return'] ?? '', $allowed_returns, true) ? $_GET['return'] : 'page_account';
+$returnUrl = '/src/pages/' . $ret . '.php';
+
 $userId  = $session->getId();
 $destDir = __DIR__ . '/../../database/profile_pictures';
 $dest    = $destDir . '/' . $userId . '.png';
 
-function failUpload(Session $session, string $msg): never {
+function failUpload(Session $session, string $msg, string $returnUrl): never {
     $session->addMessage('error', $msg);
-    header('Location: /src/pages/page_account.php');
+    header('Location: ' . $returnUrl);
     exit;
 }
 
 $file = $_FILES['photo'] ?? null;
 
 if (!$file || $file['error'] !== UPLOAD_ERR_OK) {
-    failUpload($session, 'Upload failed. Please try again.');
+    failUpload($session, 'Upload failed. Please try again.', $returnUrl);
 }
 
 if ($file['size'] > 5 * 1024 * 1024) {
-    failUpload($session, 'Image must be smaller than 5 MB.');
+    failUpload($session, 'Image must be smaller than 5 MB.', $returnUrl);
 }
 
 $finfo = new finfo(FILEINFO_MIME_TYPE);
@@ -29,12 +33,12 @@ $mime  = $finfo->file($file['tmp_name']);
 $allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 
 if (!in_array($mime, $allowed, true)) {
-    failUpload($session, 'Only JPEG, PNG, WEBP, and GIF images are allowed.');
+    failUpload($session, 'Only JPEG, PNG, WEBP, and GIF images are allowed.', $returnUrl);
 }
 
 $src = imagecreatefromstring(file_get_contents($file['tmp_name']));
 if ($src === false) {
-    failUpload($session, 'Could not process the image. Please try a different file.');
+    failUpload($session, 'Could not process the image. Please try a different file.', $returnUrl);
 }
 
 $w    = imagesx($src);
@@ -55,5 +59,5 @@ imagepng($out, $dest);
 imagedestroy($out);
 
 $session->addMessage('success', 'Profile picture updated.');
-header('Location: /src/pages/page_account.php');
+header('Location: ' . $returnUrl);
 exit;

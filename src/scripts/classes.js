@@ -3,17 +3,17 @@ const classModal = document.getElementById('class-modal');
 
 if (classModal) {
 
-function openModal() {
+function openClassModal() {
     classModal.show();
     backdrop.classList.add('modal-backdrop--visible');
 }
-function closeModal() {
+function closeClassModal() {
     classModal.close();
     backdrop.classList.remove('modal-backdrop--visible');
 }
 
-document.getElementById('class-modal-close').addEventListener('click', closeModal);
-backdrop.addEventListener('click', closeModal);
+document.getElementById('class-modal-close').addEventListener('click', closeClassModal);
+backdrop.addEventListener('click', closeClassModal);
 
 function setIntensityDots(container, value) {
     container.innerHTML = '';
@@ -39,6 +39,8 @@ function buildStars(rating) {
 function buildActionArea(card, sessionId, currentStatus, spotsLeft) {
     const area = document.getElementById('modal-action-area');
     area.innerHTML = '';
+
+    if (card.dataset.isMine === '0' && 'isMine' in card.dataset) return;
 
     const isPast = false; // calendar only shows current week; past sessions have no future datetime
 
@@ -80,7 +82,7 @@ async function handleEnroll(card, sessionId, btn) {
 
     const newStatus = json.status; // 'enrolled' | 'waitlisted'
     updateCardStatus(card, newStatus, json.waitlist_position ?? null);
-    closeModal();
+    closeClassModal();
 }
 
 async function handleCancel(card, sessionId, btn) {
@@ -100,7 +102,7 @@ async function handleCancel(card, sessionId, btn) {
 
     const prevStatus = card.dataset.status || null;
     updateCardStatus(card, null, null, prevStatus);
-    closeModal();
+    closeClassModal();
 }
 
 function updateCardStatus(card, status, waitlistPosition = null, prevStatus = null) {
@@ -278,7 +280,7 @@ document.addEventListener('click', e => {
     if (prevErr) prevErr.remove();
 
     buildActionArea(card, sessionId, status, spotsLeft);
-    openModal();
+    openClassModal();
 });
 
 // Auto-open modal when URL contains #session-{id}

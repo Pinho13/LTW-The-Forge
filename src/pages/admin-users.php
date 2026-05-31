@@ -412,7 +412,7 @@ $csrf = $session->getCsrfToken();
 
         switchTab('details');
         backdrop.classList.add('modal-backdrop--visible');
-        modal.showModal ? modal.showModal() : modal.removeAttribute('hidden');
+        modal.show ? modal.show() : modal.removeAttribute('hidden');
     }
 
     function closeModal() {

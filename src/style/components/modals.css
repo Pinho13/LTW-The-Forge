@@ -1,3 +1,12 @@
+dialog[open] {
+    position: fixed;
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}
+
 .modal-backdrop {
     display: none;
     position: fixed;
@@ -10,15 +19,20 @@
     display: block;
 }
 
-.auth-modal {
+.auth-modal,
+.auth-modal[open] {
     animation: modal-in 0.2s ease;
     position: fixed;
     top: 50%;
     left: 50%;
     right: auto;
+    bottom: auto;
     transform: translate(-50%, -50%);
     margin: 0;
-    width: min(32rem, calc(100% - 2 * var(--space-m)));
+    box-sizing: border-box;
+    width: min(32rem, calc(100% - 2 * var(--space-xl)));
+    max-height: calc(100vh - 2 * var(--space-xl));
+    overflow-y: auto;
     padding: var(--space-xl) clamp(var(--space-m), 8vw, var(--space-xxl));
     border: var(--border-thin) solid var(--color-gold);
     border-top: var(--border-l) solid var(--color-gold);
@@ -246,6 +260,7 @@
     align-items: center;
     gap: var(--space-xs);
     margin-top: var(--space-s);
+    margin-bottom: var(--space-m);
 }
 
 .class-modal__stars {
@@ -350,12 +365,7 @@
 
 @media (max-width: 640px) {
     .auth-modal {
-        width: calc(100% - 2 * var(--space-m));
-        top: auto;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        transform: none;
+        width: calc(100% - 2 * var(--space-xl));
         padding: var(--space-m) var(--space-m) var(--space-xl);
         border-radius: 0;
     }
@@ -386,8 +396,8 @@
 
 /* ── Feature swap modal ── */
 .feature-swap-modal[open] {
-    width: min(28rem, calc(100% - 2 * var(--space-l)));
-    height: min(90vh, 28rem);
+    width: min(32rem, calc(100% - 2 * var(--space-xl)));
+    max-height: min(90vh, 28rem);
     display: flex;
     flex-direction: column;
     overflow: hidden;

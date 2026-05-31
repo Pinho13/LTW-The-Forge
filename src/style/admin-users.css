@@ -265,7 +265,7 @@ main > header { position: relative; }
 
 /* User Modal */
 .user-modal {
-    width: min(38rem, calc(100% - 2 * var(--space-m)));
+    width: min(32rem, calc(100% - 2 * var(--space-xl)));
 }
 
 .user-modal .auth-modal__title {

@@ -26,19 +26,21 @@ Styling for these pages can be found at src/style/
 - [x] Edit their profile, including name, username, password, and profile photo.
 
 **Members:**
-- [~] Browse the weekly schedule of fitness classes (calendar view; premium members only; filters not implemented yet).
-- [x] Enroll in and cancel enrollment from upcoming classes, subject to capacity limits (waitlist supported).
+
+- [x] Browse the schedule of available fitness classes, filtering by type, trainer, day, or time.
+- [x] Enroll in and cancel enrollment from upcoming classes, subject to capacity limits.
 - [x] View trainer profiles, including their specializations and the classes they teach.
 - [x] Check the current availability of equipment in the main training area.
 - [x] Reserve equipment and manage upcoming reservations.
 - [x] Leave ratings and reviews for classes they have attended.
 
 **Trainers:**
-- [ ] Manage their public profile, including bio, specializations, and certifications.
-- [ ] View the roster of members enrolled in their classes.
-- [ ] Track and manage their assigned class schedule.
+- [x] Manage their public profile, including bio, specializations, and certifications.
+- [x] View the roster of members enrolled in their classes.
+- [x] Track and manage their assigned class schedule.
 
 **Admins:**
+
 - [x] Manage members and trainers (update details, roles, status, and subscriptions).
 - [x] Manage the class catalog (create, edit, and remove classes) and assign trainers to them.
 - [x] Manage equipment in the main training area (add, update availability status, and remove items).
@@ -47,16 +49,25 @@ Styling for these pages can be found at src/style/
 - [x] Oversee and ensure the smooth operation of the entire system.
 
 **Extra:**
-- [~] Membership plans (basic/premium; premium gates classes; members can pause; admins can adjust expiry; plan switching not implemented).
-- [x] Personal logging of material.
+
+- [x] Membership plans with upgrade, downgrade, and pause/freeze support.
+- [x] Waitlist for fully booked classes with automatic promotion.
+- [x] News and announcements system with pinned posts and full article pages.
+- [x] Equipment reservations with time-slot booking.
+- [x] Trainer public profiles with bio, specializations, and certifications.
+- [x] Admin analytics dashboard with key stats and attention alerts.
+- [x] Admin activity log and user data CSV export.
+- [x] CSRF token protection on all state-changing forms.
+- [x] REST API exposing class schedules, trainer profiles, and equipment availability.
+
 
 ## Running
 
 Make sure you are in the root directory of the project.
 
 ```bash
-sqlite3 database/database.db ".read database/sql/schema.sql"
-sqlite3 database/database.db ".read database/sql/populate.sql"
+sqlite3 database/sql/database.db ".read database/sql/schema.sql"
+sqlite3 database/sql/database.db ".read database/sql/populate.sql"
 php -S localhost:9000
 ```
 
@@ -67,6 +78,8 @@ Then open [The Forge](http://localhost:9000/src/pages/index.php).
 
 ### Member
 - normal@gmail.com / NormalTest1!
+- basic@test.com / basic123
+- premium@test.com / premium123
 
 ### Trainer
 - trainer@gmail.com / TrainerTest1!

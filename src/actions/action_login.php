@@ -54,7 +54,10 @@ $session->addMessage('toast', 'Login successful.');
 if ($user->role === 'admin') {
     require_once(__DIR__ . '/../../database/models/AdminLog.class.php');
     AdminLog::write($db, $user->user_id, 'LOGIN', "Admin {$user->name} signed in");
+    header('Location: /src/pages/admin-dashboard.php');
+} elseif ($user->role === 'trainer') {
+    header('Location: /src/pages/trainer-dashboard.php');
+} else {
+    header('Location: /src/pages/my-account.php');
 }
-
-header('Location: /src/pages/my-account.php');
 exit;

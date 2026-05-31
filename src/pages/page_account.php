@@ -146,6 +146,7 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
                 <button type="button" class="btn-outline" id="logout-btn">Log Out</button>
             </div>
 
+            <?php if (!$session->isTrainer()): ?>
             <div class="danger-zone__item">
                 <div class="danger-zone__info">
                     <?php if ($isFrozen): ?>
@@ -165,6 +166,7 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
                     <button type="button" class="btn-outline" id="pause-btn">Pause</button>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
 
             <?php if ($session->isMember() && !$isFrozen): ?>
             <div class="danger-zone__item">
@@ -255,7 +257,7 @@ $fieldPhone    = $accountFormData['phone']    ?? $user->phone ?? '';
     </dialog>
     <?php endif; ?>
 
-    <?php if (!$isFrozen): ?>
+    <?php if (!$isFrozen && !$session->isTrainer()): ?>
     <dialog id="pause-modal" class="auth-modal">
         <button type="button" class="btn-ghost auth-modal__close">&times;</button>
         <h2 class="auth-modal__title">Pause Membership</h2>

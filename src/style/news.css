@@ -372,10 +372,11 @@ main > header {
 @media (max-width: 640px) {
     .news-hero {
         grid-template-columns: 1fr;
+        height: auto;
     }
 
     .news-hero__image {
-        height: 200px;
+        height: 240px;
     }
 
     .news-grid {
