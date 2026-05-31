@@ -42,7 +42,7 @@ $_menu_role = $session->getRole() ?? 'member';
         <?php elseif ($_menu_role === 'trainer'): ?>
             <a href="/src/pages/my-account.php"        <?= $activePage === 'account'         ? 'class="active"' : '' ?>>MY ACCOUNT</a>
             <a href="/src/pages/trainer-schedule.php"  <?= $activePage === 'trainer-schedule'? 'class="active"' : '' ?>>MY SCHEDULE</a>
-            <a href="/src/pages/trainer-roster.php"    <?= $activePage === 'trainer-roster'  ? 'class="active"' : '' ?>>CLASS ROSTER</a>
+
             <a href="/src/pages/trainer-profile.php"   <?= $activePage === 'trainer-profile' ? 'class="active"' : '' ?>>MY PROFILE</a>
             <a href="/src/pages/news.php"              <?= $activePage === 'news'             ? 'class="active"' : '' ?>>NEWS</a>
 
