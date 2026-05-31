@@ -53,6 +53,7 @@ Styling for these pages can be found at src/style/
 - [x] Admin analytics dashboard with key stats and attention alerts.
 - [x] Admin activity log and user data CSV export.
 - [x] CSRF token protection on all state-changing forms.
+- [x] REST API exposing class schedules, trainer profiles, and equipment availability.
 - [x] Personal logging of material.
 
 ## Running
@@ -72,8 +73,8 @@ Then open [The Forge](http://localhost:9000/src/pages/index.php).
 
 ### Member
 - normal@gmail.com / NormalTest1!
-- basic@gmail.com / basic123
-- premium@gmail.com / premium123
+- basic@test.com / basic123
+- premium@test.com / premium123
 
 ### Trainer
 - trainer@gmail.com / TrainerTest1!
