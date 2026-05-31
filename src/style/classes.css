@@ -4,9 +4,6 @@
     text-decoration: none;
 }
 
-.class-modal {
-}
-
 .class-modal .auth-modal__title {
     margin-bottom: var(--space-s);
 }
