@@ -73,6 +73,7 @@
     }
 
     .enrollment__actions .btn-sm {
+        width: auto;
         padding: var(--space-xs) var(--space-l);
         font-size: var(--font-size-m);
     }

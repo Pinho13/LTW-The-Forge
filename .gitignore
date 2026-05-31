@@ -9,3 +9,7 @@ database/database.db-wal
 vendor/
 .phpunit.result.cache
 .claude
+database/sql/database.db
+database/sql/database.db-journal
+database/sql/database.db-shm
+database/sql/database.db-wal

@@ -34,7 +34,7 @@ PRAGMA foreign_keys = ON;
 -- ============================================================
 INSERT INTO user (name, username, email, password_hash, role) VALUES
     ('Normal User',   'normaluser',   'normal@gmail.com',   '$2y$12$5WlMPEie.uE7qRwWQDSWzeYLrlXWtfbpPviuh5jwa5gRJ7MMoAYSi', 'member'),
-    ('Trainer User',  'traineruser',  'trainer@gmail.com',  '$2y$12$GlvsxUI5MAx52be90F/jt.TlhCy2ts.JftMMON1TaXPfLAM4fS/xe', 'trainer'),
+    ('Trainer User',  'traineruser',  'trainer@gmail.com',  '$2y$12$LsxpN37fGeaeuxevEsVKju/MmifEuJvzpcA6UzBk.5f0RBdhjJkN2', 'trainer'),
     ('Admin User',    'adminuser',    'admin@gmail.com',    '$2y$12$M8bgiimX4JSAQ43Y7lcKSOi.3Vc7IqalZxWTPzWmhhhmshzW3HbHu', 'admin'),
     ('Member Two',    'membertwo',    'member2@gmail.com',  '$2y$12$TNGOaPId2WaZRqcgugHHaOqu9EErBKhiXoxTD7CXbl1NpHtyyk5RC', 'member'),
     ('Alex Trainer',  'alextrainer',  'alex@theforge.com',  '$2y$12$F6/LQEnjSH83o56TsAnKMekd9LtgXaxJ6ltR0lyV1iXfx3fT7u1EG', 'trainer'),
@@ -139,9 +139,9 @@ INSERT INTO class_session (class_id, datetime, room, capacity) VALUES
     (2, '2026-05-27 18:00:00', 'Room B', 12),  -- id 21 HIIT Blast    Wed 27 May
     (3, '2026-05-29 10:00:00', 'Room C', 20),  -- id 22 Cardio Burn   Fri 29 May
 
-    -- === JUNE 2026 — FUTURE ===
-    (1, '2026-06-02 08:00:00', 'Room A', 15),  -- id 23 Morning Yoga  Tue  2 Jun
-    (2, '2026-06-04 18:00:00', 'Room B', 12),  -- id 24 HIIT Blast    Thu  4 Jun
+    -- === JUNE 2026 — WEEK 1 Mon + Tue ===
+    (1, '2026-06-01 08:00:00', 'Room A', 15),  -- id 23  Morning Yoga  Mon  1 Jun
+    (4, '2026-06-02 08:00:00', 'Room B', 12),  -- id 24  Power Hour    Tue  2 Jun
 
     -- === JAN–MAR 2026 (load-more test data, ids 25–60) ===
     (1, '2026-01-05 08:00:00', 'Room A', 15),  -- id 25
@@ -196,15 +196,64 @@ INSERT INTO class_session (class_id, datetime, room, capacity) VALUES
     (8, '2026-05-30 09:00', 'Studio A',  20),  -- id 72  Evening Yoga     Fri
     (9, '2026-05-30 08:00', 'Room B',    12),  -- id 73  Kettlebell Burn  Sat
 
-    -- === NEXT WEEK (2–6 Jun 2026) ===
-    (4, '2026-06-02 08:00', 'Room B',    12),  -- id 74  Power Hour       Mon
-    (4, '2026-06-04 08:00', 'Room B',    12),  -- id 75  Power Hour       Wed
-    (5, '2026-06-02 08:00', 'Room C',    10),  -- id 76  Fight Club       Mon
-    (6, '2026-06-03 09:00', 'Studio A',  15),  -- id 77  Core & Flex      Tue
-    (7, '2026-06-02 09:00', 'Spin Room', 20),  -- id 78  Spin Session     Mon
-    (8, '2026-06-01 09:00', 'Studio A',  20),  -- id 79  Evening Yoga     Sun
-    (9, '2026-06-06 08:00', 'Room B',    12),  -- id 80  Kettlebell Burn  Sat
-    (1, '2026-06-02 09:00', 'Studio A',   1); -- id 81  Morning Yoga at capacity (demo)
+    -- === JUNE WEEK 1 continued (Tue–Sat, 2–6 Jun) ===
+    (6, '2026-06-02 09:00', 'Studio A',  15),  -- id 74  Core & Flex      Tue  2 Jun
+    (5, '2026-06-03 08:00', 'Room C',    10),  -- id 75  Fight Club       Wed  3 Jun
+    (7, '2026-06-03 09:00', 'Spin Room', 20),  -- id 76  Spin Session     Wed  3 Jun
+    (4, '2026-06-04 08:00', 'Room B',    12),  -- id 77  Power Hour       Thu  4 Jun
+    (6, '2026-06-04 09:00', 'Studio A',  15),  -- id 78  Core & Flex      Thu  4 Jun
+    (5, '2026-06-05 08:00', 'Room C',    10),  -- id 79  Fight Club       Fri  5 Jun
+    (7, '2026-06-05 09:00', 'Spin Room', 20),  -- id 80  Spin Session     Fri  5 Jun
+    (3, '2026-06-05 10:00', 'Room C',    20),  -- id 81  Cardio Burn      Fri  5 Jun
+    (9, '2026-06-06 08:00', 'Room B',    12),  -- id 82  Kettlebell Burn  Sat  6 Jun
+    (8, '2026-06-06 09:00', 'Studio A',  20),  -- id 83  Evening Yoga     Sat  6 Jun
+
+    -- === JUNE WEEK 2 (8–14 Jun) ===
+    (1, '2026-06-08 08:00', 'Room A',    15),  -- id 84  Morning Yoga     Mon  8 Jun
+    (4, '2026-06-09 08:00', 'Room B',    12),  -- id 85  Power Hour       Tue  9 Jun
+    (6, '2026-06-09 09:00', 'Studio A',  15),  -- id 86  Core & Flex      Tue  9 Jun
+    (5, '2026-06-10 08:00', 'Room C',    10),  -- id 87  Fight Club       Wed 10 Jun
+    (7, '2026-06-10 09:00', 'Spin Room', 20),  -- id 88  Spin Session     Wed 10 Jun
+    (4, '2026-06-11 08:00', 'Room B',    12),  -- id 89  Power Hour       Thu 11 Jun
+    (6, '2026-06-11 09:00', 'Studio A',  15),  -- id 90  Core & Flex      Thu 11 Jun
+    (5, '2026-06-12 08:00', 'Room C',    10),  -- id 91  Fight Club       Fri 12 Jun
+    (7, '2026-06-12 09:00', 'Spin Room', 20),  -- id 92  Spin Session     Fri 12 Jun
+    (3, '2026-06-12 10:00', 'Room C',    20),  -- id 93  Cardio Burn      Fri 12 Jun
+    (9, '2026-06-13 08:00', 'Room B',    12),  -- id 94  Kettlebell Burn  Sat 13 Jun
+    (8, '2026-06-13 09:00', 'Studio A',  20),  -- id 95  Evening Yoga     Sat 13 Jun
+
+    -- === JUNE WEEK 3 (15–21 Jun) ===
+    (1, '2026-06-15 08:00', 'Room A',    15),  -- id 96  Morning Yoga     Mon 15 Jun
+    (4, '2026-06-16 08:00', 'Room B',    12),  -- id 97  Power Hour       Tue 16 Jun
+    (6, '2026-06-16 09:00', 'Studio A',  15),  -- id 98  Core & Flex      Tue 16 Jun
+    (5, '2026-06-17 08:00', 'Room C',    10),  -- id 99  Fight Club       Wed 17 Jun
+    (7, '2026-06-17 09:00', 'Spin Room', 20),  -- id 100 Spin Session     Wed 17 Jun
+    (4, '2026-06-18 08:00', 'Room B',    12),  -- id 101 Power Hour       Thu 18 Jun
+    (6, '2026-06-18 09:00', 'Studio A',  15),  -- id 102 Core & Flex      Thu 18 Jun
+    (5, '2026-06-19 08:00', 'Room C',    10),  -- id 103 Fight Club       Fri 19 Jun
+    (7, '2026-06-19 09:00', 'Spin Room', 20),  -- id 104 Spin Session     Fri 19 Jun
+    (3, '2026-06-19 10:00', 'Room C',    20),  -- id 105 Cardio Burn      Fri 19 Jun
+    (9, '2026-06-20 08:00', 'Room B',    12),  -- id 106 Kettlebell Burn  Sat 20 Jun
+    (8, '2026-06-20 09:00', 'Studio A',  20),  -- id 107 Evening Yoga     Sat 20 Jun
+
+    -- === JUNE WEEK 4 (22–28 Jun) ===
+    (1, '2026-06-22 08:00', 'Room A',    15),  -- id 108 Morning Yoga     Mon 22 Jun
+    (4, '2026-06-23 08:00', 'Room B',    12),  -- id 109 Power Hour       Tue 23 Jun
+    (6, '2026-06-23 09:00', 'Studio A',  15),  -- id 110 Core & Flex      Tue 23 Jun
+    (5, '2026-06-24 08:00', 'Room C',    10),  -- id 111 Fight Club       Wed 24 Jun
+    (7, '2026-06-24 09:00', 'Spin Room', 20),  -- id 112 Spin Session     Wed 24 Jun
+    (4, '2026-06-25 08:00', 'Room B',    12),  -- id 113 Power Hour       Thu 25 Jun
+    (6, '2026-06-25 09:00', 'Studio A',  15),  -- id 114 Core & Flex      Thu 25 Jun
+    (5, '2026-06-26 08:00', 'Room C',    10),  -- id 115 Fight Club       Fri 26 Jun
+    (7, '2026-06-26 09:00', 'Spin Room', 20),  -- id 116 Spin Session     Fri 26 Jun
+    (3, '2026-06-26 10:00', 'Room C',    20),  -- id 117 Cardio Burn      Fri 26 Jun
+    (9, '2026-06-27 08:00', 'Room B',    12),  -- id 118 Kettlebell Burn  Sat 27 Jun
+    (8, '2026-06-27 09:00', 'Studio A',  20),  -- id 119 Evening Yoga     Sat 27 Jun
+
+    -- === JUNE WEEK 5 (29–30 Jun) ===
+    (1, '2026-06-29 08:00', 'Room A',    15),  -- id 120 Morning Yoga     Mon 29 Jun
+    (4, '2026-06-30 08:00', 'Room B',    12),  -- id 121 Power Hour       Tue 30 Jun
+    (6, '2026-06-30 09:00', 'Studio A',  15);  -- id 122 Core & Flex      Tue 30 Jun
 
 
 -- ============================================================
@@ -231,41 +280,41 @@ INSERT INTO enrollment (member_id, session_id, status) VALUES
     (1, 11, 'missed'),     -- Cardio Burn   Wed  7 May
     (1, 12, 'completed'),  -- Morning Yoga  Thu  8 May
     (1, 13, 'completed'),  -- HIIT Blast    Fri  9 May
-    (1, 14, 'completed'),  -- Cardio Burn   Sat 10 May
+    (1, 14, 'missed'),     -- Cardio Burn   Sat 10 May
 
     -- normal — May future  (+3 classes this month, +3 upcoming)
-    (1, 15, 'enrolled'),   -- HIIT Blast    Wed 13 May
-    (1, 17, 'enrolled'),   -- Morning Yoga  Mon 18 May
-    (1, 19, 'enrolled'),   -- Cardio Burn   Fri 22 May
+    (1, 15, 'missed'),     -- HIIT Blast    Wed 13 May
+    (1, 17, 'completed'),  -- Morning Yoga  Mon 18 May
+    (1, 19, 'missed'),     -- Cardio Burn   Fri 22 May
 
     -- normal — June future  (+1 upcoming, not this month)
-    (1, 23, 'enrolled'),   -- Morning Yoga  Tue  2 Jun
+    (1, 23, 'enrolled'),   -- Morning Yoga  Mon  1 Jun
 
     -- member2 — a few future sessions
     (4, 16, 'enrolled'),   -- Cardio Burn   Fri 15 May
     (4, 18, 'enrolled'),   -- HIIT Blast    Wed 20 May
     (4, 20, 'enrolled'),   -- Morning Yoga  Mon 25 May
-    (4, 24, 'enrolled'),   -- HIIT Blast    Thu  4 Jun
+    (4, 24, 'enrolled'),   -- Power Hour    Tue  2 Jun
 
     -- current week — new classes (ids 61-80)
     -- user_ids: 1=Normal, 4=Member Two, 9=Jake, 10=Priya, 11=Leo, 12=Mia
     (9,  61, 'enrolled'), (10, 61, 'enrolled'), (4,  61, 'enrolled'),
-    (12, 66, 'enrolled'), (10, 66, 'enrolled'), (1,  66, 'enrolled'),
-    (11, 70, 'enrolled'), (12, 70, 'enrolled'), (1,  70, 'enrolled'),
+    (12, 66, 'enrolled'), (10, 66, 'enrolled'), (1,  66, 'completed'),
+    (11, 70, 'enrolled'), (12, 70, 'enrolled'), (1,  70, 'completed'),
     (9,  68, 'enrolled'), (11, 68, 'enrolled'), (4,  68, 'enrolled'), (10, 68, 'enrolled'),
-    (1,  21, 'enrolled'), (9,  21, 'enrolled'),
+    (1,  21, 'completed'), (9,  21, 'enrolled'),
     (11, 64, 'enrolled'), (4,  64, 'enrolled'),
     (9,  62, 'enrolled'), (10, 62, 'enrolled'),
-    (12, 67, 'enrolled'), (1,  67, 'enrolled'),
+    (12, 67, 'enrolled'), (1,  67, 'missed'),
     (11, 71, 'enrolled'), (12, 71, 'enrolled'), (9,  71, 'enrolled'),
-    (10, 69, 'enrolled'), (4,  69, 'enrolled'), (1,  69, 'enrolled'),
+    (10, 69, 'enrolled'), (4,  69, 'enrolled'), (1,  69, 'completed'),
     (9,  22, 'enrolled'), (12, 22, 'enrolled'),
     (11, 65, 'enrolled'), (9,  65, 'enrolled'),
     (10, 63, 'enrolled'), (4,  63, 'enrolled'), (11, 63, 'enrolled'),
     (9,  73, 'enrolled'), (1,  73, 'enrolled'), (12, 73, 'enrolled'), (10, 73, 'enrolled'),
-    (1,  72, 'enrolled'), (11, 72, 'enrolled'),
+    (1,  72, 'completed'), (11, 72, 'enrolled'),
     (9,  74, 'enrolled'), (10, 74, 'enrolled'),
-    (1,  78, 'enrolled'), (4,  76, 'enrolled'),
+    (1,  77, 'enrolled'), (4,  76, 'enrolled'),
     (12, 77, 'enrolled'), (11, 79, 'enrolled'),
     (9,  80, 'enrolled'), (10, 80, 'enrolled'),
 
@@ -306,7 +355,129 @@ INSERT INTO enrollment (member_id, session_id, status) VALUES
     (1, 58, 'completed'),
     (1, 59, 'missed'),
     (1, 60, 'completed'),
-    (1, 81, 'enrolled');  -- fills session 81 to capacity (demo: at-capacity attention item)
+    -- normal — June weeks 2–5 (2 classes/week; week 1 covered by sessions 23 + 77)
+    (1,  84, 'enrolled'),  -- Morning Yoga Mon  8 Jun
+    (1,  88, 'enrolled'),  -- Spin Session Wed 10 Jun
+    (1,  97, 'enrolled'),  -- Power Hour   Tue 16 Jun
+    (1, 102, 'enrolled'),  -- Core & Flex  Thu 18 Jun
+    (1, 108, 'enrolled'),  -- Morning Yoga Mon 22 Jun
+    (1, 115, 'enrolled'),  -- Fight Club   Fri 26 Jun
+    (1, 120, 'enrolled'),  -- Morning Yoga Mon 29 Jun
+    (1, 122, 'enrolled'),  -- Core & Flex  Tue 30 Jun
+
+    -- June 2026 — varied enrollments (members: 1=Normal, 4=MemberTwo, 9=Jake, 10=Priya, 11=Leo, 12=Mia)
+
+    -- Week 1 (1–6 Jun)
+    -- id 23  Morning Yoga  Mon 1 Jun  (cap 15) — 1 already enrolled  → +2
+    (9, 23, 'enrolled'), (12, 23, 'enrolled'),
+    -- id 24  Power Hour    Tue 2 Jun  (cap 12) — 4 already enrolled  → +3
+    (1, 24, 'enrolled'), (9, 24, 'enrolled'), (11, 24, 'enrolled'),
+    -- id 74  Core & Flex   Tue 2 Jun  (cap 15) — 9,10 already enrolled  → +1
+    (12, 74, 'enrolled'),
+    -- id 75  Fight Club    Wed 3 Jun  (cap 10)  → +4
+    (4, 75, 'enrolled'), (9, 75, 'enrolled'), (11, 75, 'enrolled'), (12, 75, 'enrolled'),
+    -- id 76  Spin Session  Wed 3 Jun  (cap 20) — 4 already enrolled  → +2
+    (1, 76, 'enrolled'), (10, 76, 'enrolled'),
+    -- id 77  Power Hour    Thu 4 Jun  (cap 12) — 1,12 already enrolled  → +3
+    (4, 77, 'enrolled'), (9, 77, 'enrolled'), (11, 77, 'enrolled'),
+    -- id 78  Core & Flex   Thu 4 Jun  (cap 15)  → +1
+    (10, 78, 'enrolled'),
+    -- id 79  Fight Club    Fri 5 Jun  (cap 10) — 11 already enrolled  → +2
+    (4, 79, 'enrolled'), (9, 79, 'enrolled'),
+    -- id 80  Spin Session  Fri 5 Jun  (cap 20) — 9,10 already enrolled  → +3
+    (1, 80, 'enrolled'), (4, 80, 'enrolled'), (12, 80, 'enrolled'),
+    -- id 81  Cardio Burn   Fri 5 Jun  (cap 20)  → +2
+    (4, 81, 'enrolled'), (11, 81, 'enrolled'),
+    -- id 82  Kettlebell    Sat 6 Jun  (cap 12)  → +5
+    (1, 82, 'enrolled'), (9, 82, 'enrolled'), (10, 82, 'enrolled'), (11, 82, 'enrolled'), (12, 82, 'enrolled'),
+    -- id 83  Evening Yoga  Sat 6 Jun  (cap 20)  → +1
+    (4, 83, 'enrolled'),
+
+    -- Week 2 (8–13 Jun)
+    -- id 84  Morning Yoga  Mon 8 Jun  (cap 15) — 1 already enrolled  → +3
+    (4, 84, 'enrolled'), (10, 84, 'enrolled'), (12, 84, 'enrolled'),
+    -- id 85  Power Hour    Tue 9 Jun  (cap 12)  → +3
+    (1, 85, 'enrolled'), (9, 85, 'enrolled'), (11, 85, 'enrolled'),
+    -- id 86  Core & Flex   Tue 9 Jun  (cap 15)  → +4
+    (1, 86, 'enrolled'), (4, 86, 'enrolled'), (10, 86, 'enrolled'), (12, 86, 'enrolled'),
+    -- id 87  Fight Club    Wed 10 Jun (cap 10)  → +1
+    (9, 87, 'enrolled'),
+    -- id 88  Spin Session  Wed 10 Jun (cap 20) — 1 already enrolled  → +3
+    (4, 88, 'enrolled'), (10, 88, 'enrolled'), (12, 88, 'enrolled'),
+    -- id 89  Power Hour    Thu 11 Jun (cap 12)  → +5
+    (1, 89, 'enrolled'), (4, 89, 'enrolled'), (9, 89, 'enrolled'), (11, 89, 'enrolled'), (12, 89, 'enrolled'),
+    -- id 90  Core & Flex   Thu 11 Jun (cap 15)  → +2
+    (4, 90, 'enrolled'), (10, 90, 'enrolled'),
+    -- id 91  Fight Club    Fri 12 Jun (cap 10)  → +3
+    (4, 91, 'enrolled'), (9, 91, 'enrolled'), (11, 91, 'enrolled'),
+    -- id 92  Spin Session  Fri 12 Jun (cap 20)  → +1
+    (10, 92, 'enrolled'),
+    -- id 93  Cardio Burn   Fri 12 Jun (cap 20)  → +4
+    (1, 93, 'enrolled'), (4, 93, 'enrolled'), (11, 93, 'enrolled'), (12, 93, 'enrolled'),
+    -- id 94  Kettlebell    Sat 13 Jun (cap 12)  → +2
+    (9, 94, 'enrolled'), (10, 94, 'enrolled'),
+    -- id 95  Evening Yoga  Sat 13 Jun (cap 20)  → +5
+    (1, 95, 'enrolled'), (4, 95, 'enrolled'), (9, 95, 'enrolled'), (11, 95, 'enrolled'), (12, 95, 'enrolled'),
+
+    -- Week 3 (15–20 Jun)
+    -- id 96  Morning Yoga  Mon 15 Jun (cap 15)  → +3
+    (1, 96, 'enrolled'), (4, 96, 'enrolled'), (10, 96, 'enrolled'),
+    -- id 97  Power Hour    Tue 16 Jun (cap 12) — 1 already enrolled  → +4
+    (4, 97, 'enrolled'), (9, 97, 'enrolled'), (11, 97, 'enrolled'), (12, 97, 'enrolled'),
+    -- id 98  Core & Flex   Tue 16 Jun (cap 15)  → +1
+    (10, 98, 'enrolled'),
+    -- id 99  Fight Club    Wed 17 Jun (cap 10)  → +5
+    (1, 99, 'enrolled'), (4, 99, 'enrolled'), (9, 99, 'enrolled'), (11, 99, 'enrolled'), (12, 99, 'enrolled'),
+    -- id 100 Spin Session  Wed 17 Jun (cap 20)  → +2
+    (1, 100, 'enrolled'), (10, 100, 'enrolled'),
+    -- id 101 Power Hour    Thu 18 Jun (cap 12)  → +3
+    (4, 101, 'enrolled'), (9, 101, 'enrolled'), (12, 101, 'enrolled'),
+    -- id 102 Core & Flex   Thu 18 Jun (cap 15) — 1 already enrolled  → +2
+    (10, 102, 'enrolled'), (12, 102, 'enrolled'),
+    -- id 103 Fight Club    Fri 19 Jun (cap 10)  → +5
+    (1, 103, 'enrolled'), (4, 103, 'enrolled'), (9, 103, 'enrolled'), (11, 103, 'enrolled'), (12, 103, 'enrolled'),
+    -- id 104 Spin Session  Fri 19 Jun (cap 20)  → +1
+    (10, 104, 'enrolled'),
+    -- id 105 Cardio Burn   Fri 19 Jun (cap 20)  → +3
+    (4, 105, 'enrolled'), (9, 105, 'enrolled'), (12, 105, 'enrolled'),
+    -- id 106 Kettlebell    Sat 20 Jun (cap 12)  → +2
+    (1, 106, 'enrolled'), (9, 106, 'enrolled'),
+    -- id 107 Evening Yoga  Sat 20 Jun (cap 20)  → +4
+    (1, 107, 'enrolled'), (4, 107, 'enrolled'), (10, 107, 'enrolled'), (12, 107, 'enrolled'),
+
+    -- Week 4 (22–27 Jun)
+    -- id 108 Morning Yoga  Mon 22 Jun (cap 15) — 1 already enrolled  → +2
+    (9, 108, 'enrolled'), (10, 108, 'enrolled'),
+    -- id 109 Power Hour    Tue 23 Jun (cap 12)  → +5
+    (1, 109, 'enrolled'), (4, 109, 'enrolled'), (9, 109, 'enrolled'), (11, 109, 'enrolled'), (12, 109, 'enrolled'),
+    -- id 110 Core & Flex   Tue 23 Jun (cap 15)  → +1
+    (10, 110, 'enrolled'),
+    -- id 111 Fight Club    Wed 24 Jun (cap 10)  → +3
+    (4, 111, 'enrolled'), (9, 111, 'enrolled'), (11, 111, 'enrolled'),
+    -- id 112 Spin Session  Wed 24 Jun (cap 20)  → +5
+    (1, 112, 'enrolled'), (4, 112, 'enrolled'), (9, 112, 'enrolled'), (10, 112, 'enrolled'), (12, 112, 'enrolled'),
+    -- id 113 Power Hour    Thu 25 Jun (cap 12)  → +2
+    (4, 113, 'enrolled'), (9, 113, 'enrolled'),
+    -- id 114 Core & Flex   Thu 25 Jun (cap 15)  → +4
+    (1, 114, 'enrolled'), (10, 114, 'enrolled'), (11, 114, 'enrolled'), (12, 114, 'enrolled'),
+    -- id 115 Fight Club    Fri 26 Jun (cap 10) — 1 already enrolled  → +3
+    (4, 115, 'enrolled'), (9, 115, 'enrolled'), (11, 115, 'enrolled'),
+    -- id 116 Spin Session  Fri 26 Jun (cap 20)  → +1
+    (10, 116, 'enrolled'),
+    -- id 117 Cardio Burn   Fri 26 Jun (cap 20)  → +3
+    (4, 117, 'enrolled'), (9, 117, 'enrolled'), (12, 117, 'enrolled'),
+    -- id 118 Kettlebell    Sat 27 Jun (cap 12)  → +5
+    (1, 118, 'enrolled'), (9, 118, 'enrolled'), (10, 118, 'enrolled'), (11, 118, 'enrolled'), (12, 118, 'enrolled'),
+    -- id 119 Evening Yoga  Sat 27 Jun (cap 20)  → +2
+    (4, 119, 'enrolled'), (12, 119, 'enrolled'),
+
+    -- Week 5 (29–30 Jun)
+    -- id 120 Morning Yoga  Mon 29 Jun (cap 15) — 1 already enrolled  → +3
+    (4, 120, 'enrolled'), (9, 120, 'enrolled'), (10, 120, 'enrolled'),
+    -- id 121 Power Hour    Tue 30 Jun (cap 12)  → +4
+    (4, 121, 'enrolled'), (9, 121, 'enrolled'), (11, 121, 'enrolled'), (12, 121, 'enrolled'),
+    -- id 122 Core & Flex   Tue 30 Jun (cap 15) — 1 already enrolled  → +2
+    (4, 122, 'enrolled'), (10, 122, 'enrolled');
 
 
 -- ============================================================
@@ -320,31 +491,20 @@ INSERT INTO review (class_id, member_id, rating, comment) VALUES
 
 -- ============================================================
 -- GYM VISITS
--- normal@gmail.com — 6 consecutive weeks → streak = 6 (all fires lit)
+-- normal@gmail.com — 3-week streak (May 17, May 24, May 31); gap at May 10 breaks the chain
 -- member2@gmail.com — 3 consecutive weeks → streak = 3
 -- ============================================================
 INSERT INTO gym_visit (member_id, entered_at, left_at, status) VALUES
-    -- normal — week of 2026-04-05 (Sun)
-    (1, '2026-04-07 09:00:00', '2026-04-07 10:30:00', 'left'),
+    -- normal — week of 2026-05-17 (Sun)
+    (1, '2026-05-18 08:30:00', '2026-05-18 10:00:00', 'left'),
+    (1, '2026-05-21 18:00:00', '2026-05-21 19:15:00', 'left'),
 
-    -- normal — week of 2026-04-12 (Sun)
-    (1, '2026-04-13 08:30:00', '2026-04-13 10:00:00', 'left'),
-    (1, '2026-04-16 18:00:00', '2026-04-16 19:15:00', 'left'),
+    -- normal — week of 2026-05-24 (Sun)
+    (1, '2026-05-26 09:00:00', '2026-05-26 10:30:00', 'left'),
+    (1, '2026-05-28 18:00:00', '2026-05-28 19:00:00', 'left'),
 
-    -- normal — week of 2026-04-19 (Sun)
-    (1, '2026-04-21 09:00:00', '2026-04-21 10:30:00', 'left'),
-    (1, '2026-04-23 18:00:00', '2026-04-23 19:00:00', 'left'),
-
-    -- normal — week of 2026-04-26 (Sun)
-    (1, '2026-04-28 08:30:00', '2026-04-28 10:00:00', 'left'),
-    (1, '2026-04-30 18:00:00', '2026-04-30 19:30:00', 'left'),
-
-    -- normal — week of 2026-05-03 (Sun)
-    (1, '2026-05-05 09:00:00', '2026-05-05 10:30:00', 'left'),
-    (1, '2026-05-07 18:00:00', '2026-05-07 19:00:00', 'left'),
-
-    -- normal — week of 2026-05-10 (Sun) — currently in gym
-    (1, '2026-05-11 09:00:00', NULL, 'in_gym'),
+    -- normal — week of 2026-05-31 (Sun)
+    (1, '2026-05-31 09:00:00', '2026-05-31 10:30:00', 'left'),
 
     -- member2 — 6 consecutive weeks (streak = 6)
     (4, '2026-04-27 10:00:00', '2026-04-27 11:00:00', 'left'),  -- week of Apr 26
@@ -432,8 +592,8 @@ INSERT INTO equipment_unit (equipment_id, identifier, status, map_x, map_y, map_
 -- EQUIPMENT RESERVATION
 -- ============================================================
 INSERT INTO equipment_reservation (member_id, unit_id, start_datetime, end_datetime) VALUES
-    (1, 1, '2026-05-12 09:00:00', '2026-05-12 09:30:00'),
-    (1, 6, '2026-05-14 10:00:00', '2026-05-14 11:00:00'),
+    (1, 1, '2026-05-19 09:00:00', '2026-05-19 09:30:00'),
+    (1, 6, '2026-05-22 10:00:00', '2026-05-22 11:00:00'),
     -- Today's reservations for visual testing (all units)
     (4,  1, '2026-05-26 08:00:00', '2026-05-26 08:50:00'),
     (9,  1, '2026-05-26 10:20:00', '2026-05-26 11:10:00'),

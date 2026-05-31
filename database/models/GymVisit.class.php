@@ -5,8 +5,6 @@ class GymVisit
 {
     public static function getWeeklyStreak(PDO $db, int $memberId): int
     {
-        // A week counts if the member attended a class OR had an equipment reservation
-        // that started in the past. Only past/current activity counts.
         $stmt = $db->prepare(
             "SELECT DISTINCT
                 date(activity_dt, '+1 hour', '-' || strftime('%w', activity_dt, '+1 hour') || ' days') AS week_start
@@ -15,16 +13,21 @@ class GymVisit
                  FROM enrollment e
                  JOIN class_session cs ON cs.id = e.session_id
                  WHERE e.member_id = :mid1
-                   AND e.status = 'attended'
+                   AND e.status = 'completed'
                  UNION ALL
                  SELECT start_datetime AS activity_dt
                  FROM equipment_reservation
                  WHERE member_id = :mid2
                    AND start_datetime <= datetime('now', '+1 hour')
+                 UNION ALL
+                 SELECT entered_at AS activity_dt
+                 FROM gym_visit
+                 WHERE member_id = :mid3
+                   AND entered_at <= datetime('now', '+1 hour')
              )
              ORDER BY week_start DESC"
         );
-        $stmt->execute([':mid1' => $memberId, ':mid2' => $memberId]);
+        $stmt->execute([':mid1' => $memberId, ':mid2' => $memberId, ':mid3' => $memberId]);
         $weeks = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
         if (empty($weeks)) {
