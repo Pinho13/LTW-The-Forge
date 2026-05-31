@@ -1,0 +1,86 @@
+/* ── Edit modal subtitle: smaller and tighter ── */
+#admin-modal-subtitle {
+    font-size: var(--font-size-s);
+    margin-top: var(--space-xxs);
+    margin-bottom: var(--space-s);
+}
+
+/* ── Edit modal action buttons: larger ── */
+#admin-class-modal #save-session-btn,
+#admin-class-modal #save-class-btn,
+#admin-class-modal #delete-session-btn,
+#admin-class-modal #delete-class-btn {
+    font-size: var(--font-size-s) !important;
+    padding: var(--space-s) var(--space-l) !important;
+}
+
+
+/* ── Trainer's own class cards ── */
+.class-card--mine {
+    border-color: var(--color-gold);
+    border-left: 3px solid var(--color-gold);
+}
+
+.class-card--mine header h3 {
+    color: var(--color-gold);
+}
+
+/* ── Roster / waitlist modal body ── */
+.roster-body {
+    margin-top: var(--space-m);
+    min-height: 4rem;
+}
+
+.roster-loading,
+.roster-empty {
+    color: var(--color-grey);
+    font-size: var(--font-size-s);
+    text-align: center;
+    padding: var(--space-l) 0;
+}
+
+.roster-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 24rem;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.roster-list::-webkit-scrollbar {
+    display: none;
+}
+
+.roster-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    padding: var(--space-xs) var(--space-s);
+    border-bottom: 1px solid rgba(var(--color-grey-rgb), 0.1);
+}
+
+.roster-item:last-child {
+    border-bottom: none;
+}
+
+.roster-pos {
+    font-size: var(--font-size-xs);
+    color: var(--color-gold);
+    font-weight: 700;
+    min-width: 1.8rem;
+}
+
+.roster-name {
+    font-size: var(--font-size-s);
+    color: var(--color-almost-white);
+    flex: 1;
+}
+
+.roster-handle {
+    font-size: var(--font-size-xs);
+    color: var(--color-grey);
+}
