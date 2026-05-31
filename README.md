@@ -7,7 +7,7 @@
 The Forge is a gym management web application developed for the LTW course.
 
 The platform supports three core user roles: members, trainers, and administrators.
-Members can browse and enroll in classes and track their activity, trainers manage sessions and profiles, and administrators oversee users, classes, and equipment.
+Members can browse and enroll in classes, reserve equipment, and track their activity; trainers have public profiles and upcoming classes; and administrators oversee users, classes, and equipment.
 
 The system is being developed following the requirements of the course, including structured CSS, PHP with PDO, and role-based functionality.
 
@@ -26,10 +26,12 @@ Styling for these pages can be found at src/style/
 - [x] Edit their profile, including name, username, password, and profile photo.
 
 **Members:**
+
 - [x] Browse the schedule of available fitness classes, filtering by type, trainer, day, or time.
 - [x] Enroll in and cancel enrollment from upcoming classes, subject to capacity limits.
 - [x] View trainer profiles, including their specializations and the classes they teach.
 - [x] Check the current availability of equipment in the main training area.
+- [x] Reserve equipment and manage upcoming reservations.
 - [x] Leave ratings and reviews for classes they have attended.
 
 **Trainers:**
@@ -38,13 +40,16 @@ Styling for these pages can be found at src/style/
 - [x] Track and manage their assigned class schedule.
 
 **Admins:**
-- [x] Manage members and trainers (create, update, and deactivate accounts).
+
+- [x] Manage members and trainers (update details, roles, status, and subscriptions).
 - [x] Manage the class catalog (create, edit, and remove classes) and assign trainers to them.
 - [x] Manage equipment in the main training area (add, update availability status, and remove items).
+- [x] Create, pin, and delete announcements/news posts.
 - [x] Elevate a user to admin status.
 - [x] Oversee and ensure the smooth operation of the entire system.
 
 **Extra:**
+
 - [x] Membership plans with upgrade, downgrade, and pause/freeze support.
 - [x] Waitlist for fully booked classes with automatic promotion.
 - [x] News and announcements system with pinned posts and full article pages.
@@ -54,7 +59,7 @@ Styling for these pages can be found at src/style/
 - [x] Admin activity log and user data CSV export.
 - [x] CSRF token protection on all state-changing forms.
 - [x] REST API exposing class schedules, trainer profiles, and equipment availability.
-- [x] Personal logging of material.
+
 
 ## Running
 
@@ -123,7 +128,7 @@ These resources are available in the `design/` folder, which is organized into s
 - CSS3
 - PHP
 - JavaScript
-- Ajax / JSON
+- AJAX / JSON
 - SQLite
 - PDO
 
@@ -154,4 +159,3 @@ The project includes the following security practices:
 | Miguel Rocha | 202405484@up.pt |
 | Pedro Teixeira | 202404987@up.pt |
 | Rafael Silva | 202406334@up.pt |
-

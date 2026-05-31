@@ -17,6 +17,7 @@
     font-size: var(--font-size-xl);
     color: var(--color-gold);
     line-height: 1;
+    white-space: nowrap;
 }
 
 .logo__img {
