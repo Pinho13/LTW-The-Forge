@@ -5,19 +5,6 @@
 }
 
 .class-modal {
-    padding-top: 0;
-    border-top: none;
-    overflow: visible;
-}
-
-.class-modal::before {
-    content: '';
-    display: block;
-    height: var(--border-l);
-    background: var(--color-gold);
-    margin-bottom: var(--space-m);
-    margin-left: calc(-1 * clamp(var(--space-m), 8vw, var(--space-xxl)));
-    margin-right: calc(-1 * clamp(var(--space-m), 8vw, var(--space-xxl)));
 }
 
 .class-modal .auth-modal__title {
@@ -52,7 +39,8 @@
 
 .modal-action-btn {
     width: 100%;
-    margin-top: var(--space-s);
+    margin-top: var(--space-m);
+    margin-bottom: var(--space-l);
 }
 
 .modal-error {

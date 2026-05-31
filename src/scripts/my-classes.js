@@ -48,7 +48,7 @@ cancelModal.querySelector('form').addEventListener('submit', async e => {
         }
 
         closeModal(cancelModal);
-        document.querySelector(`[data-enrollment-id="${enrollmentId}"]`)?.remove();
+        window.location.reload();
     } catch {
         submitBtn.disabled    = false;
         submitBtn.textContent = 'Yes, cancel';

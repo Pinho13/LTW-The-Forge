@@ -142,6 +142,7 @@ $nextWeek = $weekOffset + 1;
                              data-spots="<?= $spotsLeft ?>"
                              data-capacity="<?= (int)$s['capacity'] ?>"
                              data-status="<?= htmlspecialchars($status ?? '') ?>"
+                             data-waitlist-position="<?= $status === 'waitlisted' ? (int)$s['waitlist_position'] : '' ?>"
                              data-type="<?= htmlspecialchars($s['type_name'] ?? '') ?>"
                              data-avg-rating="<?= $s['avg_rating'] !== null ? (float)$s['avg_rating'] : '' ?>"
                              data-review-count="<?= (int)$s['review_count'] ?>">
@@ -194,6 +195,7 @@ $nextWeek = $weekOffset + 1;
                                  data-spots="<?= $spotsLeft ?>"
                                  data-capacity="<?= (int)$s['capacity'] ?>"
                                  data-status="<?= htmlspecialchars($status ?? '') ?>"
+                                 data-waitlist-position="<?= $status === 'waitlisted' ? (int)$s['waitlist_position'] : '' ?>"
                                  data-type="<?= htmlspecialchars($s['type_name'] ?? '') ?>"
                                  data-avg-rating="<?= $s['avg_rating'] !== null ? (float)$s['avg_rating'] : '' ?>"
                                  data-review-count="<?= (int)$s['review_count'] ?>">
@@ -208,9 +210,9 @@ $nextWeek = $weekOffset + 1;
                                     <?php endfor; ?>
                                 </div>
                                 <?php if ($status === 'enrolled'): ?>
-                                    <span class="card-status">Enrolled &middot; <?= htmlspecialchars($s['room']) ?></span>
+                                    <span class="card-status">Enrolled</span>
                                 <?php elseif ($status === 'waitlisted'): ?>
-                                    <span class="card-status card-status--wait">Waitlisted &middot; <?= htmlspecialchars($s['room']) ?></span>
+                                    <span class="card-status card-status--wait">Waitlisted</span>
                                 <?php elseif ($isFull): ?>
                                     <span>Full</span>
                                 <?php else: ?>

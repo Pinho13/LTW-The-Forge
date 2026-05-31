@@ -21,7 +21,7 @@ class ClassCatalog
             "SELECT c.id, c.name, c.type_id, c.description, c.duration_minutes, c.intensity, c.trainer_id,
                     ct.name AS type_name, u.name AS trainer_name,
                     (SELECT cs.room FROM class_session cs WHERE cs.class_id = c.id
-                     AND cs.datetime > datetime('now','localtime') ORDER BY cs.datetime ASC LIMIT 1) AS next_room
+                     AND cs.datetime > datetime('now', '+1 hour') ORDER BY cs.datetime ASC LIMIT 1) AS next_room
              FROM class c
              LEFT JOIN class_type ct ON ct.id = c.type_id
              LEFT JOIN user u ON u.user_id = c.trainer_id
