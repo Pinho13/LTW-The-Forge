@@ -7,3 +7,7 @@ initAuthModals();
 initPasswordToggles();
 initMobileMenu();
 initTerminalTyping();
+
+window.addEventListener('pageshow', (e) => {
+    if (e.persisted) location.reload();
+});

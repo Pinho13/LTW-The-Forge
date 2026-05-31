@@ -50,6 +50,19 @@ function toSVG(clientX, clientY) {
     return pt.matrixTransform(svg.getScreenCTM().inverse());
 }
 
+// Extract {clientX, clientY} from mouse or touch event
+function clientPos(e) {
+    if (e.touches && e.touches.length) return { clientX: e.touches[0].clientX, clientY: e.touches[0].clientY };
+    if (e.changedTouches && e.changedTouches.length) return { clientX: e.changedTouches[0].clientX, clientY: e.changedTouches[0].clientY };
+    return { clientX: e.clientX, clientY: e.clientY };
+}
+
+// Add both mouse and touch listeners for drag-start events
+function onDragStart(el, handler) {
+    el.addEventListener('mousedown',  handler);
+    el.addEventListener('touchstart', e => { e.preventDefault(); handler(e); }, { passive: false });
+}
+
 // ── Enter / exit edit mode ────────────────────────────────────
 function enterEditMode() {
     if (window.__exitStatusMode) window.__exitStatusMode();
@@ -164,7 +177,7 @@ function buildNode(u) {
     g.appendChild(overlay);
 
     if (editMode) {
-        g.addEventListener('mousedown', e => onNodeMousedown(e, u));
+        onDragStart(g, e => onNodeMousedown(e, u));
     }
 
     return g;
@@ -225,7 +238,7 @@ function renderSelectionOverlay(u) {
         circle.setAttribute('r', HANDLE_R);
         circle.classList.add('sel-handle', `sel-handle--${c.id}`);
         circle.dataset.corner = c.id;
-        circle.addEventListener('mousedown', e => onResizeMousedown(e, u, c.id));
+        onDragStart(circle, e => onResizeMousedown(e, u, c.id));
         g.appendChild(circle);
     }
 
@@ -246,7 +259,7 @@ function renderSelectionOverlay(u) {
     rotHandle.setAttribute('cy', rcy);
     rotHandle.setAttribute('r', HANDLE_R);
     rotHandle.classList.add('sel-handle', 'sel-handle--rot');
-    rotHandle.addEventListener('mousedown', e => onRotateMousedown(e, u));
+    onDragStart(rotHandle, e => onRotateMousedown(e, u));
     g.appendChild(rotHandle);
 
     // Arc arrow — smaller, radius 2px, 270° sweep with arrowhead
@@ -264,7 +277,7 @@ function renderSelectionOverlay(u) {
     ].join(' ');
     arcPath.setAttribute('d', d);
     arcPath.classList.add('sel-rot-icon');
-    arcPath.addEventListener('mousedown', e => onRotateMousedown(e, u));
+    onDragStart(arcPath, e => onRotateMousedown(e, u));
     g.appendChild(arcPath);
 
     svg.appendChild(g);
@@ -297,17 +310,15 @@ function onRotateMousedown(e, u) {
     e.stopPropagation();
     e.preventDefault();
 
-    // Center of the unit in SVG space (unrotated)
     const cx = u.x + u.w / 2;
     const cy = u.y + u.h / 2;
 
     const onMove = ev => {
-        const pt      = toSVG(ev.clientX, ev.clientY);
-        // Angle from center to mouse, 0 = up, clockwise
+        const { clientX, clientY } = clientPos(ev);
+        const pt      = toSVG(clientX, clientY);
         const dx      = pt.x - cx;
         const dy      = pt.y - cy;
         const angleDeg = (Math.atan2(dy, dx) * 180 / Math.PI + 90 + 360) % 360;
-        // Snap to nearest 90°
         const snapped = Math.round(angleDeg / 90) * 90 % 360;
         if (snapped !== u.rotation) {
             u.rotation = snapped;
@@ -320,12 +331,16 @@ function onRotateMousedown(e, u) {
     const onUp = () => {
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup',   onUp);
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend',  onUp);
         svg.classList.remove('svg--rotating');
     };
 
     svg.classList.add('svg--rotating');
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup',   onUp);
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend',  onUp);
 }
 
 // ── Drag to move ───────────────────────────────────────────────
@@ -334,14 +349,16 @@ function onNodeMousedown(e, u) {
     e.stopPropagation();
     e.preventDefault();
 
-    const start  = toSVG(e.clientX, e.clientY);
+    const { clientX: startClientX, clientY: startClientY } = clientPos(e);
+    const start  = toSVG(startClientX, startClientY);
     const origX  = u.x;
     const origY  = u.y;
     let   moved  = false;
 
     const onMove = ev => {
         moved = true;
-        const pt = toSVG(ev.clientX, ev.clientY);
+        const { clientX, clientY } = clientPos(ev);
+        const pt = toSVG(clientX, clientY);
         u.x = Math.round(Math.max(0, Math.min(SVG_W - u.w, origX + pt.x - start.x)));
         u.y = Math.round(Math.max(0, Math.min(SVG_H - u.h, origY + pt.y - start.y)));
         updateNodeGeometry(u);
@@ -350,6 +367,8 @@ function onNodeMousedown(e, u) {
     const onUp = () => {
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup',   onUp);
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend',  onUp);
         if (!moved) {
             if (selected === String(u.id)) { deselect(); } else { selectUnit(u); }
         } else {
@@ -359,6 +378,8 @@ function onNodeMousedown(e, u) {
 
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup',   onUp);
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend',  onUp);
 }
 
 // ── Resize via corner handles (aspect-ratio locked) ───────────
@@ -373,7 +394,8 @@ function onResizeMousedown(e, u, corner) {
     const ratio    = origBB.w / origBB.h; // visual aspect ratio
 
     const onMove = ev => {
-        const pt = toSVG(ev.clientX, ev.clientY);
+        const { clientX, clientY } = clientPos(ev);
+        const pt = toSVG(clientX, clientY);
         let bx = origBB.x, by = origBB.y, bw, bh;
 
         if (corner === 'se') {
@@ -411,11 +433,15 @@ function onResizeMousedown(e, u, corner) {
     const onUp = () => {
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup',   onUp);
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend',  onUp);
         renderSelectionOverlay(u);
     };
 
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup',   onUp);
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend',  onUp);
 }
 
 // ── Update node geometry after move/resize/rotate ────────────
@@ -466,9 +492,22 @@ document.addEventListener('keydown', e => {
     }
 });
 
-// ── Picker drag-and-drop ──────────────────────────────────────
+// ── Picker drag-and-drop (mouse + touch) ─────────────────────
+function dropEquipmentAt(clientX, clientY, eqId, eqName, eqPhoto, eqW, eqH) {
+    const pt = toSVG(clientX, clientY);
+    const x  = Math.round(Math.max(0, Math.min(SVG_W - eqW, pt.x - eqW / 2)));
+    const y  = Math.round(Math.max(0, Math.min(SVG_H - eqH, pt.y - eqH / 2)));
+    const id = tempId--;
+    const u  = { id, equipment_id: parseInt(eqId), equipment_name: eqName, photo: eqPhoto, x, y, w: eqW, h: eqH, rotation: 0 };
+    placed[String(id)] = u;
+    svg.appendChild(buildNode(u));
+    selectUnit(u);
+}
+
 function initPickerDrag() {
     document.querySelectorAll('.picker-item').forEach(item => {
+        // Mouse drag-and-drop
+        item.setAttribute('draggable', 'true');
         item.addEventListener('dragstart', e => {
             e.dataTransfer.setData('eq-id',    item.dataset.eqId);
             e.dataTransfer.setData('eq-name',  item.dataset.eqName);
@@ -477,6 +516,29 @@ function initPickerDrag() {
             e.dataTransfer.setData('eq-h',     item.dataset.eqH);
             e.dataTransfer.effectAllowed = 'copy';
         });
+
+        // Touch drag: track finger, drop on touchend inside SVG
+        item.addEventListener('touchstart', e => {
+            if (!editMode) return;
+            e.preventDefault();
+            const touch = e.touches[0];
+            const eqId    = item.dataset.eqId;
+            const eqName  = item.dataset.eqName;
+            const eqPhoto = item.dataset.eqPhoto;
+            const eqW     = parseInt(item.dataset.eqW) || DEFAULT_UNIT_W;
+            const eqH     = parseInt(item.dataset.eqH) || DEFAULT_UNIT_H;
+
+            const onTouchEnd = ev => {
+                document.removeEventListener('touchend', onTouchEnd);
+                const t = ev.changedTouches[0];
+                const svgRect = svg.getBoundingClientRect();
+                if (t.clientX >= svgRect.left && t.clientX <= svgRect.right &&
+                    t.clientY >= svgRect.top  && t.clientY <= svgRect.bottom) {
+                    dropEquipmentAt(t.clientX, t.clientY, eqId, eqName, eqPhoto, eqW, eqH);
+                }
+            };
+            document.addEventListener('touchend', onTouchEnd);
+        }, { passive: false });
     });
 
     svg.addEventListener('dragover', e => {
@@ -488,25 +550,13 @@ function initPickerDrag() {
     svg.addEventListener('drop', e => {
         if (!editMode) return;
         e.preventDefault();
-
         const eqId    = e.dataTransfer.getData('eq-id');
         const eqName  = e.dataTransfer.getData('eq-name');
         const eqPhoto = e.dataTransfer.getData('eq-photo');
         const eqW     = parseInt(e.dataTransfer.getData('eq-w')) || DEFAULT_UNIT_W;
         const eqH     = parseInt(e.dataTransfer.getData('eq-h')) || DEFAULT_UNIT_H;
         if (!eqId) return;
-
-        const pt = toSVG(e.clientX, e.clientY);
-        const x  = Math.round(Math.max(0, Math.min(SVG_W - eqW, pt.x - eqW / 2)));
-        const y  = Math.round(Math.max(0, Math.min(SVG_H - eqH, pt.y - eqH / 2)));
-
-        const id = tempId--;
-        const u  = { id, equipment_id: parseInt(eqId), equipment_name: eqName, photo: eqPhoto, x, y, w: eqW, h: eqH, rotation: 0 };
-        placed[String(id)] = u;
-
-        const node = buildNode(u);
-        svg.appendChild(node);
-        selectUnit(u);
+        dropEquipmentAt(e.clientX, e.clientY, eqId, eqName, eqPhoto, eqW, eqH);
     });
 }
 

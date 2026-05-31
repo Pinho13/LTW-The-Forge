@@ -16,7 +16,7 @@ $memberId = $session->getId();
 $weekOffset = (int) ($_GET['week'] ?? 0);
 
 // Compute Monday of the displayed week
-$today = new DateTimeImmutable('today');
+$today  = new DateTimeImmutable('today');
 $monday = $today->modify('Monday this week')->modify("{$weekOffset} weeks");
 $sunday = $monday->modify('+6 days');
 
@@ -38,10 +38,10 @@ const GRID_START_HOUR = 8;
 const GRID_ROWS       = 52; // 13 hours * 4
 
 function timeToGridRow(string $datetime): int {
-    $dt      = new DateTimeImmutable($datetime);
-    $hour    = (int) $dt->format('G');
-    $min     = (int) $dt->format('i');
-    $offset  = ($hour - GRID_START_HOUR) * 4 + intdiv($min, 15);
+    $dt     = new DateTimeImmutable($datetime);
+    $hour   = (int) $dt->format('G');
+    $min    = (int) $dt->format('i');
+    $offset = ($hour - GRID_START_HOUR) * 4 + intdiv($min, 15);
     return max(1, $offset + 1);
 }
 

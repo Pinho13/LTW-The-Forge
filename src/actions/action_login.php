@@ -49,7 +49,6 @@ if ($user->role === 'member') {
     $frozen = MemberSubscription::isFrozen($db, $user->user_id);
 }
 $session->setUser($user->user_id, $user->name, $user->role, $plan, $frozen);
-$session->addMessage('toast', 'Login successful.');
 
 if ($user->role === 'admin') {
     require_once(__DIR__ . '/../../database/models/AdminLog.class.php');
@@ -58,6 +57,6 @@ if ($user->role === 'admin') {
 } elseif ($user->role === 'trainer') {
     header('Location: /src/pages/trainer-dashboard.php');
 } else {
-    header('Location: /src/pages/my-account.php');
+    header('Location: /src/pages/my-account.php?login=1');
 }
 exit;

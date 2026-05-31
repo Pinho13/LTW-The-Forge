@@ -6,6 +6,7 @@
   require_once(__DIR__ . '/../utils/page_bootstrap.php');
 
   $session = new Session();
+  header('Cache-Control: no-store');
   $db = getDatabaseConnection();
   $featuredClasses  = ClassCatalog::getFeatured($db);
   $featuredTrainers = ClassCatalog::getFeaturedTrainers($db);

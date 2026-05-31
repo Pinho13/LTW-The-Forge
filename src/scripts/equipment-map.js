@@ -105,7 +105,16 @@ function selectionOverlapsPast(startRow, endRow) {
 }
 
 // ── Modal ─────────────────────────────────────────────────────
+function resetZoom() {
+    const vp = document.querySelector('meta[name="viewport"]');
+    if (!vp) return;
+    const original = vp.content;
+    vp.content = original + ', maximum-scale=1';
+    requestAnimationFrame(() => { vp.content = original; });
+}
+
 function openModal() {
+    resetZoom();
     selStartMin = selEndMin = dragStart = dragEnd = null;
     startHidden.value = endHidden.value = '';
     submitBtn.disabled = true;

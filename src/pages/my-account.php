@@ -5,6 +5,13 @@ require_once(__DIR__ . '/../../database/models/Enrollment.class.php');
 require_once(__DIR__ . '/../../database/models/GymVisit.class.php');
 
 [$session, $db] = requireAuthenticatedPage();
+header('Cache-Control: no-store');
+
+if (isset($_GET['login'])) {
+    $session->addMessage('toast', 'Login successful.');
+    header('Location: /src/pages/my-account.php');
+    exit;
+}
 
 if ($session->isAdmin()) {
     header('Location: /src/pages/admin-dashboard.php');
@@ -25,6 +32,7 @@ $recentActivity       = Enrollment::getRecentActivity($db, $session->getId());
     <link rel="stylesheet" href="../style/main.css">
     <link rel="stylesheet" href="../style/layout.css">
     <link rel="stylesheet" href="../style/my-account.css">
+    <script>window.addEventListener('pageshow', e => { if (e.persisted) location.reload(); });</script>
 </head>
 
 <body>

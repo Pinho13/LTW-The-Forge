@@ -20,7 +20,7 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     font-size: var(--font-size-s);
     animation: toast-in 0.25s ease, toast-out 0.4s ease 3s forwards;
-    pointer-events: auto;
+    pointer-events: none;
     min-width: 280px;
     max-width: 380px;
 }
