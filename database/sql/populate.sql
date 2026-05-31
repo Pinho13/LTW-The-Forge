@@ -34,7 +34,7 @@ PRAGMA foreign_keys = ON;
 -- ============================================================
 INSERT INTO user (name, username, email, password_hash, role) VALUES
     ('Normal User',   'normaluser',   'normal@gmail.com',   '$2y$12$5WlMPEie.uE7qRwWQDSWzeYLrlXWtfbpPviuh5jwa5gRJ7MMoAYSi', 'member'),
-    ('Trainer User',  'traineruser',  'trainer@gmail.com',  '$2y$12$EaWvzlwLi4d3nl7JSy8ZFuiKIDUgUQZoOayYtcvCyHgXi0JyAiMES', 'trainer'),
+    ('Trainer User',  'traineruser',  'trainer@gmail.com',  '$2y$12$GlvsxUI5MAx52be90F/jt.TlhCy2ts.JftMMON1TaXPfLAM4fS/xe', 'trainer'),
     ('Admin User',    'adminuser',    'admin@gmail.com',    '$2y$12$M8bgiimX4JSAQ43Y7lcKSOi.3Vc7IqalZxWTPzWmhhhmshzW3HbHu', 'admin'),
     ('Member Two',    'membertwo',    'member2@gmail.com',  '$2y$12$TNGOaPId2WaZRqcgugHHaOqu9EErBKhiXoxTD7CXbl1NpHtyyk5RC', 'member'),
     ('Marcus Steel',  'marcus.steel', 'marcus@theforge.com','placeholder', 'trainer'),
