@@ -1,7 +1,5 @@
 # The Forge - Gym Website
 
-# ltw12g01
-
 ## Overview
 
 The Forge is a gym management web application developed for the LTW course.
@@ -10,13 +8,6 @@ The platform supports three core user roles: members, trainers, and administrato
 Members can browse and enroll in classes, reserve equipment, and track their activity; trainers have public profiles and upcoming classes; and administrators oversee users, classes, and equipment.
 
 The system is being developed following the requirements of the course, including structured CSS, PHP with PDO, and role-based functionality.
-
-## First Delivery 
-HTML files to be considered are [index](index.html); [my-account](my-account.html) and [classes](classes-static.html).
-
-After opening index, click the LogIn button to open the LogIn/Register forms. In any one of the two, if the Sign In/Register is pressed then you will be redirected to my-account.
-
-Styling for these pages can be found at src/style/
 
 ## Features
 
@@ -157,3 +148,9 @@ The project includes the following security practices:
 | Miguel Rocha | 202405484@up.pt |
 | Pedro Teixeira | 202404987@up.pt |
 | Rafael Silva | 202406334@up.pt |
+
+<p align = "center" >
+  <h2 align = "center" >
+    Grade: 18.8/20
+  </h2>
+</p>
