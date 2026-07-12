@@ -1,5 +1,4 @@
 # The Forge - Gym Website
-
 ## Overview
 
 The Forge is a gym management web application developed for the LTW course.
@@ -8,6 +7,10 @@ The platform supports three core user roles: members, trainers, and administrato
 Members can browse and enroll in classes, reserve equipment, and track their activity; trainers have public profiles and upcoming classes; and administrators oversee users, classes, and equipment.
 
 The system is being developed following the requirements of the course, including structured CSS, PHP with PDO, and role-based functionality.
+
+![Grade](https://img.shields.io/badge/Grade-18.8%2F20-1E90FF?style=for-the-badge&labelColor=21262d)
+![Course](https://img.shields.io/badge/Course-LTW-1E90FF?style=for-the-badge&labelColor=21262d)
+![Semester](https://img.shields.io/badge/Semester-2025%2F26-1E90FF?style=for-the-badge&labelColor=21262d)
 
 ## Features
 
@@ -148,9 +151,3 @@ The project includes the following security practices:
 | Miguel Rocha | 202405484@up.pt |
 | Pedro Teixeira | 202404987@up.pt |
 | Rafael Silva | 202406334@up.pt |
-
-<p align = "center" >
-  <h2 align = "center" >
-    Grade: 18.8/20
-  </h2>
-</p>
