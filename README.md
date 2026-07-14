@@ -9,6 +9,10 @@ Members can browse and enroll in classes, reserve equipment, and track their act
 
 The system is being developed following the requirements of the course, including structured CSS, PHP with PDO, and role-based functionality.
 
+![Grade](https://img.shields.io/badge/Grade-18.8%2F20-1E90FF?style=for-the-badge&labelColor=21262d)
+![Course](https://img.shields.io/badge/Course-LTW-1E90FF?style=for-the-badge&labelColor=21262d)
+![Year](https://img.shields.io/badge/Year-2025%2F26-1E90FF?style=for-the-badge&labelColor=21262d)
+
 ## Features
 
 **All users:**
@@ -149,8 +153,3 @@ The project includes the following security practices:
 | Pedro Teixeira | 202404987@up.pt |
 | Rafael Silva | 202406334@up.pt |
 
-<p align = "center" >
-  <h2 align = "center" >
-    Grade: 18.8/20
-  </h2>
-</p>
