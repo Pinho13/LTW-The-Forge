@@ -13,6 +13,7 @@ The system is being developed following the requirements of the course, includin
 ![Course](https://img.shields.io/badge/Course-LTW-1E90FF?style=for-the-badge&labelColor=21262d)
 ![Year](https://img.shields.io/badge/Year-2025%2F26-1E90FF?style=for-the-badge&labelColor=21262d)
 
+
 ## Features
 
 **All users:**
